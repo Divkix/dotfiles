@@ -1,0 +1,26 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Divanshu Chauhan
+	email = 23524935+Divkix@users.noreply.github.com
+	signingkey = 30695AF88CC00E38
+[core]
+	eol = lf
+	autocrlf = input
+	editor = nano
+[format]
+	signoff = true
+[commit]
+	gpgsign = true
+[log]
+	showSignature = true
+#[trailer "sign"]
+#	key = "Signed-off-by: "
+#	ifmissing = add
+#	ifexists = doNothing
+#	command = echo \"$(git config user.name) <$(git config user.email)>\"
+[credential "https://github.com"]
+	helper = !gh auth git-credential
