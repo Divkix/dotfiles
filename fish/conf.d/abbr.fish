@@ -16,3 +16,7 @@ abbr -g -a brewlist "brew leaves | xargs -n1 brew desc"
 abbr -g -a l ls
 abbr -g -a la ls -a
 abbr -g -a ll ls -l
+abbr -g -a gcl git clone
+abbr -g -a gph git push
+abbr -g -a gpl git pull
+abbr -g -a gst git status
