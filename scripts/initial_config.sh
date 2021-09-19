@@ -8,7 +8,7 @@ cd "$DIR"
 info "Installing some pre-requisites..."
 
 substep_info "Installing Yay Package Manager..."
-if $i --version &>/dev/null; then
+if yay --version &>/dev/null; then
     substep_success "Yay already installed."
 elif sudo pacman -S yay --noconfirm &>/dev/null; then
     substep_success "Finished installing Yay package manager."
