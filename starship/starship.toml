@@ -3,19 +3,21 @@ command_timeout = 2000
 
 [cmd_duration]
 min_time = 0
-format = '\[[⏱$duration]($style)\]'
+format = '\[[⏱ $duration]($style)\]'
 disabled = true
+show_milliseconds = true
+min_time_to_notify = -1
 
 [username]
 style_user = "white bold"
 style_root = "black bold"
-format = '[$user]($style): '
+format = '[$user]($style)'
 disabled = false
 show_always = true
 
 [memory_usage]
 format = '\[$symbol[$ram]($style)\]'
-threshold = 50
+threshold = -1
 style = "bold dimmed white"
 disabled = false
 
@@ -28,7 +30,7 @@ disabled = false
 
 [git_status]
 conflicted = "⚔️"
-ahead = "🏎️-💨×${count}"
+ahead = "🏎️💨×${count}"
 behind = "🐢×${count}"
 diverged = "🔱🏎️💨×${ahead_count} 🐢×${behind_count}"
 untracked = "🛤️ ×${count}"
@@ -42,10 +44,19 @@ format = '([\[$all_status$ahead_behind\]]($style))'
 
 [hostname]
 ssh_only = false
-format = "<[$hostname]($style)>"
+format = "@[$hostname]($style): "
 trim_at = "-"
-style = "bold dimmed white"
-disabled = true
+style = "bold green"
+disabled = false
+
+[jobs]
+symbol = "+ "
+number_threshold = 1
+symbol_threshold = 1
+
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
 
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
