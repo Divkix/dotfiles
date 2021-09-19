@@ -16,7 +16,7 @@ success "Finished installing Brewfile packages."
 find * -name "*.list" | while read fn; do
     cmd="${fn%.*}"
     set -- $cmd
-    info "Installing $1 packages..."
+    substep_info "Installing $1 packages..."
     while read package; do
         if [[ $package == $COMMENT ]];
         then continue
@@ -28,5 +28,5 @@ find * -name "*.list" | while read fn; do
             $cmd install $package $i &>/dev/null
         fi
     done < "$fn"
-    success "Finished installing $1 packages."
+    substep_success "Finished installing $1 packages."
 done
