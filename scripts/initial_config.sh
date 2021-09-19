@@ -29,4 +29,14 @@ for i in "${reqPackages[@]}"; do
     fi
 done
 
+substep_info "Installing HomeBrew..."
+if brew --version &>/dev/null; then
+    substep_success "HomeBrew already installed."
+elif /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &>/dev/null; then
+    substep_success "Finished installing HomeBrew."
+else
+    substep_error "Failed to install HomeBrew."
+    exit 1
+fi
+
 success "Finished installing pre-requisites."
