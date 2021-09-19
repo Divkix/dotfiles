@@ -11,16 +11,17 @@
 	eol = lf
 	autocrlf = input
 	editor = nano
+	excludesfile = ~/.gitignore_global
 [format]
 	signoff = true
 [commit]
 	gpgsign = true
 [log]
 	showSignature = true
+[credential "https://github.com"]
+	helper = !gh auth git-credential
 #[trailer "sign"]
 #	key = "Signed-off-by: "
 #	ifmissing = add
 #	ifexists = doNothing
 #	command = echo \"$(git config user.name) <$(git config user.email)>\"
-[credential "https://github.com"]
-	helper = !gh auth git-credential
