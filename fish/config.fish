@@ -2,7 +2,7 @@
 eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # setup gpg tty
-export GPG_TTY=(tty)
+set -gx GPG_TTY=(tty)
 
 # check if distribution is WSL or not
 # if yes, then add some things to PATH
