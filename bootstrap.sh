@@ -43,5 +43,5 @@ success "Finished installing Dotfiles"
 # If yes, then do additional setup
 if [[ "$IS_WSL_DISTRO" == "true" ]]; then
     ./wsl/setup.sh
-    note "A WSL system has been detected, a restart of WSL using 'wsl --shutdown' from command priompt is required!"
+    note "A WSL system has been detected, a restart of WSL using 'wsl --shutdown' from command prompt is required!"
 fi
