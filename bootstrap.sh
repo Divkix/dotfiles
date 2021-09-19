@@ -21,14 +21,8 @@ else
     exit 1
 fi
 
-info "Installing some pre-requisites..."
-if yay --version &>/dev/null; then
-    success "Yay already installed."
-elif sudo pacman -S yay --noconfirm &>/dev/null; then
-    success "Finished installing Yay package manager."
-else
-    error "Failed to install Yay package manager."
-fi
+# do run some initial installtions
+./scripts/initial_config.sh
 
 # Package control must be executed first in order for the rest to work
 ./packages/setup.sh
