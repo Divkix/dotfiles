@@ -25,7 +25,7 @@ find * -name "*.list" | while read fn; do
         if [[ $cmd == code* ]]; then
             $cmd $package
         else
-            $cmd install $package
+            $cmd install $package $i &>/dev/null
         fi
     done < "$fn"
     success "Finished installing $1 packages."
