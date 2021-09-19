@@ -18,6 +18,7 @@ if sudo -v; then
     success "Sudo credentials updated."
 else
     error "Failed to obtain sudo credentials."
+    exit 1
 fi
 
 info "Installing some pre-requisites..."
