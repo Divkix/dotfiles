@@ -20,3 +20,4 @@ abbr -g -a gcl git clone
 abbr -g -a gph git push
 abbr -g -a gpl git pull
 abbr -g -a gst git status
+abbr -g -a gcm git commit
