@@ -40,32 +40,7 @@ set_fish_shell() {
             substep_error "Failed changing shell to fish"
             return 2
         fi
-    fi
-
-    substep_info "Installing fisher..."
-    fish -c "curl -sL https://git.io/fisher | source && \
-        fisher install jorgebucaran/fisher" &>/dev/null
-    if fish -c "fisher -v" &>/dev/null; then
-        substep_success "Installed fisher succesfully!"
-    else
-        substep_error "Failed to install fisher!"
-    fi
-
-    substep_info "Installing fisher plugins..."
-    fish -c "fisher install \
-        jorgebucaran/fish-bax \
-        oh-my-fish/plugin-pj \
-        oh-my-fish/plugin-license \
-        markcial/upto \
-        jethrokuan/z \
-        jorgebucaran/gitio.fish \
-        gazorby/fish-abbreviation-tips" &>/dev/null
-    if fish -c "fisher list" &>/dev/null; then
-        substep_success "Installed fisher plugins succesfully!"
-    else
-        substep_error "Failed to install fisher plugins!"
-    fi
-    
+    fi    
 }
 
 if set_fish_shell; then
