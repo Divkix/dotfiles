@@ -60,7 +60,7 @@ set_fish_shell() {
         jethrokuan/z \
         jorgebucaran/gitio.fish \
         gazorby/fish-abbreviation-tips" #&>/dev/null
-    if fish -c "fisher --list" &>/dev/null; then
+    if fish -c "fisher list" &>/dev/null; then
         substep_success "Installed fisher plugins succesfully!"
     else
         substep_error "Failed to install fisher plugins!"
