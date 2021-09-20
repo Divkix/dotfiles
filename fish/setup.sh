@@ -48,7 +48,7 @@ if set_fish_shell; then
     substep_info "Setting up Fisher..."
     if fish -c "fisher -v"; then
         substep_success "Fisher already installed!"
-        scopy "$SOURCE/fish_plugins" "$DESTINATION/fish_plugins"
+        scopy "$DESTINATION/fish_plugins" "$SOURCE/fish_plugins"
         # fish -c "fisher update"
     else
         substep_info "Fisher not installed."
