@@ -7,3 +7,4 @@ pre-commit
 speedtest-cli
 ujson
 dnspython
+virtualfish
