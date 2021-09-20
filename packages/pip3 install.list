@@ -1,6 +1,5 @@
 black
 virtualenv
-virtualenvwrapper
 isort
 pylint
 pyclean
