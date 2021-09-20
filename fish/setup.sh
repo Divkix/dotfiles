@@ -41,7 +41,10 @@ set_fish_shell() {
             return 2
         fi
     fi
+}
 
+if set_fish_shell; then
+    success "Successfully set up fish shell."
     substep_info "Setting up Fisher..."
     if fish -c "fisher -v"; then
         substep_success "Fisher already installed!"
@@ -50,10 +53,6 @@ set_fish_shell() {
         substep_info "Fisher not installed."
         exit 1
     fi
-}
-
-if set_fish_shell; then
-    success "Successfully set up fish shell."
 else
     error "Failed setting up fish shell."
 fi
