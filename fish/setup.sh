@@ -44,7 +44,7 @@ set_fish_shell() {
 
     substep_info "Installing fisher..."
     fish -c "curl -sL https://git.io/fisher | source && \
-        fisher install jorgebucaran/fisher" #&>/dev/null
+        fisher install jorgebucaran/fisher" &>/dev/null
     if fish -c "fisher -v" &>/dev/null; then
         substep_success "Installed fisher succesfully!"
     else
@@ -59,7 +59,7 @@ set_fish_shell() {
         markcial/upto \
         jethrokuan/z \
         jorgebucaran/gitio.fish \
-        gazorby/fish-abbreviation-tips" #&>/dev/null
+        gazorby/fish-abbreviation-tips" &>/dev/null
     if fish -c "fisher list" &>/dev/null; then
         substep_success "Installed fisher plugins succesfully!"
     else
