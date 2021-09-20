@@ -17,7 +17,7 @@ mkdir -p "$DESTINATION/functions"
 mkdir -p "$DESTINATION/completions"
 mkdir -p "$DESTINATION/conf.d"
 
-find * -name "*fish*" | while read fn; do
+find * -name "*fish*" -not -wholename "fish_plugins" | while read fn; do
     symlink "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 clear_broken_symlinks "$DESTINATION"
@@ -48,6 +48,7 @@ if set_fish_shell; then
     substep_info "Setting up Fisher..."
     if fish -c "fisher -v"; then
         substep_success "Fisher already installed!"
+        scopy "$SOURCE/fish_plugins" "$DESTINATION/fish_plugins"
         fish -c "fisher update"
     else
         substep_info "Fisher not installed."
