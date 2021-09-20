@@ -12,7 +12,7 @@ abbr -g -a rm rm -i
 abbr -g -a snano sudo nano
 abbr -g -a www python3 -m http.server 8000
 abbr -g -a untar tar -zxvf
-abbr -g -a brewlist "brew leaves | xargs -n1 brew desc"
+abbr -g -a brews "brew leaves | xargs -n1 brew desc"
 abbr -g -a l ls
 abbr -g -a la ls -a
 abbr -g -a ll ls -l
