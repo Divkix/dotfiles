@@ -5,6 +5,8 @@ cd "$DIR"
 
 . ../scripts/functions.sh
 
+mkdir -p "$HOME/.config/fish"
+
 SOURCE="$(realpath .)"
 DESTINATION="$(realpath $HOME/.config/fish)"
 
