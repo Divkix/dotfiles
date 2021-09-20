@@ -34,6 +34,7 @@ if brew --version &>/dev/null; then
     substep_success "HomeBrew already installed."
 elif /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
     substep_success "Finished installing HomeBrew."
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 else
     substep_error "Failed to install HomeBrew."
     exit 1
