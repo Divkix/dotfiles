@@ -49,7 +49,7 @@ if set_fish_shell; then
     if fish -c "fisher -v"; then
         substep_success "Fisher already installed!"
         scopy "$SOURCE/fish_plugins" "$DESTINATION/fish_plugins"
-        fish -c "fisher update"
+        # fish -c "fisher update"
     else
         substep_info "Fisher not installed."
         exit 1
