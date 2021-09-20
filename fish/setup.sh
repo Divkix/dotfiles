@@ -43,13 +43,12 @@ set_fish_shell() {
     fi
 
     substep_info "Setting up Fisher..."
-    substep_info "Checking if Fisher is installed or not..."
     if fish -c "fisher -v"; then
         substep_success "Fisher already installed!"
+        fish -c "fisher update"
     else
-        substep_info "Fisher not installed. Installing..."
-        fish -c "curl -sL https://git.io/fisher | source && fisher update"
-        substep_success "Fisher installed!"
+        substep_info "Fisher not installed."
+        exit 1
     fi
 }
 
