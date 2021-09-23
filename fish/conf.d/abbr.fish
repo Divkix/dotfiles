@@ -22,4 +22,7 @@ abbr -g -a gpl git pull
 abbr -g -a gst git status
 abbr -g -a gcm git commit -m
 abbr -g -a gcma git commit -am
+abbr -g -a gco git commit
+abbr -g -a gca git commit --amend
+abbr -g -a gcan git commit --amend --no-edit
 abbr -g -a reload exec fish
