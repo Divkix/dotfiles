@@ -25,3 +25,5 @@
 #	ifmissing = add
 #	ifexists = doNothing
 #	command = echo \"$(git config user.name) <$(git config user.email)>\"
+[init]
+	defaultBranch = main

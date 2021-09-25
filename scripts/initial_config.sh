@@ -29,14 +29,11 @@ for i in "${reqPackages[@]}"; do
     fi
 done
 
-substep_info "Installing HomeBrew..."
+substep_info "Checking HomeBrew..."
 if brew --version &>/dev/null; then
     substep_success "HomeBrew already installed."
-elif /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
-    substep_success "Finished installing HomeBrew."
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 else
-    substep_error "Failed to install HomeBrew."
+    substep_error "HomeBrew not installed."
     exit 1
 fi
 

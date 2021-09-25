@@ -12,7 +12,7 @@ abbr -g -a rm rm -i
 abbr -g -a snano sudo nano
 abbr -g -a www python3 -m http.server 8000
 abbr -g -a untar tar -zxvf
-abbr -g -a brewlist "brew leaves | xargs -n1 brew desc"
+abbr -g -a brews "brew leaves | xargs -n1 brew desc"
 abbr -g -a l ls
 abbr -g -a la ls -a
 abbr -g -a ll ls -l
@@ -22,3 +22,7 @@ abbr -g -a gpl git pull
 abbr -g -a gst git status
 abbr -g -a gcm git commit -m
 abbr -g -a gcma git commit -am
+abbr -g -a gco git commit
+abbr -g -a gca git commit --amend
+abbr -g -a gcan git commit --amend --no-edit
+abbr -g -a reload exec fish

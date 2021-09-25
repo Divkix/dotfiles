@@ -1,6 +1,5 @@
 black
 virtualenv
-virtualenvwrapper
 isort
 pylint
 pyclean
@@ -8,3 +7,4 @@ pre-commit
 speedtest-cli
 ujson
 dnspython
+virtualfish

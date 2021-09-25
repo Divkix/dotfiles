@@ -33,6 +33,9 @@ find * -name "setup.sh" \
     ./$setup
 done
 
+# install fisher
+./scripts/install_fisher.sh
+
 success "Finished installing Dotfiles"
 
 # Check if distribution is WSL or not
