@@ -5,6 +5,8 @@ cd "$DIR"
 
 . ../scripts/functions.sh
 
+mkdir -p "$HOME/.config/fish"
+
 SOURCE="$(realpath .)"
 DESTINATION="$(realpath $HOME/.config/fish)"
 
@@ -38,17 +40,7 @@ set_fish_shell() {
             substep_error "Failed changing shell to fish"
             return 2
         fi
-    fi
-
-    substep_info "Setting up Fisher..."
-    substep_info "Checking if Fisher is installed or not..."
-    if fish -c "fisher -v" &>/dev/null; then
-        substep_success "Fisher already installed!"
-    else
-        substep_info "Fisher not installed. Installing..."
-        fish -c "curl -sL https://git.io/fisher | source && fisher update" &>/dev/null
-        substep_success "Fisher installed!"
-    fi
+    fi    
 }
 
 if set_fish_shell; then
