@@ -9,9 +9,14 @@ COMMENT=\#*
 
 sudo -v
 
-info "Installing Brewfile packages..."
-brew bundle
-success "Finished installing Brewfile packages."
+info "Installing Yay packages..."
+yay -S --noconfirm --needed - < Yayfile
+substep_info "Clearing caches and other misc. stuff"
+yay -Yc --noconfirm
+yay -Scc --noconfirm
+substep_success "Done cleaning!"
+success "Finished installing Yay packages."
+
 
 find * -name "*.list" | while read fn; do
     cmd="${fn%.*}"
