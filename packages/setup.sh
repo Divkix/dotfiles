@@ -10,10 +10,16 @@ COMMENT=\#*
 sudo -v
 
 info "Installing Yay packages..."
-yay -S --noconfirm --needed - < Yayfile
+while read p; do 
+    substep_info "Installing $p"
+    if [[ $package == $COMMENT ]];
+        then continue
+    fi
+    yay -S --noconfirm --needed "$p" &>/dev/null
+done < Yayfile
 substep_info "Clearing caches and other misc. stuff"
-yay -Yc --noconfirm
-yay -Scc --noconfirm
+yay -Yc --noconfirm &>/dev/null
+yay -Scc --noconfirm &>/dev/null
 substep_success "Done cleaning!"
 success "Finished installing Yay packages."
 
