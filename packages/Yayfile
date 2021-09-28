@@ -12,3 +12,4 @@ python-pip
 mlocate
 htop
 ncdu
+jq
