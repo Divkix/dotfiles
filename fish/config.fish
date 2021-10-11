@@ -1,11 +1,3 @@
-
-#### ---- HomeBrew Stuff first ---- ####
-# eval homebrew first
-eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-
-# Add python3 unversioned symlinks to path
-set -gx PATH "/home/linuxbrew/.linuxbrew/opt/python@3.9/libexec/bin" $PATH
-
 # setup gpg tty
 set -gx GPG_TTY (tty)
 
@@ -26,10 +18,6 @@ end
 
 # add yarn global bin
 set -gx PATH (yarn global bin) $PATH
-
-# init golang
-set -x GOPATH $HOME/go
-set -x PATH $PATH $GOPATH/bin
 
 # set starship config
 set -gx STARSHIP_CONFIG $HOME/.config/starship.toml

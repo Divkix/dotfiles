@@ -9,9 +9,20 @@ COMMENT=\#*
 
 sudo -v
 
-info "Installing Brewfile packages..."
-brew bundle
-success "Finished installing Brewfile packages."
+info "Installing Yay packages..."
+while read p; do 
+    substep_info "Installing $p"
+    if [[ $package == $COMMENT ]];
+        then continue
+    fi
+    yay -S --noconfirm --needed "$p" &>/dev/null
+done < Yayfile
+substep_info "Clearing caches and other misc. stuff"
+yay -Yc --noconfirm &>/dev/null
+yay -Scc --noconfirm &>/dev/null
+substep_success "Done cleaning!"
+success "Finished installing Yay packages."
+
 
 find * -name "*.list" | while read fn; do
     cmd="${fn%.*}"

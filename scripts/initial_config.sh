@@ -16,6 +16,12 @@ else
     substep_error "Failed to install Yay package manager."
 fi
 
+substep_info "Configuring yay..."
+yay -Y --gendb
+yay -Syu --devel --noconfirm
+yay -Y --devel --save
+substep_success "Finished configuring yay."
+
 reqPackages=("base-devel")
 
 for i in "${reqPackages[@]}"; do
@@ -28,13 +34,5 @@ for i in "${reqPackages[@]}"; do
         substep_error "Failed to install $i."
     fi
 done
-
-substep_info "Checking HomeBrew..."
-if brew --version &>/dev/null; then
-    substep_success "HomeBrew already installed."
-else
-    substep_error "HomeBrew not installed."
-    exit 1
-fi
 
 success "Finished installing pre-requisites."
