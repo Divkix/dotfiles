@@ -22,6 +22,9 @@ find * -name "*fish*" | while read fn; do
 done
 clear_broken_symlinks "$DESTINATION"
 
+
+fish_shell_location="/usr/bin/fish"
+
 set_fish_shell() {
     if grep --quiet fish <<< "$SHELL"; then
         success "Fish shell is already set up."
@@ -31,10 +34,10 @@ set_fish_shell() {
             substep_info "Fish shell already installed"
         else
             substep_error "Fish shell is not installed. Setting it up..."
-            echo $(which fish) | sudo tee -a /etc/shells
+            echo $fish_shell_location | sudo tee -a /etc/shells
         fi
         substep_info "Changing shell to fish"
-        if sudo chsh -s $(which fish) $(whoami); then
+        if sudo chsh -s $fish_shell_location $(whoami); then
             substep_success "Changed shell to fish"
         else
             substep_error "Failed changing shell to fish"

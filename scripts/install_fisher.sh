@@ -33,15 +33,3 @@ fi
 
 
 success "Extras installed!"
-
-info "Setting up virtualfish..."
-mkdir -p "$HOME/.virtualenvs"
-if fish -c "vf install \
-    auto_activation \
-    projects \
-    environment \
-    update_python" &>/dev/null; then
-    substep_success "Virtualfish installed!"
-else
-    substep_error "Virtualfish failed to install!"
-fi

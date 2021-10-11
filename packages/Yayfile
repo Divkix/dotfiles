@@ -1,4 +1,5 @@
 figlet
+wget
 fish
 github-cli
 go
