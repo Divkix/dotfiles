@@ -10,5 +10,11 @@ sudo pacman -Syyuu
 sudo pacman -S base-devel
 ```
 
-## Install brew
-`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+## Install [yay](https://github.com/Jguer/yay) package helper
+```
+pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
