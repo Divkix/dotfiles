@@ -2,7 +2,7 @@
 
 My configuration across multiple machines
 
-## OS Used: Manjaro
+## OS Used: Arch Linux
 
 ## Run this first:
 ```
