@@ -12,12 +12,9 @@ if string match -r -i -q "^(.+)-microsoft-standard-WSL2" -- (uname -r)
     clear
 
     # add vscode to path
-    set -gx PATH "/mnt/c/Users/$WINDOWS_USER_NAME/scoop/apps/vscode/current/bin" $PATH
+    set -gx PATH "/mnt/c/Users/$WINDOWS_USER_NAME/scoop/apps/vscode/current/bin/" $PATH
 
 end
-
-# add yarn global bin
-set -gx PATH "$HOME/.yarn/bin" $PATH
 
 # set starship config
 set -gx STARSHIP_CONFIG $HOME/.config/starship.toml

@@ -16,8 +16,6 @@
 	signoff = true
 [commit]
 	gpgsign = true
-[log]
-	showSignature = true
 [credential "https://github.com"]
 	helper = !gh auth git-credential
 #[trailer "sign"]
