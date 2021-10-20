@@ -17,9 +17,9 @@ else
 fi
 
 substep_info "Configuring yay..."
-yay -Y --gendb
-yay -Syu --devel --noconfirm
-yay -Y --devel --save
+yay -Y --gendb &>/dev/null
+yay -Syu --devel --noconfirm &>/dev/null
+yay -Y --devel --save &>/dev/null
 substep_success "Finished configuring yay."
 
 reqPackages=("base-devel")
