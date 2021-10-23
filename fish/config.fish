@@ -13,6 +13,9 @@ end
 # Add local bin to path
 set -gx PATH "$HOME/.local/bin" $PATH
 
+# Add yarn global bin to path
+set -gx PATH "$HOME/.yarn/bin" $PATH
+
 # set starship config
 set -gx STARSHIP_CONFIG $HOME/.config/starship.toml
 
