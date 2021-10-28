@@ -8,6 +8,13 @@ if string match -r -i -q "^(.+)-microsoft-standard-WSL2" -- (uname -r)
     # add vscode to path
     set -gx PATH "/mnt/c/Users/$WINDOWS_USER_NAME/scoop/apps/vscode/current/bin/" $PATH
 
+    # add wsl-path folder
+    set -gx PATH "/mnt/c/Users/divkix/wsl-path" $PATH
+
+
+    # enable vagrant with windows integration
+    set -gx VAGRANT_WSL_ENABLE_WINDOWS_ACCESS "1"
+
 end
 
 # Add local bin to path
