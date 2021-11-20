@@ -22,6 +22,8 @@ abbr -g -a gst git status
 abbr -g -a gcm git commit -m
 abbr -g -a gcma git commit -am
 abbr -g -a gco git commit
-abbr -g -a gca git commit --amend
-abbr -g -a gcan git commit --amend --no-edit
+abbr -g -a gca git commit -a
+abbr -g -a gcam git commit -a --amend
+abbr -g -a gcan git commit --amend -a --no-edit
 abbr -g -a reload exec fish
+abbr -g -a cdd caprover deploy -d
