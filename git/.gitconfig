@@ -25,3 +25,5 @@
 #	command = echo \"$(git config user.name) <$(git config user.email)>\"
 [init]
 	defaultBranch = main
+[pull]
+	ff = only
