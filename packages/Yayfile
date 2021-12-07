@@ -13,3 +13,5 @@ mlocate
 htop
 ncdu
 jq
+cloc
+
