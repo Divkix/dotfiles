@@ -10,7 +10,7 @@
 [core]
 	eol = lf
 	autocrlf = input
-	editor = nano
+	editor = code --wait
 	excludesfile = ~/.gitignore_global
 [format]
 	signoff = true
