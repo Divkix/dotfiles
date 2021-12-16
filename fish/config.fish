@@ -10,11 +10,6 @@ if string match -r -i -q "^(.+)-microsoft-standard-WSL2" -- (uname -r)
 
     # add wsl-path folder
     set -gx PATH "/mnt/c/Users/divkix/wsl-path" $PATH
-
-
-    # enable vagrant with windows integration
-    set -gx VAGRANT_WSL_ENABLE_WINDOWS_ACCESS "1"
-
 end
 
 # Add local bin to path
