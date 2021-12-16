@@ -14,4 +14,9 @@ htop
 ncdu
 jq
 cloc
-
+crowdin-cli-bin
+heroku-cli
+mongodb-tools-bin
+mongosh-bin
+rate-mirrors-bin
+trivy-bin
