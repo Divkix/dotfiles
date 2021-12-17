@@ -21,4 +21,4 @@ mongosh-bin
 rate-mirrors-bin
 trivy-bin
 python-poetry
-
+python-pre-commit
