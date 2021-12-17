@@ -9,7 +9,7 @@ tree
 yarn
 nodejs
 python-pip
-mlocate
+plocate
 htop
 ncdu
 jq
@@ -20,3 +20,5 @@ mongodb-tools-bin
 mongosh-bin
 rate-mirrors-bin
 trivy-bin
+python-poetry
+
