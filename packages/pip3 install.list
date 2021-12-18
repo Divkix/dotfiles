@@ -3,4 +3,3 @@ virtualenv
 isort
 pylint
 pyclean
-pre-commit
