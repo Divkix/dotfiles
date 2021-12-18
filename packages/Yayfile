@@ -15,7 +15,7 @@ ncdu
 jq
 cloc
 crowdin-cli-bin
-heroku-cli
+heroku-cli-bin
 mongodb-tools-bin
 mongosh-bin
 rate-mirrors-bin
