@@ -1,22 +1,32 @@
 # setup gpg tty
 set -gx GPG_TTY (tty)
 
-# check if distribution is WSL or not
-# if yes, then add some things to PATH
-if string match -r -i -q "^(.+)-microsoft-standard-WSL2" -- (uname -r)
+# eval homebrew
+eval (/opt/homebrew/bin/brew shellenv)
 
-    # add vscode to path
-    set -gx PATH "/mnt/c/Users/$WINDOWS_USER_NAME/scoop/apps/vscode/current/bin/" $PATH
+# Add home bin to PATH
+fish_add_path $HOME/bin
 
-    # add wsl-path folder
-    set -gx PATH "/mnt/c/Users/divkix/wsl-path" $PATH
-end
+# Add Deno bin to PATH
+fish_add_path $HOME/.deno/bin
 
-# Add local bin to path
-set -gx PATH "$HOME/.local/bin" $PATH
+#----------------------------#
+# homebrew additional config #
+#----------------------------#
 
-# Add yarn global bin to path
-set -gx PATH "$HOME/.yarn/bin" $PATH
+# fzf config
+set -g FZF_CTRL_T_COMMAND "command find -L \$dir -type f 2> /dev/null | sed '1d; s#^\./##'"
+fzf_configure_bindings --directory=\co
+set fzf_preview_dir_cmd "exa --all --color=always"
+set fzf_fd_opts "-t f -t l -p -H"
+
+fish_add_path /opt/homebrew/opt/python@3.10/bin
+fish_add_path /opt/homebrew/opt/openjdk/bin
+set -gx LDFLAGS "-L/opt/homebrew/opt/python@3.10/lib"
+
+#----------------------------#
+# homebrew additional config #
+#----------------------------#
 
 # set starship config
 set -gx STARSHIP_CONFIG $HOME/.config/starship.toml

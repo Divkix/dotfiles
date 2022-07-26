@@ -1,20 +1,19 @@
-# dotfile
+# dotfiles-mac
 
-My configuration across multiple machines
+This is my setup for my MacBook Air (2020, M1) for development purposes.
 
-## OS Used: Arch Linux
+## Installation
+These steps must be followed to ensure smooth installation:
 
-## Run this first:
-```
-sudo pacman -Syyuu
-sudo pacman -S base-devel
-```
+### Install homebrew
+Head over to https://brew.sh and install the latest version of homebrew by copying the command from the given text box.
 
-## Install [yay](https://github.com/Jguer/yay) package helper
-```
-pacman -S --needed git base-devel
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-```
+### Run the bootstrap.sh file
 
+Use this command to install dotfiles setup:
+
+`./bootstrap.sh`
+
+
+## Notes
+ - Do not delete this repo after setting up, the files from this repo have been symlinked to the configuration files. Deleting this repo may cause your system to revert back to original settings for some programs.

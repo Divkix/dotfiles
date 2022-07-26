@@ -1,8 +1,3 @@
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
 [user]
 	name = Divanshu Chauhan
 	email = 23524935+Divkix@users.noreply.github.com
@@ -11,11 +6,13 @@
 	eol = lf
 	autocrlf = input
 	editor = code --wait
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/divkix/.gitignore_global
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [format]
 	signoff = true
 [commit]
 	gpgsign = true
+	template = /Users/divkix/.stCommitMsg
 [credential "https://github.com"]
 	helper = !gh auth git-credential
 #[trailer "sign"]
@@ -27,3 +24,20 @@
 	defaultBranch = main
 [pull]
 	ff = only
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[tag]
+	forceSignAnnotated = true
+[credential]
+	helper = osxkeychain
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[interactive]
+	diffFilter = diff-so-fancy --patch

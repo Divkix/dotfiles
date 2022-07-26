@@ -10,9 +10,9 @@ DESTINATION="$(realpath $HOME/.gnupg/)"
 
 info "Configuraing gnupg..."
 
-find . -name "gpg-*" | while read fn; do
+find . -name "gpg*" | while read fn; do
     fn=$(basename $fn)
-    symlink "$SOURCE/$fn" "$DESTINATION/$fn"
+    scopy "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 clear_broken_symlinks "$DESTINATION"
 

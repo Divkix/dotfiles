@@ -5,15 +5,6 @@ cd "$DIR"
 
 . ../scripts/functions.sh
 
-COMMENT=\#*
-
-sudo -v
-
-info "Installing Brew packages from brewfile..."
-brew bundle &>/dev/null
-success "Finished installing Brew packages."
-
-
 find * -name "*.list" | while read fn; do
     cmd="${fn%.*}"
     set -- $cmd

@@ -10,8 +10,8 @@ DESTINATION="$(realpath $HOME/.config/)"
 
 info "Setting up Starship..."
 
-find * -name "*.toml*" | while read fn; do
-    symlink "$SOURCE/$fn" "$DESTINATION/$fn"
+find * -name "starship.toml*" | while read fn; do
+    scopy "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 clear_broken_symlinks "$DESTINATION"
 
