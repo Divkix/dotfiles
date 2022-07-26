@@ -1,5 +1,6 @@
 # Node
 npm-debug.log
+node_modules/
 
 # Idea files
 .idea/
@@ -14,3 +15,9 @@ log/
 
 # VS Code
 .vscode/
+
+# Mac OS DS_Store
+.DS_Store
+
+# py
+.venv/

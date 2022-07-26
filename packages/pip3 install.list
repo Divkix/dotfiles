@@ -1,5 +1,0 @@
-black
-virtualenv
-isort
-pylint
-pyclean

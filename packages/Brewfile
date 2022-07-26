@@ -1,0 +1,98 @@
+tap "aquasecurity/trivy"
+tap "buo/cask-upgrade"
+tap "cloudflare/cloudflare"
+tap "dopplerhq/cli"
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-drivers"
+tap "homebrew/cask-fonts"
+tap "homebrew/cask-versions"
+tap "homebrew/core"
+tap "homebrew/services"
+brew "bat"
+brew "cloc"
+brew "ctop"
+brew "deno"
+brew "diff-so-fancy"
+brew "exa"
+brew "fd"
+brew "figlet"
+brew "fish"
+brew "fzf"
+brew "gh"
+brew "git"
+brew "go"
+brew "htop"
+brew "python@3.10"
+brew "httpie"
+brew "jq"
+brew "lazydocker"
+brew "litecli"
+brew "mas"
+brew "minio-mc"
+brew "ncdu"
+brew "neofetch"
+brew "node"
+brew "openjdk"
+brew "pgcli"
+brew "pipx"
+brew "ripgrep"
+brew "starship"
+brew "tldr"
+brew "tree"
+brew "typescript"
+brew "vercel-cli"
+brew "watch"
+brew "wget"
+brew "dopplerhq/cli/doppler"
+cask "adobe-acrobat-pro"
+cask "android-platform-tools"
+cask "anydesk"
+cask "canva"
+cask "cyberduck"
+cask "discord"
+cask "docker"
+cask "figma"
+cask "font-fira-code-nerd-font"
+cask "github"
+cask "gitkraken"
+cask "goland"
+cask "gpg-suite"
+cask "hot"
+cask "insomnia"
+cask "intellij-idea"
+cask "iterm2"
+cask "keepingyouawake"
+cask "microsoft-edge"
+cask "nvidia-geforce-now"
+cask "obs"
+cask "paintbrush"
+cask "parallels"
+cask "pycharm-with-anaconda-plugin"
+cask "rectangle"
+cask "sketchup"
+cask "studio-3t"
+cask "telegram"
+cask "the-unarchiver"
+cask "visual-studio-code"
+cask "vlc"
+cask "zoom"
+mas "Adobe Lightroom", id: 1451544217
+mas "Bitwarden", id: 1352778147
+mas "Grammarly for Safari", id: 1462114288
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Microsoft Excel", id: 462058435
+mas "Microsoft OneNote", id: 784801555
+mas "Microsoft PowerPoint", id: 462062816
+mas "Microsoft Word", id: 462054704
+mas "NextDNS", id: 1464122853
+mas "Numbers", id: 409203825
+mas "OneDrive", id: 823766827
+mas "Pages", id: 409201541
+mas "Prime Video", id: 545519333
+mas "Shazam", id: 897118787
+mas "SponsorBlock for YouTube - Skip Sponsorships", id: 1573461917
+mas "Surfshark", id: 1437809329
+mas "WhatsApp", id: 1147396723
+mas "Xcode", id: 497799835
