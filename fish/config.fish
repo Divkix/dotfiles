@@ -17,8 +17,8 @@ fish_add_path $HOME/.deno/bin
 # fzf config
 set -g FZF_CTRL_T_COMMAND "command find -L \$dir -type f 2> /dev/null | sed '1d; s#^\./##'"
 fzf_configure_bindings --directory=\co
-set fzf_preview_dir_cmd "exa --all --color=always"
-set fzf_fd_opts "-t f -t l -p -H"
+set -g fzf_preview_dir_cmd exa --all --color=always
+set -g fzf_fd_opts -t f -t l -p -H
 
 fish_add_path /opt/homebrew/opt/python@3.10/bin
 fish_add_path /opt/homebrew/opt/openjdk/bin
