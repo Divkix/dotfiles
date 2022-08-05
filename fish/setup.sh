@@ -1,4 +1,4 @@
-#! /usr/bin/env sh
+#!/bin/bash
 
 DIR=$(dirname "$0")
 cd "$DIR"
@@ -18,12 +18,12 @@ mkdir -p "$DESTINATION/completions"
 mkdir -p "$DESTINATION/conf.d"
 
 find * -name "*fish*" | while read fn; do
-    scopy "$SOURCE/$fn" "$DESTINATION/$fn"
+    symlink "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 clear_broken_symlinks "$DESTINATION"
 
 # after it has been installed by homebrew
-fish_shell_location="/opt/homebrew/bin/fish"
+fish_shell_location=$(which fish)
 
 set_fish_shell() {
     if echo $SHELL | grep -q "$fish_shell_location"; then
@@ -34,7 +34,7 @@ set_fish_shell() {
             substep_info "Fish shell already installed"
         else
             substep_error "Fish shell is not installed. Setting it up..."
-            sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
+            echo $fish_shell_location | sudo tee -a /etc/shells
         fi
         substep_info "Changing shell to fish"
         if sudo chsh -s $fish_shell_location $(whoami); then

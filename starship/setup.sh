@@ -1,4 +1,4 @@
-#! /usr/bin/env sh
+#!/bin/bash
 
 DIR=$(dirname "$0")
 cd "$DIR"
@@ -11,7 +11,7 @@ DESTINATION="$(realpath $HOME/.config/)"
 info "Setting up Starship..."
 
 find * -name "starship.toml*" | while read fn; do
-    scopy "$SOURCE/$fn" "$DESTINATION/$fn"
+    symlink "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 clear_broken_symlinks "$DESTINATION"
 

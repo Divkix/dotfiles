@@ -1,4 +1,4 @@
-#! /usr/bin/env sh
+#!/bin/bash
 
 DIR=$(dirname "$0")
 cd "$DIR"
@@ -12,7 +12,7 @@ info "Configuraing git..."
 
 find . -name ".git*" | while read fn; do
     fn=$(basename $fn)
-    scopy "$SOURCE/$fn" "$DESTINATION/$fn"
+    symlink "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 
 success "Finished configuring git."
