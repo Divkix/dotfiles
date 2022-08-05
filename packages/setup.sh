@@ -1,4 +1,4 @@
-#! /usr/bin/env sh
+#!/bin/bash
 
 DIR=$(dirname "$0")
 cd "$DIR"
@@ -10,7 +10,7 @@ COMMENT=\#*
 sudo -v
 
 info "Installing Brew packages from brewfile..."
-brew bundle &>/dev/null
+brew bundle
 success "Finished installing Brew packages."
 
 
@@ -26,8 +26,10 @@ find * -name "*.list" | while read fn; do
         if [[ $cmd == code* ]]; then
             $cmd $package
         else
-            $cmd install $package $i &>/dev/null
+            $cmd install $package $i
         fi
     done < "$fn"
     substep_success "Finished installing $1 packages."
 done
+
+success "Finished installing all packages."
