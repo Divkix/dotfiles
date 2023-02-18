@@ -1,4 +1,4 @@
-# dotfiles-mac
+# dotfiles
 
 This is my setup for my MacBook Air (2020, M1) for development purposes.
 
