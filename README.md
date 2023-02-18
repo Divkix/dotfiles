@@ -1,5 +1,7 @@
 # dotfiles
 
+[![CI](https://github.com/Divkix/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/Divkix/dotfiles/actions/workflows/ci.yml)
+
 This is my setup for my MacBook Air (2020, M1) for development purposes.
 
 ## Installation
