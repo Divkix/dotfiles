@@ -42,7 +42,7 @@ set_fish_shell() {
             substep_error "Failed changing shell to fish"
             return 2
         fi
-    fi    
+    fi
 }
 
 if set_fish_shell; then
