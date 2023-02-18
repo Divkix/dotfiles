@@ -14,8 +14,7 @@ if [! -d "/path/to/dir" ] && echo "Directory $HOME/.gnupg does not exists creati
 
 find . -name "gpg*" | while read fn; do
     fn=$(basename $fn)
-    symlink "$SOURCE/$fn" "$DESTINATION/$fn"
+    scopy "$SOURCE/$fn" "$DESTINATION/$fn"
 done
-clear_broken_symlinks "$DESTINATION"
 
 success "Finished configuring gnupg."

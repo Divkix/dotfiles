@@ -1,7 +1,13 @@
 abbr -g -a .. cd ..
 abbr -g -a ... cd ../..
-abbr -g -a .... cd ../../..
-abbr -g -a c clear
+# Erase in display
+# ESC [ Ps ]
+# Parameter   Parameter Meaning
+# 0           Erase from the active position to the end of the screen
+# 1           Erase from start of the screen to the active position
+# 2           Erase all of the display
+# 3           Erase the scroll-back (aka "Saved")
+abbr -g -a c "clear && printf '\e[3J'"
 abbr -g -a cp cp -i
 abbr -g -a df df -h
 abbr -g -a free free -m
@@ -20,9 +26,8 @@ abbr -g -a gph git push
 abbr -g -a gpl git pull
 abbr -g -a gst git status
 abbr -g -a gcm git commit -m
-abbr -g -a gcma git commit -am
+abbr -g -a gcam git commit -am
 abbr -g -a gco git commit
-abbr -g -a gca git commit -a
 abbr -g -a gca git commit -a --amend
 abbr -g -a gcan git commit --amend -a --no-edit
 abbr -g -a reload exec fish

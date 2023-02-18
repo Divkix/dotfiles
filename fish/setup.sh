@@ -18,9 +18,8 @@ mkdir -p "$DESTINATION/completions"
 mkdir -p "$DESTINATION/conf.d"
 
 find * -name "*fish*" | while read fn; do
-    symlink "$SOURCE/$fn" "$DESTINATION/$fn"
+    scopy "$SOURCE/$fn" "$DESTINATION/$fn"
 done
-clear_broken_symlinks "$DESTINATION"
 
 # after it has been installed by homebrew
 fish_shell_location=$(which fish)

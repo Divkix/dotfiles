@@ -1,3 +1,3 @@
 alias cat=bat
 alias ls=exa
-alias rm=trash
+alias rmd=trash
