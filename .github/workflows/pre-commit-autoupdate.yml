@@ -1,0 +1,8 @@
+name: Pre-commit auto-update
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 1" # every weekday at midnight
+jobs:
+  auto-update:
+    uses: divkix/reusable-workflows/.github/workflows/pre-commit-autoupdate.yml@main
