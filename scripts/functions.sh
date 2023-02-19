@@ -18,11 +18,11 @@ scopy() {
 
 # Took these printing functions from https://github.com/Sajjadhosn/dotfiles
 coloredEcho() {
-    local exp="$1";
-    local color="$2";
-    local arrow="$3";
-    if ! [[ $color =~ '^[0-9]$' ]] ; then
-       case $(printf $color | tr '[:upper:]' '[:lower:]') in
+    local exp="$1"
+    local color="$2"
+    local arrow="$3"
+    if ! [[ $color =~ '^[0-9]$' ]]; then
+        case $(printf $color | tr '[:upper:]' '[:lower:]') in
         black) color=0 ;;
         red) color=1 ;;
         green) color=2 ;;
@@ -30,13 +30,13 @@ coloredEcho() {
         blue) color=4 ;;
         magenta) color=5 ;;
         cyan) color=6 ;;
-        white|*) color=7 ;; # white or invalid color
-       esac
+        white | *) color=7 ;; # white or invalid color
+        esac
     fi
-    tput bold;
-    tput setaf "$color";
-    printf "$arrow $exp\n";
-    tput sgr0;
+    tput bold
+    tput setaf "$color"
+    printf "$arrow $exp\n"
+    tput sgr0
 }
 
 info() {

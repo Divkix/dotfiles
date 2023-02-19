@@ -10,8 +10,8 @@ find * -name "*.list" | while read fn; do
     set -- $cmd
     info "Installing $1 packages..."
     while read package; do
-        if [[ $package == $COMMENT ]];
-        then continue
+        if [[ $package == $COMMENT ]]; then
+            continue
         fi
         substep_info "Installing $package..."
         if [[ $cmd == code* ]]; then
@@ -19,6 +19,6 @@ find * -name "*.list" | while read fn; do
         else
             $cmd install $package $i
         fi
-    done < "$fn"
+    done <"$fn"
     substep_success "Finished installing $1 packages."
 done
