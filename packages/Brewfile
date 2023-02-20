@@ -8,71 +8,141 @@ tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "mongodb/brew"
+# Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Statistics utility to count lines of code
 brew "cloc"
+# Platform built on V8 to build network applications
 brew "node"
+# CLI tool for Cloudflare Workers
 brew "cloudflare-wrangler2"
+# Cloudflare Tunnel client (formerly Argo Tunnel)
 brew "cloudflared"
+# Top-like interface for container metrics
 brew "ctop"
+# Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
+# Modern replacement for 'ls'
 brew "exa"
+# Simple, fast and user-friendly alternative to find
 brew "fd"
+# Banner-like program prints strings as ASCII art
 brew "figlet"
+# User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
+# Command-line fuzzy finder written in Go
 brew "fzf"
+# GNU internationalization (i18n) and localization (l10n) library
 brew "gettext"
+# GitHub command-line tool
 brew "gh"
+# Distributed revision control system
 brew "git"
+# Open source programming language to build simple/reliable/efficient software
 brew "go"
+# Deliver Go binaries as fast and easily as possible
 brew "goreleaser"
+# Improved top (interactive process viewer)
 brew "htop"
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# Lazier way to manage everything docker
 brew "lazydocker"
+# Rainbows and unicorns in your console!
 brew "lolcat"
+# MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
+# NCurses Disk Usage
 brew "ncdu"
+# Fast, highly customisable system info script
 brew "neofetch"
+# Interpreted, interactive, object-oriented programming language
 brew "python@3.11"
+# Python package management tool
 brew "poetry"
+# Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
+# Parallel versions of OpenSSH and related tools
+brew "pssh"
+# Rsync for cloud storage
 brew "rclone"
+# Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Safe, concurrent, practical language
 brew "rust"
+# Cross-shell prompt for astronauts
 brew "starship"
+# Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Language for application scale JavaScript development
 brew "typescript"
+# Executes a program periodically, showing output fullscreen
 brew "watch"
+# Internet file retriever
 brew "wget"
+# The official Doppler CLI for managing your secrets
 brew "dopplerhq/cli/doppler"
+# Everything you need to get started with Heroku
 brew "heroku/brew/heroku"
+# This package contains standard utilities for interacting with MongoDB.
 brew "mongodb/brew/mongodb-database-tools"
+# Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
+# Allows connection to a computer remotely
 cask "anydesk"
+# 3D creation suite
 cask "blender"
-cask "brave-browser"
+# Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
+# Server and cloud storage browser
 cask "cyberduck"
+# Voice and text chat software
 cask "discord"
+# App to build and share containerized applications and microservices
 cask "docker"
+# Collaborative team software
 cask "figma"
+# Web browser
+cask "firefox"
+# Developer targeted fonts with a high number of glyphs
 cask "font-fira-code-nerd-font"
+# Desktop client for GitHub repositories
 cask "github"
+# Tools to protect your emails and files
 cask "gpg-suite"
+# Menu bar application that displays the CPU speed limit due to thermal issues
 cask "hot"
+# Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
+# JetBrains tools manager
 cask "jetbrains-toolbox"
+# Tool to prevent the system from going into sleep mode
 cask "keepingyouawake"
+# 100% open-source Java implementation
 cask "liberica-jdk11-full"
+# Open source implementation of Microsoft's .NET Framework
 cask "mono-mdk-for-visual-studio"
+# Cloud storage client
 cask "onedrive"
+# Image editor
 cask "paintbrush"
+# Modern programming language in the Lisp/Scheme family
 cask "racket"
+# Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
+# Instant messaging application focusing on security
 cask "signal"
+# Music streaming service
 cask "spotify"
+# Remote access and connectivity software focused on security
 cask "teamviewer"
+# Desktop client for Telegram messenger
 cask "telegram-desktop"
+# Open-source code editor
 cask "visual-studio-code"
+# Multimedia player
 cask "vlc"
+# Video communication and virtual meeting platform
 cask "zoom"
