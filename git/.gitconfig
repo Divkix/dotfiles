@@ -1,6 +1,6 @@
 [user]
 	name = Divanshu Chauhan
-	email = 23524935+Divkix@users.noreply.github.com
+	email = divkix@divkix.me
 	signingkey = 30695AF88CC00E38
 [core]
 	eol = lf
@@ -15,21 +15,15 @@
 	template = /Users/divkix/.stCommitMsg
 [credential "https://github.com"]
 	helper = !gh auth git-credential
-#[trailer "sign"]
-#	key = "Signed-off-by: "
-#	ifmissing = add
-#	ifexists = doNothing
-#	command = echo \"$(git config user.name) <$(git config user.email)>\"
+[trailer "sign"]
+	key = "Signed-off-by: "
+	ifmissing = add
+	ifexists = doNothing
+	command = echo \"$(git config user.name) <$(git config user.email)>\"
 [init]
 	defaultBranch = main
 [pull]
 	ff = only
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [tag]
 	forceSignAnnotated = true
 [credential]
