@@ -1,5 +1,4 @@
 tap "bell-sw/liberica"
-tap "coder/coder"
 tap "dopplerhq/cli"
 tap "heroku/brew"
 tap "homebrew/bundle"
@@ -41,6 +40,8 @@ brew "gettext"
 brew "gh"
 # Distributed revision control system
 brew "git"
+# Prolog compiler with constraint solving
+brew "gnu-prolog"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Deliver Go binaries as fast and easily as possible
@@ -83,8 +84,6 @@ brew "typescript"
 brew "watch"
 # Internet file retriever
 brew "wget"
-# Command-line tool for the Coder remote development platform
-brew "coder/coder/coder-cli"
 # The official Doppler CLI for managing your secrets
 brew "dopplerhq/cli/doppler"
 # Everything you need to get started with Heroku
@@ -97,6 +96,8 @@ cask "adobe-creative-cloud"
 cask "anydesk"
 # 3D creation suite
 cask "blender"
+# Web browser focusing on privacy
+cask "brave-browser"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # Server and cloud storage browser
@@ -105,6 +106,8 @@ cask "cyberduck"
 cask "discord"
 # App to build and share containerized applications and microservices
 cask "docker"
+# Launcher for *Epic Games* games
+cask "epic-games"
 # Collaborative team software
 cask "figma"
 # Web browser
@@ -127,6 +130,8 @@ cask "keepingyouawake"
 cask "liberica-jdk11-full"
 # Open source implementation of Microsoft's .NET Framework
 cask "mono-mdk-for-visual-studio"
+# Reverse proxy, secure introspectable tunnels to localhost
+cask "ngrok"
 # Cloud storage client
 cask "onedrive"
 # Image editor
@@ -139,6 +144,8 @@ cask "rectangle"
 cask "signal"
 # Music streaming service
 cask "spotify"
+# Video game digital distribution service
+cask "steam"
 # Remote access and connectivity software focused on security
 cask "teamviewer"
 # Desktop client for Telegram messenger
