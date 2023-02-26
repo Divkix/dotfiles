@@ -18,7 +18,6 @@ set -gx EDITOR nano
 fish_add_path "$HOME/.cargo/bin"
 
 # fzf config
-set -g FZF_CTRL_T_COMMAND "command find -L \$dir -type f 2> /dev/null | sed '1d; s#^\./##'"
 fzf_configure_bindings --directory=\co
 set -g fzf_preview_dir_cmd exa --all --color=always
 set -g fzf_fd_opts -t f -t l -p -H
