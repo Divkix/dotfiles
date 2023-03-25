@@ -1,6 +1,7 @@
 {
     "Alt-/": "lua:comment.comment",
-    "CtrlUnderscore": "lua:comment.comment",
     "Ctrl-q": "Save,Quit",
+    "CtrlUnderscore": "lua:comment.comment",
+    "F6": "command-edit:gorename ",
     "Tab": "Autocomplete|IndentSelection|InsertTab"
 }
