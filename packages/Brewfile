@@ -12,6 +12,8 @@ tap "mongodb/brew"
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
 # Statistics utility to count lines of code
 brew "cloc"
 # Platform built on V8 to build network applications
@@ -34,14 +36,12 @@ brew "figlet"
 brew "fish"
 # Command-line fuzzy finder written in Go
 brew "fzf"
-# GNU internationalization (i18n) and localization (l10n) library
-brew "gettext"
+# GNU compiler collection
+brew "gcc"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
 brew "git"
-# Prolog compiler with constraint solving
-brew "gnu-prolog"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Deliver Go binaries as fast and easily as possible
@@ -54,6 +54,8 @@ brew "jq"
 brew "lazydocker"
 # Rainbows and unicorns in your console!
 brew "lolcat"
+# Modern and intuitive terminal-based text editor
+brew "micro"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
 # NCurses Disk Usage
@@ -66,14 +68,18 @@ brew "python@3.11"
 brew "poetry"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
-# Parallel versions of OpenSSH and related tools
-brew "pssh"
-# Rsync for cloud storage
-brew "rclone"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.10"
+# Cross-platform application and UI framework
+brew "qt"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Safe, concurrent, practical language
 brew "rust"
+# Experimental Rust compiler front-end for IDEs
+brew "rust-analyzer"
+# Format Rust code
+brew "rustfmt"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Display directories as trees (with optional color/HTML output)
@@ -108,8 +114,6 @@ cask "discord"
 cask "docker"
 # Launcher for *Epic Games* games
 cask "epic-games"
-# Collaborative team software
-cask "figma"
 # Web browser
 cask "firefox"
 # Developer targeted fonts with a high number of glyphs
@@ -150,8 +154,10 @@ cask "steam"
 cask "teamviewer"
 # Desktop client for Telegram messenger
 cask "telegram-desktop"
-# Open-source code editor
-cask "visual-studio-code"
+# JDK from the Eclipse Foundation (Adoptium)
+cask "temurin17"
+# Code editor
+cask "visual-studio-code-insiders"
 # Multimedia player
 cask "vlc"
 # Video communication and virtual meeting platform

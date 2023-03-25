@@ -7,18 +7,18 @@ eval (/opt/homebrew/bin/brew shellenv)
 # Add home bin to PATH
 fish_add_path "$HOME/bin"
 
+# use nano as default editor
+set -gx EDITOR micro
+
 #----------------------------------#
 # homebrew additional config start #
 #----------------------------------#
-
-# use nano as default editor
-set -gx EDITOR nano
 
 # add rust bin to path
 fish_add_path "$HOME/.cargo/bin"
 
 # fzf config
-fzf_configure_bindings --directory=\co
+fzf_configure_bindings --directory=\cf
 set -g fzf_preview_dir_cmd exa --all --color=always
 set -g fzf_fd_opts -t f -t l -p -H
 
