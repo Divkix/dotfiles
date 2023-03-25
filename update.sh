@@ -12,7 +12,7 @@ cp -v $fish_dir/conf.d/abbr.fish ./fish/conf.d/abbr.fish
 cp -v $fish_dir/conf.d/alias.fish ./fish/conf.d/alias.fish
 
 # update fisher, using fish -c to run the command from fish shell instead of bash
-fish -c "fisher list > './fisher/fisher install.list'"
+fish -c "fisher list | grep -v "jorgebucaran/fisher" > './fisher/fisher install.list'"
 
 # update git config
 cp -v $HOME/.gitconfig ./git/.gitconfig
