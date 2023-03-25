@@ -30,3 +30,9 @@ echo "brew bundle dump complete"
 
 # starship
 cp -v $HOME/.config/starship.toml ./starship/starship.toml
+
+# micro
+cp -v $HOME/.config/micro/*.json ./micro/
+
+# Echo that the script is done
+echo "Update script complete"
