@@ -30,9 +30,6 @@ set -gx LDFLAGS "-L/opt/homebrew/opt/python@3.11/lib"
 # jetbrains toolbox custom scripts
 fish_add_path "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 
-# multipass bin for aliases
-fish_add_path "$HOME/Library/Application Support/multipass/bin"
-
 #--------------------------------#
 # homebrew additional config end #
 #--------------------------------#
