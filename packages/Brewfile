@@ -92,8 +92,8 @@ brew "typescript"
 brew "watch"
 # Internet file retriever
 brew "wget"
-# Download YouTube videos from the command-line
-brew "youtube-dl"
+# Fork of youtube-dl with additional features and fixes
+brew "yt-dlp"
 # The official Doppler CLI for managing your secrets
 brew "dopplerhq/cli/doppler"
 # Everything you need to get started with Heroku
