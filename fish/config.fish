@@ -14,6 +14,9 @@ set -gx EDITOR micro
 # homebrew additional config start #
 #----------------------------------#
 
+# add go bin to path
+fish_add_path "$HOME/go/bin"
+
 # add rust bin to path
 fish_add_path "$HOME/.cargo/bin"
 

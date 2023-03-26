@@ -136,12 +136,14 @@ cask "jetbrains-toolbox"
 cask "keepingyouawake"
 # 100% open-source Java implementation
 cask "liberica-jdk11-full"
-# Open source implementation of Microsoft's .NET Framework
-cask "mono-mdk-for-visual-studio"
+# Provides updates to various Microsoft products
+cask "microsoft-auto-update"
+# Office suite
+cask "microsoft-office"
+# Meet, chat, call, and collaborate in just one place
+cask "microsoft-teams"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
-# Cloud storage client
-cask "onedrive"
 # Image editor
 cask "paintbrush"
 # Modern programming language in the Lisp/Scheme family
@@ -150,8 +152,6 @@ cask "racket"
 cask "rectangle"
 # Instant messaging application focusing on security
 cask "signal"
-# Music streaming service
-cask "spotify"
 # Video game digital distribution service
 cask "steam"
 # Remote access and connectivity software focused on security
