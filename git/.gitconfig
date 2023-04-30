@@ -5,7 +5,7 @@
 [core]
 	eol = lf
 	autocrlf = input
-	editor = code-insiders --wait
+	editor = code --wait
 	excludesfile = /Users/divkix/.gitignore_global
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [format]
