@@ -1,18 +1,18 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 scan_timeout = 30
-command_timeout = 2000
+command_timeout = 5000
 
 [cmd_duration]
 min_time = 0
-format = '\[[⏱ $duration]($style)\]'
+format = '\[[⌛ $duration]($style)\]'
 disabled = true
 show_milliseconds = true
 min_time_to_notify = -1
 
 [username]
-style_user = "white bold"
-style_root = "black bold"
-format = '[$user]($style)'
+style_user = "bold white"
+style_root = "bold red"
+format = '[$user]($style) '
 disabled = false
 show_always = true
 
@@ -31,17 +31,17 @@ disabled = false
 
 [git_status]
 conflicted = "⚔️"
-ahead = "🏎️💨×${count}"
-behind = "🐢×${count}"
-diverged = "🔱🏎️💨×${ahead_count} 🐢×${behind_count}"
-untracked = "🛤️ ×${count}"
+ahead = "⬆️×${count}"
+behind = "⬇️×${count}"
+diverged = "↕️⬆️×${ahead_count} ⬇️×${behind_count}"
+untracked = "📁×${count}"
 stashed = "📦"
-modified = "📝×${count}"
-staged = "🗃️×${count}"
-renamed = "📛×${count}"
+modified = "✏️×${count}"
+staged = "✅×${count}"
+renamed = "🔀×${count}"
 deleted = "🗑️×${count}"
 style = "bright-white"
-format = '([\[$all_status$ahead_behind\]]($style))'
+format = '([\[$all_status$ahead_behind\]]($style)) '
 
 [hostname]
 ssh_only = false
@@ -51,13 +51,18 @@ style = "bold green"
 disabled = false
 
 [jobs]
-symbol = "+ "
+symbol = "🔢 "
 number_threshold = 1
 symbol_threshold = 1
 
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"
+style = "bold cyan"
+
+[c]
+commands = [['cc', '--version'], ['gcc', '--version'], ['clang', '--version']]
+format = '\[[$symbol($version)]($style)\]'
 
 [cmake]
 format = '\[[$symbol($version)]($style)\]'
@@ -73,6 +78,7 @@ format = '\[[$symbol$context]($style)\]'
 
 [git_branch]
 format = '\[[$symbol$branch]($style)\]'
+style = "bold magenta"
 
 [golang]
 format = '\[[$symbol($version)]($style)\]'
@@ -94,6 +100,7 @@ format = '\[[$symbol($version)]($style)\]'
 
 [python]
 format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+style = "bold yellow"
 
 [ruby]
 format = '\[[$symbol($version)]($style)\]'

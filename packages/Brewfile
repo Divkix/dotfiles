@@ -22,6 +22,8 @@ brew "node"
 brew "cloudflare-wrangler2"
 # Cloudflare Tunnel client (formerly Argo Tunnel)
 brew "cloudflared"
+# Cross-platform make
+brew "cmake"
 # Top-like interface for container metrics
 brew "ctop"
 # Good-lookin' diffs with diff-highlight and more
@@ -86,6 +88,8 @@ brew "starship"
 brew "tree"
 # Language for application scale JavaScript development
 brew "typescript"
+# C++ Library Manager
+brew "vcpkg"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
 # Internet file retriever
