@@ -12,7 +12,7 @@ min_time_to_notify = -1
 [username]
 style_user = "bold white"
 style_root = "bold red"
-format = '[$user]($style) '
+format = '[$user]($style)'
 disabled = false
 show_always = true
 
