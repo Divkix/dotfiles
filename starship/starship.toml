@@ -9,6 +9,15 @@ disabled = true
 show_milliseconds = true
 min_time_to_notify = -1
 
+[battery]
+full_symbol = '🔋 '
+charging_symbol = '⚡️ '
+discharging_symbol = '💀 '
+
+[[battery.display]]
+threshold = 10
+style = 'bold red'
+
 [username]
 style_user = "bold white"
 style_root = "bold red"
