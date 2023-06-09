@@ -1,6 +1,8 @@
 tap "bell-sw/liberica"
 tap "dopplerhq/cli"
+tap "goreleaser/tap"
 tap "heroku/brew"
+tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-drivers"
@@ -8,12 +10,15 @@ tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "mongodb/brew"
+tap "warpdl/tap"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # GNU internationalization (i18n) and localization (l10n) library
 brew "gettext"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
 # Statistics utility to count lines of code
 brew "cloc"
 # Platform built on V8 to build network applications
@@ -48,10 +53,12 @@ brew "gh"
 brew "git"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
-# Deliver Go binaries as fast and easily as possible
-brew "goreleaser"
+# Golang security checker
+brew "gosec"
 # Improved top (interactive process viewer)
 brew "htop"
+# GNU utilities for networking
+brew "inetutils"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Lazier way to manage everything docker
@@ -66,8 +73,6 @@ brew "mongosh"
 brew "ncdu"
 # Fast, highly customisable system info script
 brew "neofetch"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
 # Python package management tool
 brew "poetry"
 # Framework for managing multi-language pre-commit hooks
@@ -88,8 +93,8 @@ brew "starship"
 brew "tree"
 # Language for application scale JavaScript development
 brew "typescript"
-# C++ Library Manager
-brew "vcpkg"
+# Compress/expand executable files
+brew "upx"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
 # Internet file retriever
@@ -98,10 +103,14 @@ brew "wget"
 brew "yt-dlp"
 # The official Doppler CLI for managing your secrets
 brew "dopplerhq/cli/doppler"
+# Deliver Go binaries as fast and easily as possible
+brew "goreleaser/tap/goreleaser"
 # Everything you need to get started with Heroku
 brew "heroku/brew/heroku"
 # This package contains standard utilities for interacting with MongoDB.
 brew "mongodb/brew/mongodb-database-tools"
+# The official Warp CLI download manager
+brew "warpdl/tap/warpdl"
 # Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
 # Allows connection to a computer remotely
@@ -146,8 +155,6 @@ cask "microsoft-auto-update"
 cask "microsoft-office"
 # Meet, chat, call, and collaborate in just one place
 cask "microsoft-teams"
-# Minimal installer for conda
-cask "miniconda"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Image editor
@@ -158,6 +165,8 @@ cask "racket"
 cask "rectangle"
 # Instant messaging application focusing on security
 cask "signal"
+# Music streaming service
+cask "spotify"
 # Video game digital distribution service
 cask "steam"
 # Remote access and connectivity software focused on security
@@ -174,3 +183,30 @@ cask "visual-studio-code"
 cask "vlc"
 # Video communication and virtual meeting platform
 cask "zoom"
+vscode "akamud.vscode-theme-onedark"
+vscode "alexkainzinger.resource-watchdog"
+vscode "antfu.icons-carbon"
+vscode "christian-kohler.path-intellisense"
+vscode "eamodio.gitlens"
+vscode "GitHub.codespaces"
+vscode "GitHub.copilot"
+vscode "golang.go"
+vscode "Gruntfuggly.todo-tree"
+vscode "ms-python.black-formatter"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-vscode-remote.remote-ssh"
+vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpptools"
+vscode "ms-vscode.cpptools-extension-pack"
+vscode "ms-vscode.live-server"
+vscode "ms-vscode.remote-explorer"
+vscode "ms-vsliveshare.vsliveshare"
+vscode "PKief.material-icon-theme"
+vscode "pnp.polacode"
+vscode "redhat.vscode-yaml"
+vscode "rust-lang.rust-analyzer"
+vscode "tamasfe.even-better-toml"
+vscode "tomoki1207.pdf"
+vscode "yzhang.markdown-all-in-one"
