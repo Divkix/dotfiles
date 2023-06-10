@@ -155,6 +155,8 @@ cask "microsoft-auto-update"
 cask "microsoft-office"
 # Meet, chat, call, and collaborate in just one place
 cask "microsoft-teams"
+# Orchestrates virtual Ubuntu instances
+cask "multipass"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Image editor
@@ -189,7 +191,8 @@ vscode "antfu.icons-carbon"
 vscode "christian-kohler.path-intellisense"
 vscode "eamodio.gitlens"
 vscode "GitHub.codespaces"
-vscode "GitHub.copilot"
+vscode "GitHub.copilot-chat"
+vscode "GitHub.copilot-nightly"
 vscode "golang.go"
 vscode "Gruntfuggly.todo-tree"
 vscode "ms-python.black-formatter"

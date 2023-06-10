@@ -18,6 +18,7 @@ abbr -g -a gcam git commit -am
 abbr -g -a gco git commit
 abbr -g -a gca git commit -a --amend
 abbr -g -a gcan git commit --amend -a --no-edit
+abbr -g -a gitweb "open (git remote get-url origin)"
 
 # others
 abbr -g -a reload exec fish
