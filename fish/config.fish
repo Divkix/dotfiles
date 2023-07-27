@@ -7,12 +7,12 @@ eval (/opt/homebrew/bin/brew shellenv)
 # Add home bin to PATH
 fish_add_path "$HOME/bin"
 
-# use nano as default editor
-set -gx EDITOR micro
-
 #----------------------------------#
 # homebrew additional config start #
 #----------------------------------#
+
+# use nano as default editor
+set -gx EDITOR micro
 
 # add go bin to path
 fish_add_path "$HOME/go/bin"
