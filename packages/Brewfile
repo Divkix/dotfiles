@@ -5,7 +5,6 @@ tap "heroku/brew"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "homebrew/cask"
-tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
@@ -81,6 +80,8 @@ brew "poetry"
 brew "pre-commit"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
+# Rsync for cloud storage
+brew "rclone"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Safe, concurrent, practical language
@@ -147,6 +148,8 @@ cask "microsoft-office"
 cask "microsoft-teams"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
+# App to write, plan, collaborate, and get organized
+cask "notion"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
 # Instant messaging application focusing on security
@@ -173,6 +176,8 @@ vscode "Dart-Code.flutter"
 vscode "dustypomerleau.rust-syntax"
 vscode "eamodio.gitlens"
 vscode "GitHub.codespaces"
+vscode "GitHub.copilot"
+vscode "GitHub.copilot-chat"
 vscode "golang.go"
 vscode "Gruntfuggly.todo-tree"
 vscode "mikestead.dotenv"
