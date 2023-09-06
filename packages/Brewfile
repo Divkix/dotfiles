@@ -128,8 +128,6 @@ cask "github"
 cask "google-chrome"
 # Tools to protect your emails and files
 cask "gpg-suite"
-# Menu bar application that displays the CPU speed limit due to thermal issues
-cask "hot"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
 # JetBrains tools manager
@@ -156,6 +154,8 @@ cask "rectangle"
 cask "signal"
 # Music streaming service
 cask "spotify"
+# System monitor for the menu bar
+cask "stats"
 # Desktop client for Telegram messenger
 cask "telegram-desktop"
 # JDK from the Eclipse Foundation (Adoptium)
@@ -189,6 +189,7 @@ vscode "ms-vscode-remote.remote-ssh-edit"
 vscode "ms-vscode.cmake-tools"
 vscode "ms-vscode.cpptools"
 vscode "ms-vscode.cpptools-extension-pack"
+vscode "ms-vscode.cpptools-themes"
 vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vsliveshare.vsliveshare"
