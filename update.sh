@@ -18,6 +18,9 @@ fish -c "fisher list | grep -v "jorgebucaran/fisher" > './fisher/fisher install.
 cp -v $HOME/.gitconfig ./git/.gitconfig
 cp -v $HOME/.gitignore_global ./git/.gitignore_global
 
+# copy ssh config
+cp -v $HOME/.ssh/config ./ssh/config
+
 # gnupg config
 gnupg_dir=$HOME/.gnupg
 cp -v $gnupg_dir/gpg.conf ./gnupg/gpg.conf
