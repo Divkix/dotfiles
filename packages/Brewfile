@@ -44,6 +44,8 @@ brew "fish"
 brew "fzf"
 # GNU compiler collection
 brew "gcc"
+# GNU compiler collection
+brew "gcc@11"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
@@ -60,8 +62,6 @@ brew "inetutils"
 brew "jq"
 # Lazier way to manage everything docker
 brew "lazydocker"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
 # Rainbows and unicorns in your console!
 brew "lolcat"
 # Modern and intuitive terminal-based text editor
@@ -72,12 +72,16 @@ brew "mongosh"
 brew "ncdu"
 # Fast, highly customisable system info script
 brew "neofetch"
+# Port scanning utility for large networks
+brew "nmap"
 # Python package management tool
 brew "poetry"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
 # Rsync for cloud storage
 brew "rclone"
 # Search tool like grep and The Silver Searcher
@@ -160,8 +164,6 @@ cask "temurin17"
 cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
-# Rust-based terminal
-cask "warp"
 # Video communication and virtual meeting platform
 cask "zoom"
 vscode "akamud.vscode-theme-onedark"
@@ -180,6 +182,7 @@ vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode.cpptools"
 vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vsliveshare.vsliveshare"
