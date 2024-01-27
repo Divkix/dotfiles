@@ -1,3 +1,7 @@
+Host dojo.pwn.college
+  HostName dojo.pwn.college
+  User hacker
+
 Host *
   UseKeychain yes
 

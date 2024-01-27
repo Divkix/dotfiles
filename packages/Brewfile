@@ -8,24 +8,20 @@ tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "mongodb/brew"
 tap "warpdl/tap"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
+# Download with resuming and segmented downloading
+brew "aria2"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# GNU internationalization (i18n) and localization (l10n) library
-brew "gettext"
 # Statistics utility to count lines of code
 brew "cloc"
-# Platform built on V8 to build network applications
-brew "node"
-# CLI tool for Cloudflare Workers
-brew "cloudflare-wrangler2"
 # Cloudflare Tunnel client (formerly Argo Tunnel)
 brew "cloudflared"
 # Cross-platform make
 brew "cmake"
-# Dependency manager for Cocoa projects
-brew "cocoapods"
 # Top-like interface for container metrics
 brew "ctop"
 # Good-lookin' diffs with diff-highlight and more
@@ -66,6 +62,8 @@ brew "lazydocker"
 brew "lolcat"
 # Modern and intuitive terminal-based text editor
 brew "micro"
+# Platform built on V8 to build network applications
+brew "node"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
 # NCurses Disk Usage
@@ -114,12 +112,18 @@ brew "warpdl/tap/warpdl"
 cask "adobe-creative-cloud"
 # Allows connection to a computer remotely
 cask "anydesk"
+# Chromium based browser
+cask "arc"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
-# Voice and text chat software
-cask "discord"
+# Calendar for professionals and teams
+cask "cron"
+# UI for creating Windows installer ISO from UUPDump
+cask "crystalfetch"
 # App to build and share containerized applications and microservices
 cask "docker"
+# Eclipse integrated development environment
+cask "eclipse-ide"
 # Flip clock screensaver
 cask "fliqlo"
 # UI toolkit for building applications for mobile, web and desktop
@@ -130,6 +134,8 @@ cask "font-fira-code-nerd-font"
 cask "github"
 # Web browser
 cask "google-chrome"
+# Virtual globe
+cask "google-earth-pro"
 # Tools to protect your emails and files
 cask "gpg-suite"
 # Menu bar application that displays the CPU speed limit due to thermal issues
@@ -140,8 +146,12 @@ cask "iterm2"
 cask "jetbrains-toolbox"
 # Tool to prevent the system from going into sleep mode
 cask "keepingyouawake"
+# 100% open-source Java implementation
+cask "liberica-jdk21-full"
 # Provides updates to various Microsoft products
 cask "microsoft-auto-update"
+# Web browser
+cask "microsoft-edge"
 # Office suite
 cask "microsoft-office"
 # Meet, chat, call, and collaborate in just one place
@@ -156,10 +166,10 @@ cask "notion"
 cask "rectangle"
 # Music streaming service
 cask "spotify"
-# Desktop client for Telegram messenger
-cask "telegram-desktop"
-# JDK from the Eclipse Foundation (Adoptium)
-cask "temurin17"
+# Remote access and connectivity software focused on security
+cask "teamviewer"
+# Virtual machines UI using QEMU
+cask "utm"
 # Open-source code editor
 cask "visual-studio-code"
 # Multimedia player
@@ -188,7 +198,15 @@ vscode "ms-vscode.remote-explorer"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "PKief.material-icon-theme"
 vscode "pnp.polacode"
+vscode "redhat.java"
 vscode "redhat.vscode-yaml"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
+vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
+vscode "VisualStudioExptTeam.vscodeintellicode"
+vscode "vscjava.vscode-java-debug"
+vscode "vscjava.vscode-java-dependency"
+vscode "vscjava.vscode-java-pack"
+vscode "vscjava.vscode-java-test"
+vscode "vscjava.vscode-maven"
 vscode "yzhang.markdown-all-in-one"
