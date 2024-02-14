@@ -30,6 +30,8 @@ brew "diff-so-fancy"
 brew "exa"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# GNU compiler collection
+brew "gcc"
 # Play, record, convert, and stream audio and video
 brew "ffmpeg"
 # Banner-like program prints strings as ASCII art
@@ -38,8 +40,6 @@ brew "figlet"
 brew "fish"
 # Command-line fuzzy finder written in Go
 brew "fzf"
-# GNU compiler collection
-brew "gcc"
 # GNU compiler collection
 brew "gcc@11"
 # GitHub command-line tool
@@ -116,8 +116,6 @@ cask "anydesk"
 cask "arc"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
-# Calendar for professionals and teams
-cask "cron"
 # UI for creating Windows installer ISO from UUPDump
 cask "crystalfetch"
 # App to build and share containerized applications and microservices
@@ -162,6 +160,8 @@ cask "motrix"
 cask "ngrok"
 # App to write, plan, collaborate, and get organized
 cask "notion"
+# Calendar for professionals and teams
+cask "notion-calendar"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
 # Music streaming service
@@ -174,6 +174,8 @@ cask "utm"
 cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
+# Native desktop client for WhatsApp
+cask "whatsapp"
 # Video communication and virtual meeting platform
 cask "zoom"
 vscode "akamud.vscode-theme-onedark"
@@ -181,13 +183,14 @@ vscode "alexkainzinger.resource-watchdog"
 vscode "antfu.icons-carbon"
 vscode "christian-kohler.path-intellisense"
 vscode "eamodio.gitlens"
-vscode "GitHub.codespaces"
-vscode "GitHub.copilot"
-vscode "GitHub.copilot-chat"
+vscode "github.codespaces"
+vscode "github.copilot"
+vscode "github.copilot-chat"
 vscode "golang.go"
-vscode "Gruntfuggly.todo-tree"
+vscode "gruntfuggly.todo-tree"
 vscode "mikestead.dotenv"
 vscode "ms-python.black-formatter"
+vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-vscode-remote.remote-ssh"
@@ -196,14 +199,14 @@ vscode "ms-vscode.cpptools"
 vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vsliveshare.vsliveshare"
-vscode "PKief.material-icon-theme"
+vscode "pkief.material-icon-theme"
 vscode "pnp.polacode"
 vscode "redhat.java"
 vscode "redhat.vscode-yaml"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
-vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
-vscode "VisualStudioExptTeam.vscodeintellicode"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vscjava.vscode-java-debug"
 vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"

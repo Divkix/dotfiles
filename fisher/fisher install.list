@@ -4,3 +4,6 @@ gazorby/fish-abbreviation-tips
 ankitsumitg/docker-fish-completions
 patrickf1/fzf.fish
 divkix/multipass-fish-completions
+edc/bass
+acomagu/fish-async-prompt
+alaz-oz/fish-insulter

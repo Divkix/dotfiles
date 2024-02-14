@@ -5,7 +5,7 @@
     "F6": "command-edit:gorename ",
     "Tab": "Autocomplete|IndentSelection|InsertTab",
     "CtrlO": "Save",
-    "CtrlR": "Open",
+    "CtrlR": "command-edit:open",
     "CtrlY": "PageUp",
     "CtrlV": "PageDown",
     "CtrlK": "CutLine",
