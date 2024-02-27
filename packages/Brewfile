@@ -4,8 +4,10 @@ tap "goreleaser/tap"
 tap "heroku/brew"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
+tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
+tap "homebrew/core"
 tap "mongodb/brew"
 tap "warpdl/tap"
 # GNU internationalization (i18n) and localization (l10n) library
@@ -118,6 +120,8 @@ cask "adobe-creative-cloud"
 cask "anydesk"
 # Chromium based browser
 cask "arc"
+# UML diagramming tool with mind mapping
+cask "astah-uml"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # UI for creating Windows installer ISO from UUPDump
@@ -206,4 +210,5 @@ vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"
 vscode "vscjava.vscode-java-test"
 vscode "vscjava.vscode-maven"
+vscode "xaver.clang-format"
 vscode "yzhang.markdown-all-in-one"
