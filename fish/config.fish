@@ -40,5 +40,3 @@ fish_add_path "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 # starship prompt setup
 set -gx STARSHIP_CONFIG "$HOME/.config/starship.toml"
 starship init fish | source
-
-thefuck --alias | source
