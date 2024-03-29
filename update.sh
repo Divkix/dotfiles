@@ -8,6 +8,7 @@ fish_dir=$HOME/.config/fish
 cp -v $fish_dir/config.fish ./fish/config.fish
 cp -v $fish_dir/functions/fish_prompt.fish ./fish/functions/fish_prompt.fish
 cp -v $fish_dir/functions/fish_greeting.fish ./fish/functions/fish_greeting.fish
+cp -v $fish_dir/functions/fish_prompt_loading_indicator.fish ./fish/functions/fish_prompt_loading_indicator.fish
 cp -v $fish_dir/conf.d/abbr.fish ./fish/conf.d/abbr.fish
 cp -v $fish_dir/conf.d/alias.fish ./fish/conf.d/alias.fish
 
