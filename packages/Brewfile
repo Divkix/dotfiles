@@ -158,6 +158,8 @@ cask "microsoft-teams"
 cask "ngrok"
 # App to write, plan, collaborate, and get organised
 cask "notion"
+# VPN client focusing on security
+cask "protonvpn"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Move and resize windows using keyboard shortcuts or snap areas
