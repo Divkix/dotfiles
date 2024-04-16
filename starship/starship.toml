@@ -4,18 +4,18 @@ command_timeout = 5000
 
 [cmd_duration]
 min_time = 0
-format = '\[[⌛ $duration]($style)\]'
-disabled = true
+format = '\[[⌛ $duration]($style)\] '
+disabled = false
 show_milliseconds = true
 min_time_to_notify = -1
 
 [battery]
-full_symbol = '🔋 '
-charging_symbol = '⚡️ '
-discharging_symbol = '💀 '
+full_symbol = 'Full 🔋 '
+charging_symbol = 'Charging ⚡️ '
+discharging_symbol = 'Low 💀 '
 
 [[battery.display]]
-threshold = 10
+threshold = 20
 style = 'bold red'
 
 [username]
@@ -44,7 +44,7 @@ ahead = "⬆️×${count}"
 behind = "⬇️×${count}"
 diverged = "↕️⬆️×${ahead_count} ⬇️×${behind_count}"
 untracked = "📁×${count}"
-stashed = "📦"
+stashed = "📦×${count}"
 modified = "✏️×${count}"
 staged = "✅×${count}"
 renamed = "🔀×${count}"
@@ -65,8 +65,8 @@ number_threshold = 1
 symbol_threshold = 1
 
 [directory]
-truncation_length = 3
-truncation_symbol = "…/"
+truncation_length = 2
+truncation_symbol = ".../"
 style = "bold cyan"
 
 [c]
@@ -74,12 +74,6 @@ commands = [['cc', '--version'], ['gcc', '--version'], ['clang', '--version']]
 format = '\[[$symbol($version)]($style)\]'
 
 [cmake]
-format = '\[[$symbol($version)]($style)\]'
-
-[dart]
-format = '\[[$symbol($version)]($style)\]'
-
-[deno]
 format = '\[[$symbol($version)]($style)\]'
 
 [docker_context]
@@ -95,30 +89,12 @@ format = '\[[$symbol($version)]($style)\]'
 [java]
 format = '\[[$symbol($version)]($style)\]'
 
-[kotlin]
-format = '\[[$symbol($version)]($style)\]'
-
-[kubernetes]
-format = '\[[$symbol$context( \($namespace\))]($style)\]'
-
-[nodejs]
-format = '\[[$symbol($version)]($style)\]'
-
-[purescript]
-format = '\[[$symbol($version)]($style)\]'
-
 [python]
 format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
 style = "bold yellow"
-
-[ruby]
-format = '\[[$symbol($version)]($style)\]'
 
 [rust]
 format = '\[[$symbol($version)]($style)\]'
 
 [time]
 format = '\[[$time]($style)\]'
-
-[vlang]
-format = '\[[$symbol($version)]($style)\]'

@@ -1,17 +1,11 @@
 tap "bell-sw/liberica"
-tap "dopplerhq/cli"
 tap "goreleaser/tap"
-tap "heroku/brew"
+tap "hashicorp/tap"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
-tap "mongodb/brew"
 tap "warpdl/tap"
-# GNU internationalization (i18n) and localization (l10n) library
-brew "gettext"
-# Download with resuming and segmented downloading
-brew "aria2"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -22,30 +16,26 @@ brew "cloc"
 brew "node"
 # CLI tool for Cloudflare Workers
 brew "cloudflare-wrangler2"
-# Cloudflare Tunnel client (formerly Argo Tunnel)
-brew "cloudflared"
 # Cross-platform make
 brew "cmake"
 # Top-like interface for container metrics
 brew "ctop"
-# Secure runtime for JavaScript and TypeScript
-brew "deno"
 # Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
 # Modern replacement for 'ls'
 brew "exa"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
-# GNU compiler collection
-brew "gcc"
-# Play, record, convert, and stream audio and video
-brew "ffmpeg"
 # Banner-like program prints strings as ASCII art
 brew "figlet"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# GNU compiler collection
+brew "gcc"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
@@ -60,16 +50,12 @@ brew "htop"
 brew "inetutils"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Lazier way to manage everything docker
-brew "lazydocker"
 # Rainbows and unicorns in your console!
 brew "lolcat"
 # Modern and intuitive terminal-based text editor
 brew "micro"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
-# NCurses Disk Usage
-brew "ncdu"
 # Fast, highly customisable system info script
 brew "neofetch"
 # Port scanning utility for large networks
@@ -80,8 +66,6 @@ brew "poetry"
 brew "pre-commit"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.11"
-# Rsync for cloud storage
-brew "rclone"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Safe, concurrent, practical language
@@ -94,22 +78,14 @@ brew "rustfmt"
 brew "starship"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
-# Language for application scale JavaScript development
-brew "typescript"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
 # Internet file retriever
 brew "wget"
-# Feature-rich command-line audio/video downloader
-brew "yt-dlp"
-# The official Doppler CLI for managing your secrets
-brew "dopplerhq/cli/doppler"
 # Deliver Go binaries as fast and easily as possible
 brew "goreleaser/tap/goreleaser"
-# Everything you need to get started with Heroku
-brew "heroku/brew/heroku"
-# This package contains standard utilities for interacting with MongoDB.
-brew "mongodb/brew/mongodb-database-tools"
+# Terraform
+brew "hashicorp/tap/terraform"
 # The official Warp CLI download manager
 brew "warpdl/tap/warpdl"
 # Collection of apps and services for photography, design, video, web, and UX
@@ -120,12 +96,18 @@ cask "anydesk"
 cask "arc"
 # UML diagramming tool with mind mapping
 cask "astah-uml"
+# Tool to flash OS images to SD cards & USB drives
+cask "balenaetcher"
+# Web browser focusing on privacy
+cask "brave-browser"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # App to build and share containerised applications and microservices
 cask "docker"
 # Eclipse integrated development environment
 cask "eclipse-ide"
+# Collaborative team software
+cask "figma"
 # Flip clock screensaver
 cask "fliqlo"
 # UI toolkit for building applications for mobile, web and desktop
@@ -158,16 +140,20 @@ cask "microsoft-teams"
 cask "ngrok"
 # App to write, plan, collaborate, and get organised
 cask "notion"
-# VPN client focusing on security
-cask "protonvpn"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
 # Instant messaging application focusing on security
 cask "signal"
+# Mesh VPN based on Wireguard
+cask "tailscale"
 # Remote access and connectivity software focused on security
 cask "teamviewer"
+# Web browser focusing on security
+cask "tor-browser"
+# Open-source BitTorrent client
+cask "transmission"
 # Virtual machines UI using QEMU
 cask "utm"
 # Open-source code editor
@@ -182,7 +168,6 @@ vscode "antfu.icons-carbon"
 vscode "christian-kohler.path-intellisense"
 vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
-vscode "github.codespaces"
 vscode "github.copilot"
 vscode "github.copilot-chat"
 vscode "github.remotehub"
@@ -193,6 +178,7 @@ vscode "ms-python.black-formatter"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
+vscode "ms-vscode-remote.remote-containers"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
 vscode "ms-vscode.cmake-tools"
@@ -213,6 +199,7 @@ vscode "ritwickdey.liveserver"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "twxs.cmake"
+vscode "usernamehw.errorlens"
 vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vscjava.vscode-java-debug"
 vscode "vscjava.vscode-java-dependency"
