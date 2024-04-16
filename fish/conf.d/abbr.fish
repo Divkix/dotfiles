@@ -25,7 +25,6 @@ abbr -g -a reload exec fish
 abbr -g -a c "clear && printf '\e[3J'"
 abbr -g -a cp cp -i
 abbr -g -a df df -h
-abbr -g -a free free -m
 abbr -g -a ln ln -i
 abbr -g -a less more
 abbr -g -a mv mv -i

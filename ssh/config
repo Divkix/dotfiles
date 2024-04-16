@@ -5,12 +5,6 @@ Host dojo.pwn.college
 Host *
   UseKeychain yes
 
-# divkix oracle server
-Match host ssh.divkix.me exec "/opt/homebrew/bin/cloudflared access ssh-gen --hostname %h"
-  ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname %h
-  IdentityFile ~/.cloudflared/%h-cf_key
-  CertificateFile ~/.cloudflared/%h-cf_key-cert.pub
-
 # asu general
 Host General.ASU.edu
   HostName general.asu.edu
