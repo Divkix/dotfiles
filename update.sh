@@ -27,6 +27,10 @@ gnupg_dir=$HOME/.gnupg
 cp -v $gnupg_dir/gpg.conf ./gnupg/gpg.conf
 cp -v $gnupg_dir/gpg-agent.conf ./gnupg/gpg-agent.conf
 
+# update the neofetch config
+neofetch_dir=$HOME/.config/neofetch
+cp -v $neofetch_dir/config.conf ./neofetch/config.conf
+
 # packages
 # dump new brewfile
 brew bundle dump --force --describe --file=./packages/Brewfile
