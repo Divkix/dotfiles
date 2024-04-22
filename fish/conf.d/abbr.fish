@@ -31,3 +31,6 @@ abbr -g -a mv mv -i
 abbr -g -a snano sudo nano
 abbr -g -a www python3 -m http.server 8000
 abbr -g -a untar tar -zxvf
+
+# brew commands
+abbr -g -a bu brew upgrade
