@@ -28,7 +28,7 @@ fish_add_path "$HOME/.cargo/bin"
 
 # fzf config
 fzf_configure_bindings --directory=\cf
-set -g fzf_preview_dir_cmd exa --all --color=always
+set -g fzf_preview_dir_cmd lsd --all --icon never --color=always
 set -g fzf_fd_opts -t f -t l -p -H
 
 # python config
