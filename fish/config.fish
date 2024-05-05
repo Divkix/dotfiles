@@ -14,6 +14,12 @@ fish_add_path "$HOME/bin"
 # use nano as default editor
 set -gx EDITOR micro
 
+# add curl
+fish_add_path "/opt/homebrew/opt/curl/bin"
+set -gx LDFLAGS "-L/opt/homebrew/opt/curl/lib"
+set -gx CPPFLAGS "-I/opt/homebrew/opt/curl/include"
+set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/curl/lib/pkgconfig"
+
 # add go bin to path
 fish_add_path "$HOME/go/bin"
 

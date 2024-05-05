@@ -1,6 +1,5 @@
 tap "bell-sw/liberica"
 tap "goreleaser/tap"
-tap "hashicorp/tap"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
@@ -12,14 +11,14 @@ brew "bash"
 brew "bat"
 # Statistics utility to count lines of code
 brew "cloc"
-# Platform built on V8 to build network applications
-brew "node"
-# CLI tool for Cloudflare Workers
-brew "cloudflare-wrangler2"
 # Cross-platform make
 brew "cmake"
 # Top-like interface for container metrics
 brew "ctop"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
+# Get a file from an HTTP, HTTPS or FTP server
+brew "curl"
 # Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
 # Modern replacement for 'ls'
@@ -34,8 +33,6 @@ brew "fish"
 brew "fzf"
 # GNU compiler collection
 brew "gcc"
-# GNU internationalization (i18n) and localization (l10n) library
-brew "gettext"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
@@ -50,16 +47,14 @@ brew "htop"
 brew "inetutils"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
 # Rainbows and unicorns in your console!
 brew "lolcat"
 # Modern and intuitive terminal-based text editor
 brew "micro"
-# MongoDB Shell to connect, configure, query, and work with your MongoDB database
-brew "mongosh"
 # Fast, highly customisable system info script
 brew "neofetch"
-# Port scanning utility for large networks
-brew "nmap"
 # Python package management tool
 brew "poetry"
 # Framework for managing multi-language pre-commit hooks
@@ -84,8 +79,6 @@ brew "watch"
 brew "wget"
 # Deliver Go binaries as fast and easily as possible
 brew "goreleaser/tap/goreleaser"
-# Terraform
-brew "hashicorp/tap/terraform"
 # The official Warp CLI download manager
 brew "warpdl/tap/warpdl"
 # Collection of apps and services for photography, design, video, web, and UX
@@ -119,13 +112,13 @@ cask "iterm2"
 # JetBrains tools manager
 cask "jetbrains-toolbox"
 # 100% open-source Java implementation
-cask "liberica-jdk21-full"
+cask "liberica-jdk22-full"
 # Provides updates to various Microsoft products
 cask "microsoft-auto-update"
 # Office suite
 cask "microsoft-office"
-# Reverse proxy, secure introspectable tunnels to localhost
-cask "ngrok"
+# Desktop sync client for Nextcloud software products
+cask "nextcloud"
 # App to write, plan, collaborate, and get organised
 cask "notion"
 # Control your tools with a few keystrokes
@@ -138,8 +131,6 @@ cask "signal"
 cask "tailscale"
 # Web browser focusing on security
 cask "tor-browser"
-# Open-source BitTorrent client
-cask "transmission"
 # Open-source code editor
 cask "visual-studio-code"
 # Native desktop client for WhatsApp
