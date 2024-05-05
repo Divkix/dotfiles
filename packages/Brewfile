@@ -3,7 +3,6 @@ tap "goreleaser/tap"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
-tap "homebrew/cask-versions"
 tap "warpdl/tap"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
@@ -21,8 +20,8 @@ brew "gettext"
 brew "curl"
 # Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
-# Modern replacement for 'ls'
-brew "exa"
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
 # Banner-like program prints strings as ASCII art
@@ -51,10 +50,10 @@ brew "jq"
 brew "python@3.12"
 # Rainbows and unicorns in your console!
 brew "lolcat"
+# Clone of ls with colorful output, file type icons, and more
+brew "lsd"
 # Modern and intuitive terminal-based text editor
 brew "micro"
-# Fast, highly customisable system info script
-brew "neofetch"
 # Python package management tool
 brew "poetry"
 # Framework for managing multi-language pre-commit hooks

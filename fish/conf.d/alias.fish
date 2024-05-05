@@ -1,4 +1,4 @@
 alias cat=bat
-alias ls=exa
+alias ls="lsd --icon never"
 alias rmd=trash
 alias nano=micro
