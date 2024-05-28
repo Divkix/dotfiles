@@ -3,11 +3,16 @@ tap "goreleaser/tap"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
+tap "homebrew/services"
 tap "warpdl/tap"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# GNU compiler collection
+brew "gcc"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
 # Statistics utility to count lines of code
 brew "cloc"
 # Cross-platform make
@@ -30,8 +35,6 @@ brew "figlet"
 brew "fish"
 # Command-line fuzzy finder written in Go
 brew "fzf"
-# GNU compiler collection
-brew "gcc"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
@@ -40,8 +43,6 @@ brew "git"
 brew "go"
 # Stricter gofmt
 brew "gofumpt"
-# Improved top (interactive process viewer)
-brew "htop"
 # GNU utilities for networking
 brew "inetutils"
 # Lightweight and flexible command-line JSON processor
@@ -82,6 +83,8 @@ brew "goreleaser/tap/goreleaser"
 brew "warpdl/tap/warpdl"
 # Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
+# Network scanner
+cask "angry-ip-scanner"
 # Allows connection to a computer remotely
 cask "anydesk"
 # Chromium based browser
@@ -112,12 +115,12 @@ cask "iterm2"
 cask "jetbrains-toolbox"
 # 100% open-source Java implementation
 cask "liberica-jdk22-full"
+# Software for Logitech devices
+cask "logitech-options"
 # Provides updates to various Microsoft products
 cask "microsoft-auto-update"
 # Office suite
 cask "microsoft-office"
-# Desktop sync client for Nextcloud software products
-cask "nextcloud"
 # App to write, plan, collaborate, and get organised
 cask "notion"
 # Control your tools with a few keystrokes
