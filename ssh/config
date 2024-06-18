@@ -1,3 +1,6 @@
+Host cse330-summer24
+  HostName cse330-summer24
+
 Host dojo.pwn.college
   HostName dojo.pwn.college
   User hacker
