@@ -89,17 +89,12 @@ cask "angry-ip-scanner"
 cask "anydesk"
 # Chromium based browser
 cask "arc"
-# Tool to flash OS images to SD cards & USB drives
-cask "balenaetcher"
 # Web browser focusing on privacy
 cask "brave-browser"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # App to build and share containerised applications and microservices
 cask "docker"
-# Collaborative team software
-cask "figma"
-# Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
 # Desktop client for GitHub repositories
 cask "github"
@@ -115,8 +110,6 @@ cask "iterm2"
 cask "jetbrains-toolbox"
 # 100% open-source Java implementation
 cask "liberica-jdk22-full"
-# Software for Logitech devices
-cask "logitech-options"
 # Provides updates to various Microsoft products
 cask "microsoft-auto-update"
 # Office suite
@@ -127,12 +120,10 @@ cask "notion"
 cask "raycast"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
-# Instant messaging application focusing on security
-cask "signal"
 # Mesh VPN based on Wireguard
 cask "tailscale"
-# Web browser focusing on security
-cask "tor-browser"
+# Remote access and connectivity software focused on security
+cask "teamviewer"
 # Open-source code editor
 cask "visual-studio-code"
 # Native desktop client for WhatsApp
