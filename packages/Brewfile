@@ -2,6 +2,7 @@ tap "bell-sw/liberica"
 tap "goreleaser/tap"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
+tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/services"
 tap "warpdl/tap"
@@ -25,6 +26,8 @@ brew "gettext"
 brew "curl"
 # Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
+# Diff that understands syntax
+brew "difftastic"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
@@ -64,7 +67,7 @@ brew "python@3.11"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Safe, concurrent, practical language
-brew "rust"
+brew "rust", link: false
 # Experimental Rust compiler front-end for IDEs
 brew "rust-analyzer"
 # Format Rust code
@@ -79,22 +82,16 @@ brew "watch"
 brew "wget"
 # Deliver Go binaries as fast and easily as possible
 brew "goreleaser/tap/goreleaser"
-# The official Warp CLI download manager
-brew "warpdl/tap/warpdl"
 # Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
 # Network scanner
 cask "angry-ip-scanner"
 # Allows connection to a computer remotely
 cask "anydesk"
-# Chromium based browser
-cask "arc"
 # Web browser focusing on privacy
 cask "brave-browser"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
-# App to build and share containerised applications and microservices
-cask "docker"
 cask "font-hack-nerd-font"
 # Desktop client for GitHub repositories
 cask "github"
@@ -106,6 +103,8 @@ cask "hot"
 cask "iina"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
+# Offline AI chat tool
+cask "jan"
 # JetBrains tools manager
 cask "jetbrains-toolbox"
 # 100% open-source Java implementation
@@ -114,25 +113,22 @@ cask "liberica-jdk22-full"
 cask "microsoft-auto-update"
 # Office suite
 cask "microsoft-office"
-# App to write, plan, collaborate, and get organised
-cask "notion"
+# Remote desktop client
+cask "microsoft-remote-desktop"
+# Replacement for Docker Desktop
+cask "orbstack"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
-# Mesh VPN based on Wireguard
+# Mesh VPN based on WireGuard
 cask "tailscale"
-# Remote access and connectivity software focused on security
-cask "teamviewer"
 # Open-source code editor
 cask "visual-studio-code"
 # Native desktop client for WhatsApp
 cask "whatsapp"
-# Video communication and virtual meeting platform
-cask "zoom"
 vscode "aaron-bond.better-comments"
 vscode "akamud.vscode-theme-onedark"
-vscode "alexkainzinger.resource-watchdog"
 vscode "antfu.icons-carbon"
 vscode "christian-kohler.path-intellisense"
 vscode "donjayamanne.githistory"
@@ -148,7 +144,6 @@ vscode "ms-python.black-formatter"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
-vscode "ms-vscode-remote.remote-containers"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
 vscode "ms-vscode.cmake-tools"
@@ -165,7 +160,7 @@ vscode "redhat.java"
 vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
 vscode "rust-lang.rust-analyzer"
-vscode "streetsidesoftware.code-spell-checker"
+vscode "semanticdiff.semanticdiff"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "twxs.cmake"

@@ -35,3 +35,5 @@
 	required = true
 [interactive]
 	diffFilter = diff-so-fancy --patch
+[diff]
+	external = difft
