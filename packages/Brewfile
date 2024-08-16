@@ -6,6 +6,10 @@ tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/services"
 tap "warpdl/tap"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
+# Automate deployment, configuration, and upgrading
+brew "ansible"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -26,8 +30,6 @@ brew "gettext"
 brew "curl"
 # Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
-# Diff that understands syntax
-brew "difftastic"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
@@ -46,8 +48,6 @@ brew "git"
 brew "go"
 # Stricter gofmt
 brew "gofumpt"
-# GNU utilities for networking
-brew "inetutils"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Rainbows and unicorns in your console!
@@ -56,20 +56,14 @@ brew "lolcat"
 brew "lsd"
 # Modern and intuitive terminal-based text editor
 brew "micro"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.12"
 # Python package management tool
 brew "poetry"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Experimental Rust compiler front-end for IDEs
-brew "rust-analyzer"
-# Format Rust code
-brew "rustfmt"
+# Non-interactive SSH password auth
+brew "sshpass"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Display directories as trees (with optional color/HTML output)
@@ -103,8 +97,6 @@ cask "hot"
 cask "iina"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
-# Offline AI chat tool
-cask "jan"
 # 100% open-source Java implementation
 cask "liberica-jdk22-full"
 # Remote desktop client
@@ -119,6 +111,8 @@ cask "rectangle"
 cask "tailscale"
 # Open-source code editor
 cask "visual-studio-code"
+# Create, manage, and run virtual machines
+cask "vmware-fusion"
 # Native desktop client for WhatsApp
 cask "whatsapp"
 vscode "aaron-bond.better-comments"
@@ -149,12 +143,12 @@ vscode "pkief.material-icon-theme"
 vscode "redhat.java"
 vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
-vscode "rust-lang.rust-analyzer"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "twxs.cmake"
 vscode "usernamehw.errorlens"
 vscode "visualstudioexptteam.vscodeintellicode"
+vscode "vscjava.vscode-gradle"
 vscode "vscjava.vscode-java-debug"
 vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"

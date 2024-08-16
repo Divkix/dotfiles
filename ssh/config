@@ -3,17 +3,14 @@
 # Comment this line if you don't want it to be added again.
 Include ~/.orbstack/ssh/config
 
-Host cse330-summer24
-  HostName cse330-summer24
-
 Host dojo.pwn.college
-  HostName dojo.pwn.college
-  User hacker
+	User hacker
+	HostName dojo.pwn.college
 
 Host *
-  UseKeychain yes
+	UseKeychain yes
 
 # asu general
 Host General.ASU.edu
-  HostName general.asu.edu
-  User dchauha6
+	User dchauha6
+	HostName general.asu.edu
