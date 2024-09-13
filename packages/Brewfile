@@ -1,15 +1,9 @@
 tap "bell-sw/liberica"
-tap "goreleaser/tap"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "homebrew/cask"
-tap "homebrew/cask-fonts"
 tap "homebrew/services"
 tap "warpdl/tap"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.12"
-# Automate deployment, configuration, and upgrading
-brew "ansible"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -22,12 +16,16 @@ brew "btop"
 brew "cloc"
 # Cross-platform make
 brew "cmake"
-# Top-like interface for container metrics
-brew "ctop"
 # GNU internationalization (i18n) and localization (l10n) library
 brew "gettext"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# General-purpose scripting language
+brew "php"
+# Dependency Manager for PHP
+brew "composer"
+# Top-like interface for container metrics
+brew "ctop"
 # Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
 # Like neofetch, but much faster because written mostly in C
@@ -50,20 +48,26 @@ brew "go"
 brew "gofumpt"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Sophisticated file transfer program
+brew "lftp"
 # Rainbows and unicorns in your console!
 brew "lolcat"
 # Clone of ls with colorful output, file type icons, and more
 brew "lsd"
 # Modern and intuitive terminal-based text editor
 brew "micro"
+# Platform built on V8 to build network applications
+brew "node"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
 # Python package management tool
 brew "poetry"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
+# Rsync for cloud storage
+brew "rclone"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Non-interactive SSH password auth
-brew "sshpass"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Display directories as trees (with optional color/HTML output)
@@ -72,8 +76,6 @@ brew "tree"
 brew "watch"
 # Internet file retriever
 brew "wget"
-# Deliver Go binaries as fast and easily as possible
-brew "goreleaser/tap/goreleaser"
 # Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
 # Network scanner
@@ -84,8 +86,6 @@ cask "anydesk"
 cask "brave-browser"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
-# Window peeking utility app
-cask "dockdoor"
 cask "font-hack-nerd-font"
 # Desktop client for GitHub repositories
 cask "github"
@@ -95,26 +95,30 @@ cask "gpg-suite"
 cask "hot"
 # Free and open-source media player
 cask "iina"
+# Java IDE by JetBrains
+cask "intellij-idea"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
 # 100% open-source Java implementation
 cask "liberica-jdk22-full"
-# Remote desktop client
-cask "microsoft-remote-desktop"
+# Open-source software for live streaming and screen recording
+cask "obs"
 # Replacement for Docker Desktop
 cask "orbstack"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
+# Team communication and collaboration software
+cask "slack"
 # Mesh VPN based on WireGuard
 cask "tailscale"
 # Open-source code editor
 cask "visual-studio-code"
-# Create, manage, and run virtual machines
-cask "vmware-fusion"
 # Native desktop client for WhatsApp
 cask "whatsapp"
+# Video communication and virtual meeting platform
+cask "zoom"
 vscode "aaron-bond.better-comments"
 vscode "akamud.vscode-theme-onedark"
 vscode "antfu.icons-carbon"
@@ -124,6 +128,7 @@ vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
 vscode "github.copilot"
 vscode "github.copilot-chat"
+vscode "github.remotehub"
 vscode "golang.go"
 vscode "gruntfuggly.todo-tree"
 vscode "mhutchie.git-graph"
@@ -133,11 +138,13 @@ vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode.azure-repos"
 vscode "ms-vscode.cmake-tools"
 vscode "ms-vscode.cpptools"
 vscode "ms-vscode.cpptools-extension-pack"
 vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
+vscode "ms-vscode.remote-repositories"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "pkief.material-icon-theme"
 vscode "redhat.java"
