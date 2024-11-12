@@ -32,12 +32,9 @@ set -g fzf_preview_dir_cmd lsd --all --icon never --color=always
 set -g fzf_fd_opts -t f -t l -p -H
 
 # python config
-fish_add_path "/opt/homebrew/opt/python@3.11/bin"
-fish_add_path "/opt/homebrew/opt/python@3.11/libexec/bin"
-set -gx LDFLAGS "-L/opt/homebrew/opt/python@3.11/lib"
-
-# jetbrains toolbox custom scripts
-fish_add_path "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
+fish_add_path "/opt/homebrew/opt/python/bin"
+fish_add_path "/opt/homebrew/opt/python/libexec/bin"
+set -gx LDFLAGS "-L/opt/homebrew/opt/python/lib"
 
 #--------------------------------#
 # homebrew additional config end #

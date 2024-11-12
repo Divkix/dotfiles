@@ -1,33 +1,28 @@
-tap "bell-sw/liberica"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "homebrew/cask"
-tap "homebrew/services"
-tap "warpdl/tap"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# GNU compiler collection
-brew "gcc"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
 # Statistics utility to count lines of code
 brew "cloc"
 # Cross-platform make
 brew "cmake"
-# GNU internationalization (i18n) and localization (l10n) library
-brew "gettext"
-# Get a file from an HTTP, HTTPS or FTP server
-brew "curl"
-# General-purpose scripting language
-brew "php"
-# Dependency Manager for PHP
-brew "composer"
 # Top-like interface for container metrics
 brew "ctop"
+# Get a file from an HTTP, HTTPS or FTP server
+brew "curl"
+# Secure runtime for JavaScript and TypeScript
+brew "deno"
 # Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
+# Diff that understands syntax
+brew "difftastic"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
@@ -38,6 +33,8 @@ brew "figlet"
 brew "fish"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# GNU compiler collection
+brew "gcc"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
@@ -46,28 +43,40 @@ brew "git"
 brew "go"
 # Stricter gofmt
 brew "gofumpt"
+# Graph visualization software from AT&T and Bell Labs
+brew "graphviz"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Sophisticated file transfer program
-brew "lftp"
+# Postgres C API library
+brew "libpq", link: true
 # Rainbows and unicorns in your console!
 brew "lolcat"
 # Clone of ls with colorful output, file type icons, and more
 brew "lsd"
+# Java-based project management
+brew "maven"
 # Modern and intuitive terminal-based text editor
 brew "micro"
 # Platform built on V8 to build network applications
 brew "node"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.12"
+# MongoDB Shell to connect, configure, query, and work with your MongoDB database
+brew "mongosh"
 # Python package management tool
 brew "poetry"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
 # Rsync for cloud storage
 brew "rclone"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Utility that provides fast incremental file transfer
+brew "rsync"
+# Safe, concurrent, practical language
+brew "rust"
+# Experimental Rust compiler front-end for IDEs
+brew "rust-analyzer"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Display directories as trees (with optional color/HTML output)
@@ -76,16 +85,26 @@ brew "tree"
 brew "watch"
 # Internet file retriever
 brew "wget"
-# Collection of apps and services for photography, design, video, web, and UX
-cask "adobe-creative-cloud"
+# View, create, manipulate, print and manage files in Portable Document Format
+cask "adobe-acrobat-pro"
 # Network scanner
 cask "angry-ip-scanner"
 # Allows connection to a computer remotely
 cask "anydesk"
+# Tool to flash OS images to SD cards & USB drives
+cask "balenaetcher"
 # Web browser focusing on privacy
 cask "brave-browser"
-# Tool to remove unnecessary files and folders from disk
-cask "cleanmymac"
+# OpenAI's official ChatGPT desktop app
+cask "chatgpt"
+# Tool to show live information about the batteries in various devices
+cask "coconutbattery"
+# Voice and text chat software
+cask "discord"
+# Web browser
+cask "firefox"
+# Flip clock screensaver
+cask "fliqlo"
 cask "font-hack-nerd-font"
 # Desktop client for GitHub repositories
 cask "github"
@@ -95,12 +114,16 @@ cask "gpg-suite"
 cask "hot"
 # Free and open-source media player
 cask "iina"
-# Java IDE by JetBrains
-cask "intellij-idea"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
-# 100% open-source Java implementation
-cask "liberica-jdk22-full"
+# JetBrains tools manager
+cask "jetbrains-toolbox"
+# Web browser focused on privacy and on minimizing tracking and fingerprinting
+cask "mullvad-browser"
+# VPN client
+cask "mullvadvpn"
+# Htop on steroids
+cask "neohtop"
 # Open-source software for live streaming and screen recording
 cask "obs"
 # Replacement for Docker Desktop
@@ -109,22 +132,26 @@ cask "orbstack"
 cask "raycast"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
-# Team communication and collaboration software
-cask "slack"
 # Mesh VPN based on WireGuard
 cask "tailscale"
+# Remote access and connectivity software focused on security
+cask "teamviewer"
 # Open-source code editor
 cask "visual-studio-code"
+# Create, manage, and run virtual machines
+cask "vmware-fusion"
 # Native desktop client for WhatsApp
 cask "whatsapp"
+# Connect to Windows
+cask "windows-app"
 # Video communication and virtual meeting platform
 cask "zoom"
 vscode "aaron-bond.better-comments"
 vscode "akamud.vscode-theme-onedark"
 vscode "antfu.icons-carbon"
 vscode "christian-kohler.path-intellisense"
+vscode "denoland.vscode-deno"
 vscode "donjayamanne.githistory"
-vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
 vscode "github.copilot"
 vscode "github.copilot-chat"
@@ -138,7 +165,6 @@ vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
-vscode "ms-vscode.azure-repos"
 vscode "ms-vscode.cmake-tools"
 vscode "ms-vscode.cpptools"
 vscode "ms-vscode.cpptools-extension-pack"
@@ -154,6 +180,7 @@ vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "twxs.cmake"
 vscode "usernamehw.errorlens"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
 vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vscjava.vscode-gradle"
 vscode "vscjava.vscode-java-debug"
