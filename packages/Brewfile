@@ -1,6 +1,5 @@
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
-tap "homebrew/cask"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -43,8 +42,6 @@ brew "git"
 brew "go"
 # Stricter gofmt
 brew "gofumpt"
-# Graph visualization software from AT&T and Bell Labs
-brew "graphviz"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Postgres C API library
@@ -61,18 +58,16 @@ brew "micro"
 brew "node"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
 # Python package management tool
 brew "poetry"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.12"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
-# Rsync for cloud storage
-brew "rclone"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Utility that provides fast incremental file transfer
-brew "rsync"
 # Safe, concurrent, practical language
 brew "rust"
 # Experimental Rust compiler front-end for IDEs
@@ -91,8 +86,12 @@ cask "adobe-acrobat-pro"
 cask "angry-ip-scanner"
 # Allows connection to a computer remotely
 cask "anydesk"
+# Integrated CAD, CAM, CAE, and PCB software
+cask "autodesk-fusion"
 # Tool to flash OS images to SD cards & USB drives
 cask "balenaetcher"
+# 3D creation suite
+cask "blender"
 # Web browser focusing on privacy
 cask "brave-browser"
 # OpenAI's official ChatGPT desktop app
@@ -103,9 +102,9 @@ cask "coconutbattery"
 cask "discord"
 # Web browser
 cask "firefox"
-# Flip clock screensaver
-cask "fliqlo"
 cask "font-hack-nerd-font"
+# 3D parametric modeller
+cask "freecad"
 # Desktop client for GitHub repositories
 cask "github"
 # Tools to protect your emails and files
@@ -114,16 +113,14 @@ cask "gpg-suite"
 cask "hot"
 # Free and open-source media player
 cask "iina"
+# Vector graphics editor
+cask "inkscape"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
 # JetBrains tools manager
 cask "jetbrains-toolbox"
 # Web browser focused on privacy and on minimizing tracking and fingerprinting
 cask "mullvad-browser"
-# VPN client
-cask "mullvadvpn"
-# Htop on steroids
-cask "neohtop"
 # Open-source software for live streaming and screen recording
 cask "obs"
 # Replacement for Docker Desktop
@@ -134,8 +131,6 @@ cask "raycast"
 cask "rectangle"
 # Mesh VPN based on WireGuard
 cask "tailscale"
-# Remote access and connectivity software focused on security
-cask "teamviewer"
 # Open-source code editor
 cask "visual-studio-code"
 # Create, manage, and run virtual machines
@@ -165,27 +160,14 @@ vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
-vscode "ms-vscode.cmake-tools"
-vscode "ms-vscode.cpptools"
-vscode "ms-vscode.cpptools-extension-pack"
 vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.remote-repositories"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "pkief.material-icon-theme"
-vscode "redhat.java"
 vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
-vscode "twxs.cmake"
 vscode "usernamehw.errorlens"
-vscode "visualstudioexptteam.intellicode-api-usage-examples"
-vscode "visualstudioexptteam.vscodeintellicode"
-vscode "vscjava.vscode-gradle"
-vscode "vscjava.vscode-java-debug"
-vscode "vscjava.vscode-java-dependency"
-vscode "vscjava.vscode-java-pack"
-vscode "vscjava.vscode-java-test"
-vscode "vscjava.vscode-maven"
 vscode "yzhang.markdown-all-in-one"
