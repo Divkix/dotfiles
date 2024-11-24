@@ -11,7 +11,9 @@ abbr -g -a ll ls -l
 abbr -g -a g git
 abbr -g -a gcl git clone
 abbr -g -a gph git push
+abbr -g -a gphf git push -f
 abbr -g -a gpl git pull
+abbr -g -a gplr git pull --rebase
 abbr -g -a gst git status
 abbr -g -a gcm git commit -m
 abbr -g -a gcam git commit -am
