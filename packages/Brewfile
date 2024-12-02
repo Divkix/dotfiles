@@ -42,6 +42,8 @@ brew "git"
 brew "go"
 # Stricter gofmt
 brew "gofumpt"
+# Graph visualization software from AT&T and Bell Labs
+brew "graphviz"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Postgres C API library
@@ -72,10 +74,14 @@ brew "ripgrep"
 brew "rust"
 # Experimental Rust compiler front-end for IDEs
 brew "rust-analyzer"
+# Command-line interface for https://speedtest.net bandwidth tests
+brew "speedtest-cli"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Language for application scale JavaScript development
+brew "typescript"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
 # Internet file retriever
@@ -90,8 +96,6 @@ cask "anydesk"
 cask "autodesk-fusion"
 # Tool to flash OS images to SD cards & USB drives
 cask "balenaetcher"
-# 3D creation suite
-cask "blender"
 # Web browser focusing on privacy
 cask "brave-browser"
 # OpenAI's official ChatGPT desktop app
@@ -103,32 +107,32 @@ cask "discord"
 # Web browser
 cask "firefox"
 cask "font-hack-nerd-font"
-# 3D parametric modeller
-cask "freecad"
 # Desktop client for GitHub repositories
 cask "github"
+# Git client focusing on productivity
+cask "gitkraken"
 # Tools to protect your emails and files
 cask "gpg-suite"
 # Menu bar application that displays the CPU speed limit due to thermal issues
 cask "hot"
+# Convert your caps lock key or any of your modifier keys to the hyper key
+cask "hyperkey"
 # Free and open-source media player
 cask "iina"
 # Vector graphics editor
 cask "inkscape"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
-# JetBrains tools manager
-cask "jetbrains-toolbox"
 # Web browser focused on privacy and on minimizing tracking and fingerprinting
 cask "mullvad-browser"
 # Open-source software for live streaming and screen recording
 cask "obs"
 # Replacement for Docker Desktop
 cask "orbstack"
+# Apple Notes extension
+cask "pronotes"
 # Control your tools with a few keystrokes
 cask "raycast"
-# Move and resize windows using keyboard shortcuts or snap areas
-cask "rectangle"
 # Mesh VPN based on WireGuard
 cask "tailscale"
 # Open-source code editor
@@ -139,35 +143,54 @@ cask "vmware-fusion"
 cask "whatsapp"
 # Connect to Windows
 cask "windows-app"
+# REST, GraphQL and gRPC client
+cask "yaak"
 # Video communication and virtual meeting platform
 cask "zoom"
 vscode "aaron-bond.better-comments"
 vscode "akamud.vscode-theme-onedark"
 vscode "antfu.icons-carbon"
 vscode "christian-kohler.path-intellisense"
+vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
-vscode "donjayamanne.githistory"
+vscode "dustypomerleau.rust-syntax"
+vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
 vscode "github.copilot"
 vscode "github.copilot-chat"
 vscode "github.remotehub"
 vscode "golang.go"
 vscode "gruntfuggly.todo-tree"
-vscode "mhutchie.git-graph"
+vscode "ms-azuretools.vscode-docker"
 vscode "ms-python.black-formatter"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpptools"
+vscode "ms-vscode.cpptools-extension-pack"
+vscode "ms-vscode.cpptools-themes"
 vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.remote-repositories"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "pkief.material-icon-theme"
+vscode "redhat.java"
 vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
-vscode "tamasfe.even-better-toml"
+vscode "rust-lang.rust-analyzer"
 vscode "tomoki1207.pdf"
+vscode "twxs.cmake"
 vscode "usernamehw.errorlens"
+vscode "vadimcn.vscode-lldb"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "visualstudioexptteam.vscodeintellicode"
+vscode "vscjava.vscode-gradle"
+vscode "vscjava.vscode-java-debug"
+vscode "vscjava.vscode-java-dependency"
+vscode "vscjava.vscode-java-pack"
+vscode "vscjava.vscode-java-test"
+vscode "vscjava.vscode-maven"
 vscode "yzhang.markdown-all-in-one"

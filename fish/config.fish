@@ -36,6 +36,11 @@ fish_add_path "/opt/homebrew/opt/python/bin"
 fish_add_path "/opt/homebrew/opt/python/libexec/bin"
 set -gx LDFLAGS "-L/opt/homebrew/opt/python/lib"
 
+# java config
+set -gx JAVA_HOME "/opt/homebrew/opt/openjdk"
+fish_add_path "/opt/homebrew/opt/openjdk/bin"
+set -gx CPPFLAGS "-I/opt/homebrew/opt/openjdk/include"
+
 #--------------------------------#
 # homebrew additional config end #
 #--------------------------------#
