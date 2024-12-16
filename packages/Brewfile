@@ -1,5 +1,6 @@
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
+tap "supabase/tap"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -16,6 +17,8 @@ brew "cmake"
 brew "ctop"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# Modern diagram scripting language that turns text to diagrams
+brew "d2"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # Good-lookin' diffs with diff-highlight and more
@@ -52,6 +55,8 @@ brew "libpq", link: true
 brew "lolcat"
 # Clone of ls with colorful output, file type icons, and more
 brew "lsd"
+# Mac App Store command-line interface
+brew "mas"
 # Java-based project management
 brew "maven"
 # Modern and intuitive terminal-based text editor
@@ -60,6 +65,8 @@ brew "micro"
 brew "node"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
+# Swiss-army knife of markup format conversion
+brew "pandoc"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Python package management tool
@@ -86,6 +93,8 @@ brew "typescript"
 brew "watch"
 # Internet file retriever
 brew "wget"
+# Supabase CLI
+brew "supabase/tap/supabase"
 # View, create, manipulate, print and manage files in Portable Document Format
 cask "adobe-acrobat-pro"
 # Network scanner
@@ -98,8 +107,6 @@ cask "autodesk-fusion"
 cask "balenaetcher"
 # Web browser focusing on privacy
 cask "brave-browser"
-# OpenAI's official ChatGPT desktop app
-cask "chatgpt"
 # Tool to show live information about the batteries in various devices
 cask "coconutbattery"
 # Voice and text chat software
@@ -143,10 +150,26 @@ cask "vmware-fusion"
 cask "whatsapp"
 # Connect to Windows
 cask "windows-app"
-# REST, GraphQL and gRPC client
-cask "yaak"
 # Video communication and virtual meeting platform
 cask "zoom"
+mas "Affinity Designer 2", id: 1616831348
+mas "Affinity Publisher 2", id: 1606941598
+mas "djay Pro", id: 450527929
+mas "Hidden Bar", id: 1452453066
+mas "iMovie", id: 408981434
+mas "Microsoft Excel", id: 462058435
+mas "Microsoft PowerPoint", id: 462062816
+mas "Microsoft Word", id: 462054704
+mas "OneDrive", id: 823766827
+mas "Paint S", id: 736473980
+mas "Photomator", id: 1444636541
+mas "Prime Video", id: 545519333
+mas "Raycast Companion", id: 6738274497
+mas "Slack", id: 803453959
+mas "SponsorBlock", id: 1573461917
+mas "The Unarchiver", id: 425424353
+mas "Wipr", id: 1662217862
+mas "Xcode", id: 497799835
 vscode "aaron-bond.better-comments"
 vscode "akamud.vscode-theme-onedark"
 vscode "antfu.icons-carbon"
@@ -178,9 +201,11 @@ vscode "ms-vscode.remote-repositories"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "pkief.material-icon-theme"
 vscode "redhat.java"
+vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
 vscode "rust-lang.rust-analyzer"
+vscode "terrastruct.d2"
 vscode "tomoki1207.pdf"
 vscode "twxs.cmake"
 vscode "usernamehw.errorlens"
