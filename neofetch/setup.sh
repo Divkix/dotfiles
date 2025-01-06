@@ -8,7 +8,7 @@ cd "$DIR"
 SOURCE="$(realpath .)"
 DESTINATION="$(realpath $HOME/.config/neofetch)"
 
-info "Setting up Micro Text Editor..."
+info "Setting up Neofetch..."
 
 find * -name "*.conf" | while read fn; do
     scopy "$SOURCE/$fn" "$DESTINATION/$fn"
