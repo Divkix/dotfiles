@@ -12,6 +12,10 @@ cp -v $fish_dir/functions/fish_prompt_loading_indicator.fish ./fish/functions/fi
 cp -v $fish_dir/conf.d/abbr.fish ./fish/conf.d/abbr.fish
 cp -v $fish_dir/conf.d/alias.fish ./fish/conf.d/alias.fish
 
+# copy ghostty config
+ghostty_dir=$HOME/.config/ghostty
+cp -v $ghostty_dir/config ./ghostty/config
+
 # update fisher, using fish -c to run the command from fish shell instead of bash
 fish -c "fisher list | grep -v "jorgebucaran/fisher" > './fisher/fisher install.list'"
 

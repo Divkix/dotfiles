@@ -65,8 +65,6 @@ brew "micro"
 brew "node"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
-# Swiss-army knife of markup format conversion
-brew "pandoc"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Python package management tool
@@ -105,6 +103,10 @@ cask "anydesk"
 cask "autodesk-fusion"
 # Tool to flash OS images to SD cards & USB drives
 cask "balenaetcher"
+# Display management tool
+cask "betterdisplay"
+# 3D creation suite
+cask "blender"
 # Web browser focusing on privacy
 cask "brave-browser"
 # Tool to show live information about the batteries in various devices
@@ -114,6 +116,8 @@ cask "discord"
 # Web browser
 cask "firefox"
 cask "font-hack-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
 # Desktop client for GitHub repositories
 cask "github"
 # Git client focusing on productivity
@@ -128,8 +132,6 @@ cask "hyperkey"
 cask "iina"
 # Vector graphics editor
 cask "inkscape"
-# Terminal emulator as alternative to Apple's Terminal app
-cask "iterm2"
 # Web browser focused on privacy and on minimizing tracking and fingerprinting
 cask "mullvad-browser"
 # Open-source software for live streaming and screen recording
@@ -140,6 +142,8 @@ cask "orbstack"
 cask "pronotes"
 # Control your tools with a few keystrokes
 cask "raycast"
+# 3D modeling software used to create and manipulate 3D models
+cask "sketchup"
 # Mesh VPN based on WireGuard
 cask "tailscale"
 # Open-source code editor
