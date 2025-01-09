@@ -2,3 +2,9 @@
 # This only works if it's at the top of ssh_config (before any Host blocks).
 # This won't be added again if you remove it.
 Include ~/.orbstack/ssh/config
+
+Host oracle-eu-zrh-02
+  SetEnv TERM=xterm-256color
+
+Host oracle-eu-zrh-01-umon
+  SetEnv TERM=xterm-256color

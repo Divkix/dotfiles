@@ -17,8 +17,6 @@ brew "cmake"
 brew "ctop"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
-# Modern diagram scripting language that turns text to diagrams
-brew "d2"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # Good-lookin' diffs with diff-highlight and more
@@ -45,12 +43,8 @@ brew "git"
 brew "go"
 # Stricter gofmt
 brew "gofumpt"
-# Graph visualization software from AT&T and Bell Labs
-brew "graphviz"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Postgres C API library
-brew "libpq", link: true
 # Rainbows and unicorns in your console!
 brew "lolcat"
 # Clone of ls with colorful output, file type icons, and more
@@ -79,8 +73,6 @@ brew "ripgrep"
 brew "rust"
 # Experimental Rust compiler front-end for IDEs
 brew "rust-analyzer"
-# Command-line interface for https://speedtest.net bandwidth tests
-brew "speedtest-cli"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Display directories as trees (with optional color/HTML output)
@@ -91,8 +83,6 @@ brew "typescript"
 brew "watch"
 # Internet file retriever
 brew "wget"
-# Supabase CLI
-brew "supabase/tap/supabase"
 # View, create, manipulate, print and manage files in Portable Document Format
 cask "adobe-acrobat-pro"
 # Network scanner
@@ -101,16 +91,12 @@ cask "angry-ip-scanner"
 cask "anydesk"
 # Integrated CAD, CAM, CAE, and PCB software
 cask "autodesk-fusion"
-# Tool to flash OS images to SD cards & USB drives
-cask "balenaetcher"
 # Display management tool
 cask "betterdisplay"
 # 3D creation suite
 cask "blender"
 # Web browser focusing on privacy
 cask "brave-browser"
-# Tool to show live information about the batteries in various devices
-cask "coconutbattery"
 # Voice and text chat software
 cask "discord"
 # Web browser
@@ -130,34 +116,23 @@ cask "hot"
 cask "hyperkey"
 # Free and open-source media player
 cask "iina"
-# Vector graphics editor
-cask "inkscape"
-# Web browser focused on privacy and on minimizing tracking and fingerprinting
-cask "mullvad-browser"
-# Open-source software for live streaming and screen recording
-cask "obs"
 # Replacement for Docker Desktop
 cask "orbstack"
 # Apple Notes extension
 cask "pronotes"
 # Control your tools with a few keystrokes
 cask "raycast"
-# 3D modeling software used to create and manipulate 3D models
-cask "sketchup"
 # Mesh VPN based on WireGuard
 cask "tailscale"
 # Open-source code editor
 cask "visual-studio-code"
 # Create, manage, and run virtual machines
 cask "vmware-fusion"
-# Native desktop client for WhatsApp
-cask "whatsapp"
-# Connect to Windows
-cask "windows-app"
 # Video communication and virtual meeting platform
 cask "zoom"
 mas "Affinity Designer 2", id: 1616831348
 mas "Affinity Publisher 2", id: 1606941598
+mas "BIMx", id: 6446137693
 mas "djay Pro", id: 450527929
 mas "Hidden Bar", id: 1452453066
 mas "iMovie", id: 408981434
@@ -172,8 +147,10 @@ mas "Raycast Companion", id: 6738274497
 mas "Slack", id: 803453959
 mas "SponsorBlock", id: 1573461917
 mas "The Unarchiver", id: 425424353
+mas "Windows App", id: 1295203466
 mas "Wipr", id: 1662217862
 mas "Xcode", id: 497799835
+mas "‎WhatsApp", id: 310633997
 vscode "aaron-bond.better-comments"
 vscode "akamud.vscode-theme-onedark"
 vscode "antfu.icons-carbon"
@@ -209,7 +186,6 @@ vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
 vscode "rust-lang.rust-analyzer"
-vscode "terrastruct.d2"
 vscode "tomoki1207.pdf"
 vscode "twxs.cmake"
 vscode "usernamehw.errorlens"

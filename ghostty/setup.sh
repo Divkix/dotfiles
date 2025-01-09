@@ -6,7 +6,7 @@ cd "$DIR"
 . ../scripts/functions.sh
 
 SOURCE="$(realpath .)"
-DESTINATION="$(realpath $HOME/.config/)"
+DESTINATION="$(realpath $HOME/.config/ghostty/)"
 
 info "Setting up Ghostty..."
 
