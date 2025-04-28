@@ -1,6 +1,8 @@
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "supabase/tap"
+# Run your GitHub Actions locally
+brew "act"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -11,6 +13,10 @@ brew "btop"
 brew "gettext"
 # Statistics utility to count lines of code
 brew "cloc"
+# Platform built on V8 to build network applications
+brew "node"
+# CLI tool for Cloudflare Workers
+brew "cloudflare-wrangler"
 # Cross-platform make
 brew "cmake"
 # Top-like interface for container metrics
@@ -39,6 +45,8 @@ brew "gcc"
 brew "gh"
 # Distributed revision control system
 brew "git"
+# GitHub Model Context Protocol server for AI tools
+brew "github-mcp-server"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Stricter gofmt
@@ -55,18 +63,18 @@ brew "mas"
 brew "maven"
 # Modern and intuitive terminal-based text editor
 brew "micro"
-# Platform built on V8 to build network applications
-brew "node"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
+# Manage multiple Node.js versions
+brew "nvm"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Python package management tool
 brew "poetry"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.12"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
+# Rsync for cloud storage
+brew "rclone"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Safe, concurrent, practical language
@@ -89,39 +97,39 @@ cask "adobe-acrobat-pro"
 cask "angry-ip-scanner"
 # Allows connection to a computer remotely
 cask "anydesk"
-# Integrated CAD, CAM, CAE, and PCB software
-cask "autodesk-fusion"
 # Display management tool
 cask "betterdisplay"
-# 3D creation suite
-cask "blender"
 # Web browser focusing on privacy
 cask "brave-browser"
-# Voice and text chat software
-cask "discord"
 # Web browser
 cask "firefox"
+# Flip clock screensaver
+cask "fliqlo"
 cask "font-hack-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Desktop client for GitHub repositories
 cask "github"
-# Git client focusing on productivity
-cask "gitkraken"
+# Client for the Google Drive storage service
+cask "google-drive"
 # Tools to protect your emails and files
 cask "gpg-suite"
 # Menu bar application that displays the CPU speed limit due to thermal issues
 cask "hot"
-# Convert your caps lock key or any of your modifier keys to the hyper key
-cask "hyperkey"
 # Free and open-source media player
 cask "iina"
+# File archiver
+cask "keka"
+# Open-source software for live streaming and screen recording
+cask "obs"
 # Replacement for Docker Desktop
 cask "orbstack"
 # Apple Notes extension
 cask "pronotes"
 # Control your tools with a few keystrokes
 cask "raycast"
+# Open-source media center
+cask "stremio"
 # Mesh VPN based on WireGuard
 cask "tailscale"
 # Open-source code editor
@@ -132,26 +140,23 @@ cask "vmware-fusion"
 cask "zoom"
 mas "Affinity Designer 2", id: 1616831348
 mas "Affinity Publisher 2", id: 1606941598
-mas "BIMx", id: 6446137693
 mas "djay Pro", id: 450527929
 mas "Hidden Bar", id: 1452453066
 mas "iMovie", id: 408981434
 mas "Microsoft Excel", id: 462058435
 mas "Microsoft PowerPoint", id: 462062816
 mas "Microsoft Word", id: 462054704
-mas "OneDrive", id: 823766827
 mas "Paint S", id: 736473980
 mas "Photomator", id: 1444636541
+mas "PiPifier", id: 1160374471
 mas "Prime Video", id: 545519333
 mas "Raycast Companion", id: 6738274497
-mas "Slack", id: 803453959
 mas "SponsorBlock", id: 1573461917
-mas "The Unarchiver", id: 425424353
+mas "Telegram", id: 747648890
+mas "WhatsApp", id: 310633997
 mas "Windows App", id: 1295203466
 mas "Wipr", id: 1662217862
 mas "Xcode", id: 497799835
-mas "‎WhatsApp", id: 310633997
-vscode "aaron-bond.better-comments"
 vscode "akamud.vscode-theme-onedark"
 vscode "antfu.icons-carbon"
 vscode "christian-kohler.path-intellisense"
@@ -165,7 +170,6 @@ vscode "github.copilot-chat"
 vscode "github.remotehub"
 vscode "golang.go"
 vscode "gruntfuggly.todo-tree"
-vscode "ms-azuretools.vscode-docker"
 vscode "ms-python.black-formatter"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
@@ -180,12 +184,14 @@ vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.remote-repositories"
 vscode "ms-vsliveshare.vsliveshare"
+vscode "mtxr.sqltools"
 vscode "pkief.material-icon-theme"
 vscode "redhat.java"
 vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
 vscode "rust-lang.rust-analyzer"
+vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "twxs.cmake"
 vscode "usernamehw.errorlens"
@@ -198,4 +204,5 @@ vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"
 vscode "vscjava.vscode-java-test"
 vscode "vscjava.vscode-maven"
+vscode "wakatime.vscode-wakatime"
 vscode "yzhang.markdown-all-in-one"

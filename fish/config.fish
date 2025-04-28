@@ -48,3 +48,7 @@ set -gx CPPFLAGS "-I/opt/homebrew/opt/openjdk/include"
 # starship prompt setup
 set -gx STARSHIP_CONFIG "$HOME/.config/starship.toml"
 starship init fish | source
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :

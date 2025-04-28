@@ -3,8 +3,5 @@
 # This won't be added again if you remove it.
 Include ~/.orbstack/ssh/config
 
-Host oracle-eu-zrh-02
-  SetEnv TERM=xterm-256color
-
-Host oracle-eu-zrh-01-umon
+Host *
   SetEnv TERM=xterm-256color

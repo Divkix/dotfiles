@@ -1,15 +1,15 @@
 {
-    "Alt-/": "lua:comment.comment",
-    "Ctrl-q": "Save,Quit",
-    "CtrlUnderscore": "lua:comment.comment",
-    "F6": "command-edit:gorename ",
-    "Tab": "Autocomplete|IndentSelection|InsertTab",
-    "CtrlO": "Save",
-    "CtrlR": "command-edit:open",
-    "CtrlY": "PageUp",
-    "CtrlV": "PageDown",
-    "CtrlK": "CutLine",
-    "CtrlU": "Paste",
-    "CtrlX": "Quit",
-    "CtrlW": "Find"
+  "Alt-/": "lua:comment.comment",
+  "Ctrl-q": "Save,Quit",
+  "CtrlUnderscore": "lua:comment.comment",
+  "F6": "command-edit:gorename ",
+  "Tab": "Autocomplete|IndentSelection|InsertTab",
+  "CtrlO": "Save",
+  "CtrlR": "command-edit:open",
+  "CtrlY": "PageUp",
+  "CtrlV": "PageDown",
+  "CtrlK": "CutLine",
+  "CtrlU": "Paste",
+  "CtrlX": "Quit",
+  "CtrlW": "Find"
 }
