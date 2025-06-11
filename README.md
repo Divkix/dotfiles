@@ -2,7 +2,11 @@
 
 [![CI](https://github.com/Divkix/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/Divkix/dotfiles/actions/workflows/ci.yml)
 
-This is my setup for my MacBook Air (2020, M1) for development purposes.
+This is my setup for my Macbook Pro (M4 Pro) for development purposes.
+
+Previously used on:
+- MacBook Air (2020, M1)
+
 
 ## Installation
 These steps must be followed to ensure smooth installation:
