@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 DIR=$(dirname "$0")
 cd "$DIR"
 
@@ -25,7 +27,7 @@ find * -name "*.list" | while read fn; do
         if [[ $cmd == code* ]]; then
             $cmd $package
         else
-            $cmd install $package $i
+            $cmd install $package
         fi
     done <"$fn"
     substep_success "Finished installing $1 packages."

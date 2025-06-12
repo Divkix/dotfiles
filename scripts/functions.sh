@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 scopy() {
     OVERWRITTEN=""
     if [ -e "$2" ] || [ -h "$2" ]; then
@@ -10,9 +12,9 @@ scopy() {
     fi
 
     if sudo cp "$1" "$2"; then
-        substep_success "Copied $2 to $1. $OVERWRITTEN"
+        substep_success "Copied $1 to $2. $OVERWRITTEN"
     else
-        substep_error "Copying $2 to $1 failed."
+        substep_error "Copying $1 to $2 failed."
     fi
 }
 

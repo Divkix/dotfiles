@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 DIR=$(dirname "$0")
 cd "$DIR"
 
@@ -8,7 +10,7 @@ cd "$DIR"
 mkdir -p "$HOME/.config/fish"
 
 SOURCE="$(realpath .)"
-DESTINATION="$(realpath $HOME/.config/fish)"
+DESTINATION="$(realpath "$HOME/.config/fish")"
 
 info "Setting up fish shell..."
 
@@ -25,18 +27,18 @@ done
 fish_shell_location=$(which fish)
 
 set_fish_shell() {
-    if echo $SHELL | grep -q "$fish_shell_location"; then
+    if echo "$SHELL" | grep -q "$fish_shell_location"; then
         success "Fish shell is already set up."
     else
         substep_info "Checking if fish is installed..."
-        if cat /etc/shells | grep -q "$fish_shell_location"; then
+        if grep -q "$fish_shell_location" /etc/shells; then
             substep_info "Fish shell already installed"
         else
             substep_error "Fish shell is not installed. Setting it up..."
-            echo $fish_shell_location | sudo tee -a /etc/shells
+            echo "$fish_shell_location" | sudo tee -a /etc/shells
         fi
         substep_info "Changing shell to fish"
-        if sudo chsh -s $fish_shell_location $(whoami); then
+        if sudo chsh -s "$fish_shell_location" "$(whoami)"; then
             substep_success "Changed shell to fish"
         else
             substep_error "Failed changing shell to fish"
