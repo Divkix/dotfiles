@@ -8,6 +8,8 @@ cd "$DIR"
 
 . ../scripts/functions.sh
 
+COMMENT=\#*
+
 find * -name "*.list" | while read fn; do
     cmd="${fn%.*}"
     set -- $cmd
@@ -17,7 +19,10 @@ find * -name "*.list" | while read fn; do
             continue
         fi
         substep_info "Installing $package..."
-        if [[ $cmd == code* ]]; then
+        if [[ $1 == "fisher" ]]; then
+            # Use fish shell to install plugins since fisher is a fish function
+            fish -c "fisher install $package"
+        elif [[ $cmd == code* ]]; then
             $cmd $package
         else
             $cmd install $package $i
