@@ -1,22 +1,14 @@
 tap "homebrew/autoupdate"
-tap "homebrew/bundle"
-tap "supabase/tap"
-# Run your GitHub Actions locally
-brew "act"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# GNU internationalization (i18n) and localization (l10n) library
-brew "gettext"
 # Statistics utility to count lines of code
 brew "cloc"
-# Platform built on V8 to build network applications
-brew "node"
-# CLI tool for Cloudflare Workers
-brew "cloudflare-wrangler"
 # Cross-platform make
 brew "cmake"
 # Top-like interface for container metrics
@@ -45,8 +37,6 @@ brew "gcc"
 brew "gh"
 # Distributed revision control system
 brew "git"
-# GitHub Model Context Protocol server for AI tools
-brew "github-mcp-server"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Stricter gofmt
@@ -63,6 +53,8 @@ brew "mas"
 brew "maven"
 # Modern and intuitive terminal-based text editor
 brew "micro"
+# Platform built on V8 to build network applications
+brew "node"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
 # Manage multiple Node.js versions
@@ -87,6 +79,8 @@ brew "starship"
 brew "tree"
 # Language for application scale JavaScript development
 brew "typescript"
+# Extremely fast Python package installer and resolver, written in Rust
+brew "uv"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
 # Internet file retriever
@@ -97,10 +91,10 @@ cask "adobe-acrobat-pro"
 cask "angry-ip-scanner"
 # Allows connection to a computer remotely
 cask "anydesk"
-# Display management tool
-cask "betterdisplay"
 # Web browser focusing on privacy
 cask "brave-browser"
+# Write, edit, and chat about your code with AI
+cask "cursor"
 # Web browser
 cask "firefox"
 # Flip clock screensaver
@@ -110,8 +104,6 @@ cask "font-hack-nerd-font"
 cask "ghostty"
 # Desktop client for GitHub repositories
 cask "github"
-# Client for the Google Drive storage service
-cask "google-drive"
 # Tools to protect your emails and files
 cask "gpg-suite"
 # Menu bar application that displays the CPU speed limit due to thermal issues
@@ -120,29 +112,28 @@ cask "hot"
 cask "iina"
 # File archiver
 cask "keka"
-# Open-source software for live streaming and screen recording
-cask "obs"
+# Discover, download, and run local LLMs
+cask "lm-studio"
+# Controls and monitors all fans on Apple computers
+cask "macs-fan-control"
 # Replacement for Docker Desktop
 cask "orbstack"
 # Apple Notes extension
 cask "pronotes"
 # Control your tools with a few keystrokes
 cask "raycast"
+# Instant messaging application focusing on security
+cask "signal"
+# Graphical client for Git version control
+cask "sourcetree"
 # Open-source media center
 cask "stremio"
 # Mesh VPN based on WireGuard
-cask "tailscale"
+cask "tailscale-app"
 # Open-source code editor
 cask "visual-studio-code"
-# Create, manage, and run virtual machines
-cask "vmware-fusion"
 # Video communication and virtual meeting platform
 cask "zoom"
-mas "Affinity Designer 2", id: 1616831348
-mas "Affinity Publisher 2", id: 1606941598
-mas "djay Pro", id: 450527929
-mas "Hidden Bar", id: 1452453066
-mas "iMovie", id: 408981434
 mas "Microsoft Excel", id: 462058435
 mas "Microsoft PowerPoint", id: 462062816
 mas "Microsoft Word", id: 462054704
@@ -154,11 +145,11 @@ mas "Raycast Companion", id: 6738274497
 mas "SponsorBlock", id: 1573461917
 mas "Telegram", id: 747648890
 mas "WhatsApp", id: 310633997
-mas "Windows App", id: 1295203466
 mas "Wipr", id: 1662217862
 mas "Xcode", id: 497799835
 vscode "akamud.vscode-theme-onedark"
 vscode "antfu.icons-carbon"
+vscode "bradlc.vscode-tailwindcss"
 vscode "christian-kohler.path-intellisense"
 vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
@@ -170,6 +161,7 @@ vscode "github.copilot-chat"
 vscode "github.remotehub"
 vscode "golang.go"
 vscode "gruntfuggly.todo-tree"
+vscode "kilocode.kilo-code"
 vscode "ms-python.black-formatter"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
@@ -184,7 +176,7 @@ vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.remote-repositories"
 vscode "ms-vsliveshare.vsliveshare"
-vscode "mtxr.sqltools"
+vscode "njzy.stats-bar"
 vscode "pkief.material-icon-theme"
 vscode "redhat.java"
 vscode "redhat.vscode-xml"
@@ -204,5 +196,4 @@ vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"
 vscode "vscjava.vscode-java-test"
 vscode "vscjava.vscode-maven"
-vscode "wakatime.vscode-wakatime"
 vscode "yzhang.markdown-all-in-one"
