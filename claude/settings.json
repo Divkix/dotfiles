@@ -1,0 +1,30 @@
+{
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "mcp__mcp-sequentialthinking-tools__sequentialthinking_tools",
+      "mcp__context7__get-library-docs",
+      "mcp__context7__resolve-library-id",
+      "mcp__ide__getDiagnostics",
+      "WebFetch(*)",
+      "Bash(find:*)",
+      "Bash(git:*)",
+      "Bash(diff:*)",
+      "Bash(head:*)",
+      "Bash(awk:*)",
+      "Bash(tail:*)",
+      "Bash(grep:*)",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(less:*)",
+      "Bash(rg:*)",
+      "Bash(cp:*)"
+    ],
+    "deny": [],
+    "defaultMode": "plan"
+  },
+  "model": "opus"
+}
