@@ -5,9 +5,8 @@
 [core]
 	eol = lf
 	autocrlf = input
-	editor = code --wait
+	editor = code --wait --new-window
 	excludesfile = /Users/divkix/.gitignore_global
-	pager = diff-so-fancy | less --tabs=4 -RFX
 [format]
 	signoff = true
 [commit]
@@ -26,6 +25,7 @@
 	ff = only
 [tag]
 	forceSignAnnotated = true
+	gpgSign = true
 [credential]
 	helper = osxkeychain
 [filter "lfs"]
@@ -33,13 +33,16 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[interactive]
-	diffFilter = diff-so-fancy --patch
+[push]
+	autoSetupRemote = true
+	followTags = true
 [diff]
-	external = difft
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[difftool]
+	prompt = false
+[merge]
+	tool = vscode
+[mergetool "vscode"]
+	cmd = code --wait $MERGED

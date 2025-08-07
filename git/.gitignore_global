@@ -1,5 +1,9 @@
 # Node
 npm-debug.log
+node_modules/
+
+# Go
+vendor/
 
 # Idea files
 .idea/
@@ -14,6 +18,9 @@ log/
 
 # VS Code
 .vscode/
+
+# Claude Code
+.claude/
 
 # Mac OS DS_Store
 .DS_Store

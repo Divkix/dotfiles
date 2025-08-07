@@ -1,7 +1,3 @@
-# cd commands
-abbr -g -a .. cd ..
-abbr -g -a ... cd ../..
-
 # ls commands
 abbr -g -a l ls
 abbr -g -a la ls -a
@@ -25,14 +21,13 @@ abbr -g -a gitweb "open (git remote get-url origin)"
 # others
 abbr -g -a reload exec fish
 abbr -g -a c "clear && printf '\e[3J'"
-abbr -g -a cp cp -i
 abbr -g -a df df -h
-abbr -g -a ln ln -i
 abbr -g -a less more
-abbr -g -a mv mv -i
-abbr -g -a snano sudo nano
 abbr -g -a www python3 -m http.server 8000
 abbr -g -a untar tar -zxvf
 
 # brew commands
-abbr -g -a bu brew upgrade
+abbr -g -a bu "brew update && brew upgrade"
+
+# claude code
+abbr -g -a yolo claude --dangerously-skip-permissions --ide
