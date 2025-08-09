@@ -24,3 +24,4 @@ log/
 
 # Mac OS DS_Store
 .DS_Store
+.config/fish/conf.d/keychain.fish
