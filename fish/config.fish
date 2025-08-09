@@ -4,14 +4,15 @@ set -gx GPG_TTY (tty)
 # eval homebrew
 eval (/opt/homebrew/bin/brew shellenv)
 
-set --export BUN_INSTALL "$HOME/.bun" # bun
+set -x BUN_INSTALL "$HOME/.bun" # bun
 
 # Add home bin to PATH
 fish_add_path "$HOME/.local/bin"
 fish_add_path "$HOME/go/bin" # add go bin to path
 fish_add_path "$HOME/.cargo/bin" # add rust bin to path
-fish_add_path $BUN_INSTALL/bin # bun
-fish_add_path /opt/homebrew/opt/libpq/bin # psql
+fish_add_path "$BUN_INSTALL/bin" # bun
+fish_add_path "/opt/homebrew/opt/libpq/bin" # psql
+fish_add_path "/Users/divkix/.deno/bin"
 
 #----------------------------------#
 # homebrew additional config start #
