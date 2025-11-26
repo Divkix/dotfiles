@@ -1,1 +1,9 @@
+# OS
 .DS_Store
+
+# Node.js / Package Managers
+node_modules/
+bun.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
