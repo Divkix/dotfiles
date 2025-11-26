@@ -8,9 +8,12 @@ cd "$DIR"
 SOURCE="$(realpath .)"
 DESTINATION="$(realpath $HOME/.gnupg/)"
 
-info "Configuraing gnupg..."
+info "Configuring gnupg..."
 
-if [! -d "/path/to/dir" ] && echo "Directory $HOME/.gnupg does not exists creating..." && mkdir $DESTINATION
+if [ ! -d "$DESTINATION" ]; then
+    echo "Directory $DESTINATION does not exist, creating..."
+    mkdir -p "$DESTINATION"
+fi
 
 find . -name "gpg*" | while read fn; do
     fn=$(basename $fn)

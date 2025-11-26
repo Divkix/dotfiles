@@ -8,6 +8,8 @@ cd "$DIR"
 
 . ../scripts/functions.sh
 
+COMMENT=\#*
+
 find * -name "*.list" | while read fn; do
     cmd="${fn%.*}"
     set -- $cmd

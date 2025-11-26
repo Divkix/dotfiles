@@ -14,4 +14,4 @@ find * -name "config*" | while read fn; do
     scopy "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 
-success "Finished configuring Starship 🚀"
+success "Finished configuring Ghostty."

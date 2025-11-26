@@ -10,7 +10,7 @@ DESTINATION="$(realpath $HOME/.config/opencode/)"
 
 info "Setting up Opencode..."
 
-find * -name "*" | while read fn; do
+find * -name "*" -not -name "setup.sh" | while read fn; do
     scopy "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 
