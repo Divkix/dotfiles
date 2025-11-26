@@ -37,6 +37,6 @@
   "formatter": {
     "prettier": {
       "disabled": false
-    },
+    }
   }
 }
