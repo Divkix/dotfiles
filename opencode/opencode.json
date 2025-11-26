@@ -1,19 +1,27 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "anthropic/claude-sonnet-4-20250514",
-  "mode": {
-    "plan": {
-      "model": "anthropic/claude-opus-4-1-20250805"
-    }
-  },
+  "model": "anthropic/claude-opus-4-1-20250805",
+  "theme": "system",
+  "instructions": [
+    "CLAUDE.md",
+    "AGENTS.md"
+  ],
   "mcp": {
     "context7": {
       "type": "local",
-      "command": ["npx", "-y", "@upstash/context7-mcp"]
+      "command": [
+        "npx",
+        "-y",
+        "@upstash/context7-mcp"
+      ]
     },
     "mcp-sequential-thinking": {
       "type": "local",
-      "command": ["npx", "-y", "mcp-sequentialthinking-tools"]
+      "command": [
+        "npx",
+        "-y",
+        "mcp-sequentialthinking-tools"
+      ]
     },
     "playwright": {
       "type": "local",
@@ -25,5 +33,10 @@
         "--isolated"
       ]
     }
+  },
+  "formatter": {
+    "prettier": {
+      "disabled": false
+    },
   }
 }
