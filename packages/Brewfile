@@ -1,38 +1,39 @@
 tap "golangci/tap"
 tap "homebrew/autoupdate"
 tap "mongodb/brew"
+tap "oven-sh/bun"
+tap "sst/tap"
 tap "supabase/tap"
-tap "theboredteam/boring-notch"
-# GNU internationalization (i18n) and localization (l10n) library
-brew "gettext"
-# Bourne-Again SHell, a UNIX command interpreter
-brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Toolchain of the web
+brew "biome"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
+# ASP system to ground and solve logic programs
+brew "clingo"
 # Statistics utility to count lines of code
 brew "cloc"
-# Platform built on V8 to build network applications
+# Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # CLI tool for Cloudflare Workers
 brew "cloudflare-wrangler"
 # Cross-platform make
 brew "cmake"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
-# OpenAI's coding agent that runs in your terminal
-brew "codex"
 # Top-like interface for container metrics
 brew "ctop"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
-# Secure runtime for JavaScript and TypeScript
-brew "deno"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# Low-level access to audio, keyboard, mouse, joystick, and graphics
+brew "sdl2"
+# Play, record, convert, and stream audio and video
+brew "ffmpeg"
 # Banner-like program prints strings as ASCII art
 brew "figlet"
 # User-friendly command-line shell for UNIX-like operating systems
@@ -57,20 +58,14 @@ brew "gopls"
 brew "goreleaser"
 # Golang security checker
 brew "gosec"
-# Client library for huggingface.co hub
-brew "huggingface-cli"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Postgres C API library
-brew "libpq"
 # Rainbows and unicorns in your console!
 brew "lolcat"
 # Clone of ls with colorful output, file type icons, and more
 brew "lsd"
 # Mac App Store command-line interface
 brew "mas"
-# Java-based project management
-brew "maven"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
 # Package compiler and linker metadata toolkit
@@ -79,18 +74,26 @@ brew "pkgconf"
 brew "pre-commit"
 # Static type checker for Python
 brew "pyright"
+# Rsync for cloud storage
+brew "rclone"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
 # Extremely fast Python linter, written in Rust
 brew "ruff"
 # Safe, concurrent, practical language
 brew "rust"
 # Experimental Rust compiler front-end for IDEs
 brew "rust-analyzer"
+# Build tool for Scala projects
+brew "sbt"
 # Cross-shell prompt for astronauts
 brew "starship"
 # State of the art linter for the Go programming language
 brew "staticcheck"
-# Display directories as trees (with optional color/HTML output)
-brew "tree"
+# Language for application scale JavaScript development
+brew "typescript"
+# Language Server Protocol implementation for TypeScript wrapping tsserver
+brew "typescript-language-server"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
 # Executes a program periodically, showing output fullscreen
@@ -101,29 +104,33 @@ brew "wget"
 brew "golangci/tap/golangci-lint"
 # This package contains standard utilities for interacting with MongoDB.
 brew "mongodb/brew/mongodb-database-tools"
+# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
+brew "oven-sh/bun/bun"
+# The AI coding agent built for the terminal.
+brew "sst/tap/opencode"
 # Supabase CLI
 brew "supabase/tap/supabase"
 # View, create, manipulate, print and manage files in Portable Document Format
 cask "adobe-acrobat-pro"
-# Network scanner
-cask "angry-ip-scanner"
+# Image editing and design software
+cask "affinity"
 # Allows connection to a computer remotely
 cask "anydesk"
-# Not so boring notch That Rocks 🎸🎶 
-cask "boring-notch"
-# Web browser focusing on privacy
-cask "brave-browser"
-# OpenAI's official ChatGPT desktop app
-cask "chatgpt"
+# Integrated CAD, CAM, CAE, and PCB software
+cask "autodesk-fusion"
+# 3D model slicing software for 3D printers, maintained by Bambu Lab
+cask "bambu-studio"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
 # Write, edit, and chat about your code with AI
 cask "cursor"
-# Window peeking utility app
-cask "dockdoor"
 cask "font-hack-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Desktop client for GitHub repositories
 cask "github"
+# Web browser
+cask "google-chrome"
 # Tools to protect your emails and files
 cask "gpg-suite"
 # Menu bar application that displays the CPU speed limit due to thermal issues
@@ -134,10 +141,10 @@ cask "iina"
 cask "keka"
 # Discover, download, and run local LLMs
 cask "lm-studio"
+# Reverse proxy, secure introspectable tunnels to localhost
+cask "ngrok"
 # Replacement for Docker Desktop
 cask "orbstack"
-# Apple Notes extension
-cask "pronotes"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Instant messaging application focusing on security
@@ -152,41 +159,45 @@ cask "tailscale-app"
 cask "temurin"
 # Open-source code editor
 cask "visual-studio-code"
+# Web browser with built-in email client focusing on customization and control
+cask "vivaldi"
 # Video communication and virtual meeting platform
 cask "zoom"
+mas "Hidden Bar", id: 1452453066
+mas "Keynote", id: 409183694
 mas "Microsoft Excel", id: 462058435
 mas "Microsoft PowerPoint", id: 462062816
 mas "Microsoft Word", id: 462054704
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
 mas "Paint S", id: 736473980
 mas "Photomator", id: 1444636541
 mas "PiPifier", id: 1160374471
-mas "Prime Video", id: 545519333
 mas "Raycast Companion", id: 6738274497
 mas "SponsorBlock", id: 1573461917
 mas "Telegram", id: 747648890
 mas "WhatsApp", id: 310633997
+mas "Windows App", id: 1295203466
 mas "Wipr", id: 1662217862
 mas "Xcode", id: 497799835
 vscode "akamud.vscode-theme-onedark"
 vscode "antfu.icons-carbon"
 vscode "anthropic.claude-code"
-vscode "ardenivanov.svelte-intellisense"
 vscode "bierner.markdown-mermaid"
+vscode "biomejs.biome"
 vscode "bradlc.vscode-tailwindcss"
 vscode "charliermarsh.ruff"
 vscode "christian-kohler.path-intellisense"
-vscode "dbaeumer.vscode-eslint"
-vscode "denoland.vscode-deno"
 vscode "eamodio.gitlens"
 vscode "github.copilot"
 vscode "github.copilot-chat"
-vscode "github.vscode-github-actions"
+vscode "github.vscode-pull-request-github"
 vscode "golang.go"
+vscode "google.gemini-cli-vscode-ide-companion"
 vscode "gruntfuggly.todo-tree"
-vscode "ms-playwright.playwright"
+vscode "ms-pyright.pyright"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
 vscode "ms-python.vscode-python-envs"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
@@ -194,23 +205,28 @@ vscode "ms-vscode.cmake-tools"
 vscode "ms-vscode.cpptools"
 vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
+vscode "ms-vscode.vscode-typescript-next"
 vscode "ms-vsliveshare.vsliveshare"
-vscode "pkief.material-icon-theme"
+vscode "oven.bun-vscode"
 vscode "redhat.java"
 vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
-vscode "rooveterinaryinc.roo-cline"
 vscode "rust-lang.rust-analyzer"
-vscode "svelte.svelte-vscode"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "usernamehw.errorlens"
 vscode "vadimcn.vscode-lldb"
-vscode "visualstudioexptteam.intellicode-api-usage-examples"
-vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vscjava.vscode-gradle"
 vscode "vscjava.vscode-java-debug"
 vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"
 vscode "vscjava.vscode-java-test"
 vscode "vscjava.vscode-maven"
+go "github.com/air-verse/air"
+go "golang.org/x/tools/cmd/deadcode"
+go "github.com/golangci/golangci-lint/cmd/golangci-lint"
+go "golang.org/x/tools/gopls"
+go "github.com/gordonklaus/ineffassign"
+go "go.uber.org/mock/mockgen"
+go "github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen"
+go "honnef.co/go/tools/cmd/staticcheck"

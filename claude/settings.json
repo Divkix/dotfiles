@@ -27,5 +27,10 @@
     "deny": [],
     "defaultMode": "plan"
   },
-  "model": "sonnet"
+  "enableAllProjectMcpServers": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bunx ccusage statusline"
+  },
+  "alwaysThinkingEnabled": false
 }

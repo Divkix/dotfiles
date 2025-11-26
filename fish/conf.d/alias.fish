@@ -1,4 +1,3 @@
 alias cat=bat
-alias ls="lsd --icon never"
+alias ls="lsd"
 alias rmd=trash
-#alias code=code-insiders
