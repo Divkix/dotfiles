@@ -22,7 +22,9 @@ cp -v $HOME/.claude.json ./claude/claude.json
 
 # opencode
 opencode_dir=$HOME/.config/opencode
-cp -v -r $opencode_dir/* ./opencode
+cp -v $opencode_dir/opencode.json ./opencode/opencode.json
+cp -v $opencode_dir/AGENTS.md ./opencode/AGENTS.md
+cp -v -r $opencode_dir/agent/* ./opencode/agent/
 
 # copy ghostty config
 ghostty_dir=$HOME/.config/ghostty
