@@ -27,7 +27,4 @@ find * -name "setup.sh" \
     ./$setup
 done
 
-# Install fisher plugins
-./fisher/setup.sh
-
 success "Finished installing Dotfiles"

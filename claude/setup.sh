@@ -10,7 +10,7 @@ DESTINATION="$(realpath $HOME/.claude)"
 
 info "Setting up Claude Code..."
 
-find * -name "*" | while read fn; do
+find * -name "*" -not -name "setup.sh" | while read fn; do
     scopy "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 

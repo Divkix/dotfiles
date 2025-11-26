@@ -10,7 +10,7 @@ scopy() {
     fi
 
     if sudo cp "$1" "$2"; then
-        substep_success "Copied $2 to $1. $OVERWRITTEN"
+        substep_success "Copied $1 to $2. $OVERWRITTEN"
     else
         substep_error "Copying $2 to $1 failed."
     fi

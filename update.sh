@@ -29,7 +29,7 @@ ghostty_dir=$HOME/.config/ghostty
 cp -v $ghostty_dir/config ./ghostty/config
 
 # update fisher, using fish -c to run the command from fish shell instead of bash
-fish -c "fisher list | grep -v "jorgebucaran/fisher" > './fisher/fisher install.list'"
+fish -c 'fisher list | grep -v "jorgebucaran/fisher" > "./fisher/fisher install.list"'
 
 # update git config
 cp -v $HOME/.gitconfig ./git/.gitconfig
