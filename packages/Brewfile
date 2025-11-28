@@ -2,6 +2,7 @@ tap "golangci/tap"
 tap "homebrew/autoupdate"
 tap "mongodb/brew"
 tap "oven-sh/bun"
+tap "sdkman/tap"
 tap "sst/tap"
 tap "supabase/tap"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -46,8 +47,6 @@ brew "gemini-cli"
 brew "gh"
 # Distributed revision control system
 brew "git"
-# Git extension for versioning large files
-brew "git-lfs"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Stricter gofmt
@@ -84,8 +83,6 @@ brew "ruff"
 brew "rust"
 # Experimental Rust compiler front-end for IDEs
 brew "rust-analyzer"
-# Build tool for Scala projects
-brew "sbt"
 # Cross-shell prompt for astronauts
 brew "starship"
 # State of the art linter for the Go programming language
@@ -100,12 +97,16 @@ brew "uv"
 brew "watch"
 # Internet file retriever
 brew "wget"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
 # Fast linters runner for Go.
 brew "golangci/tap/golangci-lint"
 # This package contains standard utilities for interacting with MongoDB.
 brew "mongodb/brew/mongodb-database-tools"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
+# SDKMAN! the Software Development Kit Manager
+brew "sdkman/tap/sdkman-cli"
 # The AI coding agent built for the terminal.
 brew "sst/tap/opencode"
 # Supabase CLI
@@ -155,8 +156,6 @@ cask "spotify"
 cask "stremio"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
-# JDK from the Eclipse Foundation (Adoptium)
-cask "temurin"
 # Open-source code editor
 cask "visual-studio-code"
 # Web browser with built-in email client focusing on customization and control
@@ -207,6 +206,7 @@ vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.vscode-typescript-next"
 vscode "ms-vsliveshare.vsliveshare"
+vscode "mtxr.sqltools"
 vscode "oven.bun-vscode"
 vscode "redhat.java"
 vscode "redhat.vscode-yaml"

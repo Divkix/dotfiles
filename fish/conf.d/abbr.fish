@@ -27,7 +27,7 @@ abbr -g -a www python3 -m http.server 8000
 abbr -g -a untar tar -zxvf
 
 # brew commands
-abbr -g -a bu "brew update && brew upgrade"
+abbr -g -a bu "fisher update && brew update && brew upgrade"
 
 # claude code
-abbr -g -a yolo claude --dangerously-skip-permissions --ide
+abbr -g -a yolo "claude --dangerously-skip-permissions --ide"
