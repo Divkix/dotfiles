@@ -1,3 +1,3 @@
 function fish_greeting
-    figlet -f slant "Welcome Div!" | lolcat
+    figlet -f slant "Waddup Div!" | lolcat
 end
