@@ -38,9 +38,6 @@ bass source "$SDKMAN_DIR/bin/sdkman-init.sh"
 # This won't be added again if you remove it.
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
 
-# zoxide (z alternative)
-zoxide init fish | source
-
 # starship prompt setup
 set -gx STARSHIP_CONFIG "$HOME/.config/starship.toml"
 starship init fish | source
