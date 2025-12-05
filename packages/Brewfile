@@ -62,8 +62,6 @@ brew "gopls"
 brew "goreleaser"
 # Golang security checker
 brew "gosec"
-# Kubernetes package manager
-brew "helm"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Rainbows and unicorns in your console!
@@ -72,8 +70,6 @@ brew "lolcat"
 brew "lsd"
 # Mac App Store command-line interface
 brew "mas"
-# Run a Kubernetes cluster locally
-brew "minikube"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
 # Package compiler and linker metadata toolkit
