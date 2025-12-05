@@ -1,5 +1,5 @@
 alias cat="bat"
-alias ls="lsd"
+alias ls="lsd --icon-theme=unicode"
 alias rmd="trash"
 alias python="uv run python"
 alias python3="uv run python"
