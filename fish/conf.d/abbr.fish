@@ -31,3 +31,7 @@ abbr -g -a bu "fisher update && brew update && brew upgrade"
 
 # claude code
 abbr -g -a yolo "claude --dangerously-skip-permissions --ide"
+abbr -g -a yolop "claude --dangerously-skip-permissions --ide -p"
+
+# aria2c download
+abbr -a fastdl 'aria2c -x16 -s16 -k1M'

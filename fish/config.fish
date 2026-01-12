@@ -14,12 +14,17 @@ fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.bun/bin"
 fish_add_path "/Users/divkix/.deno/bin"
 
-
 # add curl
 fish_add_path "/opt/homebrew/opt/curl/bin"
 set -gx LDFLAGS "-L/opt/homebrew/opt/curl/lib"
 set -gx CPPFLAGS "-I/opt/homebrew/opt/curl/include"
 set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/curl/lib/pkgconfig"
+
+# add ruby
+fish_add_path /opt/homebrew/opt/ruby/bin
+set -gx LDFLAGS "-L/opt/homebrew/opt/ruby/lib"
+set -gx CPPFLAGS "-I/opt/homebrew/opt/ruby/include"
+set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/ruby/lib/pkgconfig"
 
 # fzf config
 fzf_configure_bindings --directory=\cf
