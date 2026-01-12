@@ -17,20 +17,33 @@
       "Bash(tail:*)",
       "Bash(grep:*)",
       "Bash(cat:*)",
-      "Bash(find:*)",
       "Bash(less:*)",
       "Bash(rg:*)",
       "Bash(cp:*)",
       "Bash(gh issue view:*)",
-      "WebFetch"
+      "WebFetch",
+      "WebSearch"
     ],
     "deny": [],
+    "ask": [],
     "defaultMode": "plan"
   },
   "enableAllProjectMcpServers": true,
   "statusLine": {
     "type": "command",
-    "command": "bunx ccusage statusline"
+    "command": "bunx -y ccstatusline@latest",
+    "padding": 0
   },
-  "alwaysThinkingEnabled": false
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true
+  }
 }
