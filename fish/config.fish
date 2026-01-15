@@ -12,7 +12,6 @@ fish_add_path "$HOME/.local/bin"
 fish_add_path "$HOME/go/bin"
 fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.bun/bin"
-fish_add_path "/Users/divkix/.deno/bin"
 
 # add curl
 fish_add_path "/opt/homebrew/opt/curl/bin"
@@ -25,6 +24,12 @@ fish_add_path /opt/homebrew/opt/ruby/bin
 set -gx LDFLAGS "-L/opt/homebrew/opt/ruby/lib"
 set -gx CPPFLAGS "-I/opt/homebrew/opt/ruby/include"
 set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/ruby/lib/pkgconfig"
+
+# add fmpeg
+fish_add_path /opt/homebrew/opt/ffmpeg-full/bin
+set -gx LDFLAGS "-L/opt/homebrew/opt/ffmpeg-full/lib"
+set -gx CPPFLAGS "-I/opt/homebrew/opt/ffmpeg-full/include"
+set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/ffmpeg-full/lib/pkgconfig"
 
 # fzf config
 fzf_configure_bindings --directory=\cf
