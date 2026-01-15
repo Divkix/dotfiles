@@ -46,7 +46,7 @@ brew "fd"
 # Low-level access to audio, keyboard, mouse, joystick, and graphics
 brew "sdl2"
 # Play, record, convert, and stream audio and video
-brew "ffmpeg"
+brew "ffmpeg-full"
 # Banner-like program prints strings as ASCII art
 brew "figlet"
 # User-friendly command-line shell for UNIX-like operating systems
@@ -141,6 +141,8 @@ cask "anydesk"
 cask "bambu-studio"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
+# Node-based image, video and audio generator
+cask "comfyui"
 # Write, edit, and chat about your code with AI
 cask "cursor"
 cask "font-hack-nerd-font"
@@ -172,8 +174,6 @@ cask "raycast"
 cask "signal"
 # Music streaming service
 cask "spotify"
-# Open-source media center
-cask "stremio"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
 # Open-source code editor
@@ -185,7 +185,6 @@ mas "Exporter", id: 1099120373
 mas "Hidden Bar", id: 1452453066
 mas "HP", id: 1474276998
 mas "Microsoft Excel", id: 462058435
-mas "Microsoft PowerPoint", id: 462062816
 mas "Microsoft Word", id: 462054704
 mas "Photomator", id: 1444636541
 mas "PiPifier", id: 1160374471
@@ -204,6 +203,8 @@ vscode "bradlc.vscode-tailwindcss"
 vscode "charliermarsh.ruff"
 vscode "christian-kohler.path-intellisense"
 vscode "eamodio.gitlens"
+vscode "github.copilot"
+vscode "github.copilot-chat"
 vscode "github.vscode-pull-request-github"
 vscode "golang.go"
 vscode "gruntfuggly.todo-tree"

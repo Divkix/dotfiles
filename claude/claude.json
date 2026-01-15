@@ -1,5 +1,5 @@
 {
-  "numStartups": 566,
+  "numStartups": 595,
   "installMethod": "local",
   "autoUpdates": true,
   "hasSeenTasksHint": true,
@@ -8,40 +8,40 @@
     "plan-mode-for-complex-tasks": 1,
     "terminal-setup": 1,
     "shift-enter-setup": 1,
-    "memory-command": 564,
-    "theme-command": 563,
-    "stickers-command": 563,
+    "memory-command": 594,
+    "theme-command": 583,
+    "stickers-command": 583,
     "prompt-queue": 3,
-    "enter-to-steer-in-relatime": 564,
-    "shift-enter": 556,
-    "todo-list": 564,
-    "ide-upsell-external-terminal": 560,
+    "enter-to-steer-in-relatime": 584,
+    "shift-enter": 587,
+    "todo-list": 584,
+    "ide-upsell-external-terminal": 594,
     "# for memory": 79,
-    "install-github-app": 556,
-    "drag-and-drop-images": 558,
-    "paste-images-mac": 559,
-    "double-esc-code-restore": 559,
-    "continue": 559,
-    "shift-tab": 559,
-    "image-paste": 564,
+    "install-github-app": 588,
+    "drag-and-drop-images": 588,
+    "paste-images-mac": 589,
+    "double-esc-code-restore": 589,
+    "continue": 589,
+    "shift-tab": 589,
+    "image-paste": 585,
     "tab-toggle-thinking": 53,
-    "ultrathink-keyword": 559,
-    "custom-agents": 564,
+    "ultrathink-keyword": 589,
+    "custom-agents": 594,
     "frontend-design-plugin": 561,
-    "permissions": 556,
-    "custom-commands": 564,
-    "rename-conversation": 564,
-    "git-worktrees": 556,
+    "permissions": 588,
+    "custom-commands": 594,
+    "rename-conversation": 594,
+    "git-worktrees": 587,
     "config-thinking-mode": 509,
     "guest-passes": 59,
-    "desktop-app": 566,
-    "web-app": 566,
-    "mobile-app": 551,
-    "install-slack-app": 556,
+    "desktop-app": 581,
+    "web-app": 581,
+    "mobile-app": 581,
+    "install-slack-app": 588,
     "btw-side-question": 503,
     "colorterm-truecolor": 558
   },
-  "promptQueueUseCount": 772,
+  "promptQueueUseCount": 790,
   "showExpandedTodos": true,
   "autoConnectIde": true,
   "cachedStatsigGates": {
@@ -81,7 +81,7 @@
   "cachedGrowthBookFeatures": {
     "strawberry_granite_flag": "N/A",
     "persimmon_marble_flag": "N/A",
-    "tengu_mcp_tool_search": false,
+    "tengu_mcp_tool_search": true,
     "tengu_disable_bypass_permissions_mode": false,
     "tengu_tool_pear": false,
     "tengu_c4w_usage_limit_notifications_enabled": true,
@@ -109,7 +109,12 @@
     "tengu_log_segment_events": false,
     "tengu_log_datadog_events": true,
     "tengu_post_compact_survey": false,
-    "tengu_streaming_tool_execution2": false
+    "tengu_streaming_tool_execution2": false,
+    "tengu_code_diff_cli": true,
+    "enhanced_telemetry_beta": false,
+    "tengu_chrome_auto_enable": false,
+    "tengu_permission_explainer": false,
+    "tengu_compact_streaming_retry": false
   },
   "hasSeenStashHint": true,
   "firstStartTime": "2025-11-26T01:02:51.802Z",
@@ -191,9 +196,12 @@
     ],
     "divkix/ori-ui": [
       "/Users/divkix/GitHub/ori-ui"
+    ],
+    "ekagra1602/live-it": [
+      "/Users/divkix/GitHub/live-it"
     ]
   },
-  "changelogLastFetched": 1768219264839,
+  "changelogLastFetched": 1768362518534,
   "passesEligibilityCache": {
     "b3977396-8bfc-4811-b920-849ca98b6ff4": {
       "eligible": false,
@@ -207,7 +215,7 @@
         "campaign": "claude_code_guest_pass",
         "referral_link": "https://claude.ai/referral/f0Nq0hC_Lg"
       },
-      "timestamp": 1768219264256
+      "timestamp": 1768499121599
     }
   },
   "s1mAccessCache": {
@@ -219,7 +227,7 @@
     "45df1448-7db6-4ea3-9b07-0b139b2ba36f": {
       "hasAccess": false,
       "hasAccessNotAsDefault": false,
-      "timestamp": 1768219236848
+      "timestamp": 1768499121890
     }
   },
   "projects": {
@@ -288,36 +296,28 @@
         "version": "15.5.6",
         "packageManager": "npm"
       },
-      "lastCost": 0.378825,
-      "lastAPIDuration": 27340,
-      "lastAPIDurationWithoutRetries": 27334,
-      "lastToolDuration": 21,
-      "lastDuration": 385257,
+      "lastCost": 0.053030999999999995,
+      "lastAPIDuration": 16774,
+      "lastAPIDurationWithoutRetries": 16768,
+      "lastToolDuration": 0,
+      "lastDuration": 18068,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 1023,
-      "lastTotalOutputTokens": 639,
-      "lastTotalCacheCreationInputTokens": 63384,
-      "lastTotalCacheReadInputTokens": 77366,
+      "lastTotalInputTokens": 51846,
+      "lastTotalOutputTokens": 237,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 997,
-          "outputTokens": 315,
+          "inputTokens": 51846,
+          "outputTokens": 237,
           "cacheReadInputTokens": 0,
-          "cacheCreationInputTokens": 13362,
+          "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.019274499999999996
-        },
-        "claude-opus-4-5-20251101": {
-          "inputTokens": 26,
-          "outputTokens": 324,
-          "cacheReadInputTokens": 77366,
-          "cacheCreationInputTokens": 50022,
-          "webSearchRequests": 0,
-          "costUSD": 0.3595505
+          "costUSD": 0.053030999999999995
         }
       },
-      "lastSessionId": "8a4c9749-62d2-4d6d-b4c4-0890ba4b8f09",
+      "lastSessionId": "ceb77096-9b1f-4d97-879e-c94e9d50314d",
       "reactVulnerabilityWarningCount": 3
     },
     "/Users/divkix/GitHub/webresume.now": {
@@ -405,20 +405,20 @@
         "animations.ts",
         "ReadingProgress.tsx"
       ],
-      "exampleFilesGeneratedAt": 1767705909804,
+      "exampleFilesGeneratedAt": 1768348710285,
       "hasCompletedProjectOnboarding": true,
-      "lastCost": 1.1036089000000004,
-      "lastAPIDuration": 194570,
-      "lastToolDuration": 31175,
-      "lastDuration": 685003,
-      "lastLinesAdded": 46,
-      "lastLinesRemoved": 2,
-      "lastTotalInputTokens": 99298,
-      "lastTotalOutputTokens": 6493,
-      "lastTotalCacheCreationInputTokens": 109778,
-      "lastTotalCacheReadInputTokens": 522682,
+      "lastCost": 0,
+      "lastAPIDuration": 0,
+      "lastToolDuration": 0,
+      "lastDuration": 5665,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 0,
+      "lastTotalOutputTokens": 0,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 0,
       "lastTotalWebSearchRequests": 0,
-      "lastSessionId": "44eb2800-9983-4d46-b120-c582ba4acdf8",
+      "lastSessionId": "dd491955-bdd8-4505-921d-1c8d3047990a",
       "reactVulnerabilityCache": {
         "detected": false,
         "package": null,
@@ -426,25 +426,8 @@
         "version": null,
         "packageManager": null
       },
-      "lastAPIDurationWithoutRetries": 194564,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 98195,
-          "outputTokens": 1467,
-          "cacheReadInputTokens": 48424,
-          "cacheCreationInputTokens": 12234,
-          "webSearchRequests": 0,
-          "costUSD": 0.1256649
-        },
-        "claude-opus-4-5-20251101": {
-          "inputTokens": 1103,
-          "outputTokens": 5026,
-          "cacheReadInputTokens": 474258,
-          "cacheCreationInputTokens": 97544,
-          "webSearchRequests": 0,
-          "costUSD": 0.9779439999999999
-        }
-      }
+      "lastAPIDurationWithoutRetries": 0,
+      "lastModelUsage": {}
     },
     "/Users/divkix/GitHub/Alita_Robot": {
       "allowedTools": [],
@@ -530,37 +513,37 @@
         "version": null,
         "packageManager": null
       },
-      "lastCost": 0.40949515000000003,
-      "lastAPIDuration": 93509,
-      "lastAPIDurationWithoutRetries": 93505,
-      "lastToolDuration": 60,
-      "lastDuration": 107040,
-      "lastLinesAdded": 0,
-      "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 3361,
-      "lastTotalOutputTokens": 3305,
-      "lastTotalCacheCreationInputTokens": 34973,
-      "lastTotalCacheReadInputTokens": 213091,
+      "lastCost": 0.47032674999999985,
+      "lastAPIDuration": 97896,
+      "lastAPIDurationWithoutRetries": 97884,
+      "lastToolDuration": 9440,
+      "lastDuration": 125179,
+      "lastLinesAdded": 1,
+      "lastLinesRemoved": 5,
+      "lastTotalInputTokens": 32294,
+      "lastTotalOutputTokens": 3865,
+      "lastTotalCacheCreationInputTokens": 27279,
+      "lastTotalCacheReadInputTokens": 352668,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 869,
-          "outputTokens": 318,
-          "cacheReadInputTokens": 13064,
+          "inputTokens": 32099,
+          "outputTokens": 310,
+          "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.0037653999999999995
+          "costUSD": 0.033649
         },
         "claude-opus-4-5-20251101": {
-          "inputTokens": 2492,
-          "outputTokens": 2987,
-          "cacheReadInputTokens": 200027,
-          "cacheCreationInputTokens": 34973,
+          "inputTokens": 195,
+          "outputTokens": 3555,
+          "cacheReadInputTokens": 352668,
+          "cacheCreationInputTokens": 27279,
           "webSearchRequests": 0,
-          "costUSD": 0.40572975
+          "costUSD": 0.43667775
         }
       },
-      "lastSessionId": "b34a62f9-dfef-44e9-9c6c-a4803b403efc"
+      "lastSessionId": "3202932c-4962-4b2c-a3e3-3d85b61a3ef7"
     },
     "/Users/divkix/GitHub/xrossways-website": {
       "allowedTools": [],
@@ -588,37 +571,37 @@
         "version": null,
         "packageManager": null
       },
-      "lastCost": 0.3943604499999999,
-      "lastAPIDuration": 140714,
-      "lastAPIDurationWithoutRetries": 140696,
-      "lastToolDuration": 51,
-      "lastDuration": 146769,
-      "lastLinesAdded": 0,
-      "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 70823,
-      "lastTotalOutputTokens": 3411,
-      "lastTotalCacheCreationInputTokens": 29751,
-      "lastTotalCacheReadInputTokens": 150567,
+      "lastCost": 0.591075,
+      "lastAPIDuration": 94762,
+      "lastAPIDurationWithoutRetries": 94759,
+      "lastToolDuration": 1152,
+      "lastDuration": 240190,
+      "lastLinesAdded": 3,
+      "lastLinesRemoved": 7,
+      "lastTotalInputTokens": 18284,
+      "lastTotalOutputTokens": 3413,
+      "lastTotalCacheCreationInputTokens": 45592,
+      "lastTotalCacheReadInputTokens": 411600,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 70630,
-          "outputTokens": 930,
-          "cacheReadInputTokens": 12842,
+          "inputTokens": 18000,
+          "outputTokens": 221,
+          "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.07656420000000001
+          "costUSD": 0.019104999999999994
         },
         "claude-opus-4-5-20251101": {
-          "inputTokens": 193,
-          "outputTokens": 2481,
-          "cacheReadInputTokens": 137725,
-          "cacheCreationInputTokens": 29751,
+          "inputTokens": 284,
+          "outputTokens": 3192,
+          "cacheReadInputTokens": 411600,
+          "cacheCreationInputTokens": 45592,
           "webSearchRequests": 0,
-          "costUSD": 0.31779625
+          "costUSD": 0.5719699999999999
         }
       },
-      "lastSessionId": "5bcb9b4a-c2cc-4d5c-b3fd-7489ab080769"
+      "lastSessionId": "6746ec8c-4229-4876-bf7a-2bef851fd90d"
     },
     "/Users/divkix/GitHub/CSE511-Assignments": {
       "allowedTools": [],
@@ -646,22 +629,22 @@
       "enabledMcpjsonServers": [],
       "disabledMcpjsonServers": [],
       "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 1,
+      "projectOnboardingSeenCount": 2,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [],
       "lastTotalWebSearchRequests": 0,
-      "lastCost": 0.000129,
-      "lastAPIDuration": 1343,
-      "lastToolDuration": 0,
-      "lastDuration": 3388,
+      "lastCost": 0.6735977500000001,
+      "lastAPIDuration": 166944,
+      "lastToolDuration": 57148,
+      "lastDuration": 1638557,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 79,
-      "lastTotalOutputTokens": 10,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 0,
-      "lastSessionId": "08ad9051-88e9-45f0-915d-e5b1860305b4",
+      "lastTotalInputTokens": 53411,
+      "lastTotalOutputTokens": 4665,
+      "lastTotalCacheCreationInputTokens": 66215,
+      "lastTotalCacheReadInputTokens": 209900,
+      "lastSessionId": "533d6a6e-601f-4ff8-9789-fa8ad365ef52",
       "reactVulnerabilityCache": {
         "detected": false,
         "package": null,
@@ -669,15 +652,23 @@
         "version": null,
         "packageManager": null
       },
-      "lastAPIDurationWithoutRetries": 1343,
+      "lastAPIDurationWithoutRetries": 166934,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 79,
-          "outputTokens": 10,
+          "inputTokens": 53004,
+          "outputTokens": 843,
           "cacheReadInputTokens": 0,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.000129
+          "costUSD": 0.057219
+        },
+        "claude-opus-4-5-20251101": {
+          "inputTokens": 407,
+          "outputTokens": 3822,
+          "cacheReadInputTokens": 209900,
+          "cacheCreationInputTokens": 66215,
+          "webSearchRequests": 0,
+          "costUSD": 0.61637875
         }
       }
     },
@@ -1881,37 +1872,40 @@
       },
       "exampleFilesGeneratedAt": 1768219239233,
       "hasCompletedProjectOnboarding": true,
-      "lastCost": 0.15531924999999996,
-      "lastAPIDuration": 41300,
-      "lastAPIDurationWithoutRetries": 33199,
-      "lastToolDuration": 0,
-      "lastDuration": 24892,
-      "lastLinesAdded": 0,
-      "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 17744,
-      "lastTotalOutputTokens": 590,
-      "lastTotalCacheCreationInputTokens": 30977,
-      "lastTotalCacheReadInputTokens": 0,
+      "lastCost": 17.39885369999998,
+      "lastAPIDuration": 2388105,
+      "lastAPIDurationWithoutRetries": 2388051,
+      "lastToolDuration": 1835599,
+      "lastDuration": 4310281,
+      "lastLinesAdded": 1111,
+      "lastLinesRemoved": 330,
+      "lastTotalInputTokens": 90227,
+      "lastTotalOutputTokens": 109973,
+      "lastTotalCacheCreationInputTokens": 804608,
+      "lastTotalCacheReadInputTokens": 21050713,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 17738,
-          "outputTokens": 370,
-          "cacheReadInputTokens": 0,
-          "cacheCreationInputTokens": 12681,
+          "inputTokens": 81149,
+          "outputTokens": 11521,
+          "cacheReadInputTokens": 460967,
+          "cacheCreationInputTokens": 123272,
           "webSearchRequests": 0,
-          "costUSD": 0.03543924999999999
+          "costUSD": 0.33894069999999976
         },
         "claude-opus-4-5-20251101": {
-          "inputTokens": 6,
-          "outputTokens": 220,
-          "cacheReadInputTokens": 0,
-          "cacheCreationInputTokens": 18296,
+          "inputTokens": 9078,
+          "outputTokens": 98452,
+          "cacheReadInputTokens": 20589746,
+          "cacheCreationInputTokens": 681336,
           "webSearchRequests": 0,
-          "costUSD": 0.11988000000000001
+          "costUSD": 17.059912999999984
         }
       },
-      "lastSessionId": "5c5a6b28-ea15-4b01-bc68-4442a29d6b58"
+      "lastSessionId": "a97bf196-4b41-4acb-adcc-25c5e63f9488",
+      "disabledMcpServers": [
+        "plugin:playwright:playwright"
+      ]
     },
     "/Users/divkix/GitHub/ori-ui": {
       "allowedTools": [],
@@ -1988,6 +1982,32 @@
         "version": null,
         "packageManager": null
       }
+    },
+    "/Users/divkix/GitHub/live-it": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 1,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "exampleFiles": [
+        "Workspace.tsx",
+        "index.js",
+        "App.tsx",
+        "ThreeDPreview.tsx",
+        "StatusCards.tsx"
+      ],
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "exampleFilesGeneratedAt": 1768362519145
     }
   },
   "oauthAccount": {
@@ -2007,9 +2027,9 @@
   "hasShownOpus45Notice": {
     "45df1448-7db6-4ea3-9b07-0b139b2ba36f": true
   },
-  "lastReleaseNotesSeen": "2.1.5",
+  "lastReleaseNotesSeen": "2.1.7",
   "bypassPermissionsModeAccepted": true,
-  "lastPlanModeUse": 1768220529120,
+  "lastPlanModeUse": 1768499790361,
   "feedbackSurveyState": {
     "lastShownTime": 1768220358255
   },
@@ -2022,21 +2042,21 @@
   "groveConfigCache": {
     "88237b71-f174-431b-a8fd-81ee97c638fb": {
       "grove_enabled": true,
-      "timestamp": 1768219264692
+      "timestamp": 1768494802735
     }
   },
   "skillUsage": {
     "ralph-loop:help": {
-      "usageCount": 4,
-      "lastUsedAt": 1767874418353
+      "usageCount": 5,
+      "lastUsedAt": 1768221530190
     },
     "ralph-loop:cancel-ralph": {
-      "usageCount": 21,
-      "lastUsedAt": 1768064501087
+      "usageCount": 23,
+      "lastUsedAt": 1768222977087
     },
     "ralph-loop:ralph-loop": {
-      "usageCount": 19,
-      "lastUsedAt": 1768064581635
+      "usageCount": 21,
+      "lastUsedAt": 1768365345751
     },
     "frontend-design": {
       "usageCount": 2,
@@ -2053,5 +2073,9 @@
   },
   "hasIdeOnboardingBeenShown": {
     "goland": true
-  }
+  },
+  "opusProMigrationComplete": true,
+  "cachedChromeExtensionInstalled": true,
+  "claudeInChromeDefaultEnabled": true,
+  "hasCompletedClaudeInChromeOnboarding": true
 }
