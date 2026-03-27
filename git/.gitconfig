@@ -3,10 +3,10 @@
 	email = divkix@divkix.me
 	signingkey = 30695AF88CC00E38
 [core]
-	eol = lf
-	autocrlf = input
-	editor = code --wait --new-window
-	excludesfile = /Users/divkix/.gitignore_global
+    eol = lf
+    autocrlf = input
+    editor = zed --wait          # was: code --wait --new-window
+    excludesfile = /Users/divkix/.gitignore_global
 [format]
 	signoff = true
 [commit]
@@ -37,12 +37,16 @@
 	autoSetupRemote = true
 	followTags = true
 [diff]
-	tool = vscode
-[difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
+    tool = zed                   # was: vscode
+[difftool "zed"]                 # was: [difftool "vscode"]
+    cmd = zed --wait --diff $LOCAL $REMOTE
 [difftool]
-	prompt = false
+    prompt = false
 [merge]
-	tool = vscode
-[mergetool "vscode"]
-	cmd = code --wait $MERGED
+    tool = vscode                # KEEP this for now — Zed can't do mergetool yet
+[mergetool "vscode"]             # KEEP this too
+    cmd = code --wait $MERGED
+[lfs "customtransfer.xet"]
+	path = git-xet
+	args = transfer
+	concurrent = true
