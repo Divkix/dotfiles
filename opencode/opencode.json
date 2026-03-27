@@ -1,42 +1,165 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "anthropic/claude-opus-4-1-20250805",
-  "theme": "system",
-  "instructions": [
-    "CLAUDE.md",
-    "AGENTS.md"
-  ],
+  "model": "zai-coding-plan/glm-5-turbo",
+  "instructions": ["AGENTS.md"],
   "mcp": {
     "context7": {
       "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@upstash/context7-mcp"
-      ]
+      "command": ["npx", "-y", "@upstash/context7-mcp"]
     },
-    "mcp-sequential-thinking": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "mcp-sequentialthinking-tools"
-      ]
+    "cloudflare-api": {
+      "type": "remote",
+      "url": "https://mcp.cloudflare.com/mcp"
     },
-    "playwright": {
+    "cloudflare-docs": {
+      "type": "remote",
+      "url": "https://docs.mcp.cloudflare.com/mcp"
+    },
+    "cloudflare-bindings": {
+      "type": "remote",
+      "url": "https://bindings.mcp.cloudflare.com/mcp"
+    },
+    "cloudflare-builds": {
+      "type": "remote",
+      "url": "https://builds.mcp.cloudflare.com/mcp"
+    },
+    "cloudflare-observability": {
+      "type": "remote",
+      "url": "https://observability.mcp.cloudflare.com/mcp"
+    },
+    "linear": {
+      "type": "remote",
+      "url": "https://mcp.linear.app/mcp"
+    },
+    "next-devtools": {
       "type": "local",
-      "command": [
-        "npx",
-        "@playwright/mcp@latest",
-        "--browser",
-        "webkit",
-        "--isolated"
-      ]
+      "command": ["npx", "-y", "next-devtools-mcp@latest"]
+    },
+    "svelte": {
+      "type": "local",
+      "command": ["npx", "-y", "@sveltejs/mcp"]
+    },
+    "supabase": {
+      "type": "remote",
+      "url": "https://mcp.supabase.com/mcp",
+      "enabled": true
+    },
+    "chrome-devtools": {
+      "type": "local",
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest"]
     }
   },
   "formatter": {
     "prettier": {
       "disabled": false
     }
-  }
+  },
+  "provider": {
+    "cursor": {
+      "name": "Cursor"
+    }
+  },
+  "agent": {
+    "frontend-designer": {
+      "description": "Whenever working with ui or frontend requests or any user front requests",
+      "mode": "subagent",
+      "model": "opencode-go/kimi-k2.5",
+      "prompt": "{file:./prompts/frontend-designer.md}",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "read": true,
+        "bash": true
+      }
+    },
+    "code-simplifier": {
+      "description": "Simplifies and refines code for clarity, consistency, and maintainability while preserving all functionality. Focuses on recently modified code unless instructed otherwise.",
+      "mode": "subagent",
+      "model": "opencode-go/kimi-k2.5",
+      "prompt": "{file:./prompts/code-simplifier.md}",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "read": true,
+        "bash": true
+      }
+    },
+    "golang-pro": {
+      "description": "Expert Go developer specializing in high-performance systems, concurrent programming, and cloud-native microservices. Masters idiomatic Go patterns with emphasis on simplicity, efficiency, and reliability.",
+      "mode": "subagent",
+      "model": "zai-coding-plan/glm-5-turbo",
+      "prompt": "{file:./prompts/golang-pro.md}",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "read": true,
+        "bash": true
+      }
+    },
+    "python-pro": {
+      "description": "Expert Python developer specializing in modern Python 3.11+ development with deep expertise in type safety, async programming, data science, and web frameworks. Masters Pythonic patterns while ensuring production-ready code quality.",
+      "mode": "subagent",
+      "model": "zai-coding-plan/glm-5-turbo",
+      "prompt": "{file:./prompts/python-pro.md}",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "read": true,
+        "bash": true
+      }
+    },
+    "rust-pro": {
+      "description": "Expert Rust developer specializing in systems programming, memory safety, and zero-cost abstractions. Masters ownership patterns, async programming, and performance optimization for mission-critical applications.",
+      "mode": "subagent",
+      "model": "zai-coding-plan/glm-5-turbo",
+      "prompt": "{file:./prompts/rust-pro.md}",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "read": true,
+        "bash": true
+      }
+    },
+    "sql-pro": {
+      "description": "Expert SQL developer specializing in complex query optimization, database design, and performance tuning across PostgreSQL, MySQL, SQL Server, and Oracle. Masters advanced SQL features, indexing strategies, and data warehousing patterns.",
+      "mode": "subagent",
+      "model": "zai-coding-plan/glm-5-turbo",
+      "prompt": "{file:./prompts/sql-pro.md}",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "read": true,
+        "bash": true
+      }
+    },
+    "typescript-pro": {
+      "description": "Expert TypeScript developer specializing in large-scale application architecture, type safety, and modern frontend frameworks. Masters advanced TypeScript features, design patterns, and best practices for maintainable codebases.",
+      "mode": "subagent",
+      "model": "zai-coding-plan/glm-5-turbo",
+      "prompt": "{file:./prompts/typescript-pro.md}",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "read": true,
+        "bash": true
+      }
+    },
+    "github-actions-pro": {
+      "description": "Use this agent when working with GitHub Actions workflows, CI/CD pipelines, or DevOps automation.",
+      "mode": "subagent",
+      "model": "opencode-go/minimax-m2.7",
+      "prompt": "{file:./prompts/github-actions-expert.md}",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "read": true,
+        "bash": true
+      }
+    }
+  },
+  "plugin": [
+    "opencode-cursor-oauth@latest",
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "@tarquinen/opencode-dcp@latest"
+  ]
 }

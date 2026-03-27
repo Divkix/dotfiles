@@ -1,29 +1,32 @@
 #!/bin/bash
 
-# first install fisher using fish shell
-fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+# shellcheck source=../scripts/functions.sh
 
-DIR=$(dirname "$0")
-cd "$DIR"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+cd "$DIR" || exit 1
 
 . ../scripts/functions.sh
 
-COMMENT=\#*
+MANIFEST="fisher install.list"
 
-find * -name "*.list" | while read fn; do
-    cmd="${fn%.*}"
-    set -- $cmd
-    info "Installing $1 packages..."
-    while read package; do
-        if [[ $package == $COMMENT ]]; then
-            continue
-        fi
-        substep_info "Installing $package..."
-        if [[ $cmd == code* ]]; then
-            $cmd $package
-        else
-            $cmd install $package $i
-        fi
-    done <"$fn"
-    substep_success "Finished installing $1 packages."
-done
+if ! fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"; then
+    substep_error "Failed to bootstrap fisher."
+    exit 1
+fi
+
+info "Installing fisher packages..."
+while IFS= read -r package || [ -n "$package" ]; do
+    case "$package" in
+    "" | \#*)
+        continue
+        ;;
+    esac
+
+    substep_info "Installing $package..."
+    if ! fish -c "fisher install $package"; then
+        substep_error "Failed installing $package."
+        exit 1
+    fi
+done <"$MANIFEST"
+
+substep_success "Finished installing fisher packages."

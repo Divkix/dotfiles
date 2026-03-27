@@ -1,23 +1,24 @@
 #!/bin/bash
 
-DIR=$(dirname "$0")
-cd "$DIR"
+# shellcheck source=../scripts/functions.sh
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+cd "$DIR" || exit 1
 
 . ../scripts/functions.sh
 
-SOURCE="$(realpath .)"
-DESTINATION="$(realpath $HOME/.gnupg/)"
+SOURCE="$DIR"
+DESTINATION="$HOME/.gnupg"
 
 info "Configuring gnupg..."
 
-if [ ! -d "$DESTINATION" ]; then
-    echo "Directory $DESTINATION does not exist, creating..."
-    mkdir -p "$DESTINATION"
-fi
+mkdir -p "$DESTINATION"
+chmod 700 "$DESTINATION"
 
-find . -name "gpg*" | while read fn; do
-    fn=$(basename $fn)
-    scopy "$SOURCE/$fn" "$DESTINATION/$fn"
-done
+scopy "$SOURCE/gpg.conf" "$DESTINATION/gpg.conf" || exit 1
+scopy "$SOURCE/gpg-agent.conf" "$DESTINATION/gpg-agent.conf" || exit 1
+
+chmod 600 "$DESTINATION/gpg.conf"
+chmod 600 "$DESTINATION/gpg-agent.conf"
 
 success "Finished configuring gnupg."
