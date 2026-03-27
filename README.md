@@ -52,7 +52,7 @@ Run this to sync the live machine back into the repo:
 
 `./update.sh`
 
-This refreshes the tracked config files, updates the Fisher manifest, and regenerates `packages/Brewfile`.
+This builds a temp mirror of the managed live config, updates the Fisher manifest, and regenerates `packages/Brewfile` before applying the changes to the repo. If a managed live file or directory is missing, `./update.sh` removes the corresponding repo snapshot on purpose. If snapshot or generation fails, the repo stays unchanged and the hidden repo-local `.update.sh.*` temp directory is cleaned up. If apply fails after changes start, `./update.sh` tries to roll touched targets back; if rollback also fails, it reports that the repo may be partially updated and keeps that repo-local `.update.sh.*` artifacts path for inspection.
 
 ## Tests
 
