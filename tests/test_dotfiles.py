@@ -142,7 +142,9 @@ exit 0
             timeout=timeout,
         )
 
-    def snapshot_repo_paths(self, *relative_paths: str) -> dict[str, tuple[str, str | None]]:
+    def snapshot_repo_paths(
+        self, *relative_paths: str
+    ) -> dict[str, tuple[str, str | None]]:
         snapshot: dict[str, tuple[str, str | None]] = {}
 
         for relative_path in relative_paths:
@@ -167,7 +169,10 @@ exit 0
                 if child.is_symlink():
                     snapshot[child_relative] = ("symlink", os.readlink(child))
                 elif child.is_file():
-                    snapshot[child_relative] = ("file", child.read_text(encoding="utf-8"))
+                    snapshot[child_relative] = (
+                        "file",
+                        child.read_text(encoding="utf-8"),
+                    )
                 else:
                     snapshot[child_relative] = ("dir", None)
 
@@ -485,7 +490,35 @@ exit 127
         result = self.run_cmd("bash", "update.sh")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertEqual(brewfile.read_text(encoding="utf-8"), 'tap "homebrew/bundle"\n')
+        self.assertEqual(
+            brewfile.read_text(encoding="utf-8"), 'tap "homebrew/bundle"\n'
+        )
+
+    def test_update_preserves_single_file_symlinks(self):
+        self.seed_update_sources()
+        abbr_path = self.home / ".config" / "fish" / "conf.d" / "abbr.fish"
+        alias_path = self.home / ".config" / "fish" / "conf.d" / "alias.fish"
+        abbr_path.unlink()
+        abbr_path.symlink_to(alias_path.name)
+
+        result = self.run_cmd(
+            "bash",
+            "update.sh",
+            extra_env={
+                "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
+            },
+        )
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        repo_abbr_path = self.fixture / "fish" / "conf.d" / "abbr.fish"
+        self.assertTrue(repo_abbr_path.is_symlink())
+        self.assertEqual(os.readlink(repo_abbr_path), alias_path.name)
+        self.assertEqual(
+            (self.fixture / "fish" / "conf.d" / "alias.fish").read_text(
+                encoding="utf-8"
+            ),
+            "alias ll='ls -la'\n",
+        )
 
     def test_update_cleans_repo_local_temp_artifacts_on_success(self):
         self.seed_update_sources()

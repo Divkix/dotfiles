@@ -41,7 +41,7 @@ stage_file() {
     fi
 
     mkdir -p "$(dirname "$staged_target")"
-    cp -v "$source" "$staged_target"
+    cp -P -v "$source" "$staged_target"
 }
 
 stage_directory() {
