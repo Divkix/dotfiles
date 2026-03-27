@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -80,7 +81,18 @@ exit 0
         self.write_stub(
             "brew",
             """#!/bin/bash
-printf '%s\n' \"$*\" >> \"$FAKE_BREW_LOG\"
+printf '%s\n' "$*" >> "$FAKE_BREW_LOG"
+
+for arg in "$@"; do
+    case "$arg" in
+        --file=*)
+            brewfile="${arg#--file=}"
+            mkdir -p "$(dirname "$brewfile")"
+            printf 'tap "homebrew/bundle"\n' > "$brewfile"
+            ;;
+    esac
+done
+
 exit 0
 """,
         )
@@ -128,6 +140,51 @@ exit 0
             capture_output=True,
             text=True,
             timeout=timeout,
+        )
+
+    def snapshot_repo_paths(self, *relative_paths: str) -> dict[str, tuple[str, str | None]]:
+        snapshot: dict[str, tuple[str, str | None]] = {}
+
+        for relative_path in relative_paths:
+            target = self.fixture / relative_path
+            relative_key = target.relative_to(self.fixture).as_posix()
+
+            if not target.exists() and not target.is_symlink():
+                snapshot[relative_key] = ("missing", None)
+                continue
+
+            if target.is_symlink():
+                snapshot[relative_key] = ("symlink", os.readlink(target))
+                continue
+
+            if target.is_file():
+                snapshot[relative_key] = ("file", target.read_text(encoding="utf-8"))
+                continue
+
+            snapshot[relative_key] = ("dir", None)
+            for child in sorted(target.rglob("*")):
+                child_relative = child.relative_to(self.fixture).as_posix()
+                if child.is_symlink():
+                    snapshot[child_relative] = ("symlink", os.readlink(child))
+                elif child.is_file():
+                    snapshot[child_relative] = ("file", child.read_text(encoding="utf-8"))
+                else:
+                    snapshot[child_relative] = ("dir", None)
+
+        return snapshot
+
+    def snapshot_managed_repo(self) -> dict[str, tuple[str, str | None]]:
+        return self.snapshot_repo_paths(
+            "fish",
+            "claude",
+            "opencode",
+            "ghostty",
+            "fisher",
+            "git",
+            "ssh",
+            "gnupg",
+            "packages",
+            "starship",
         )
 
     def test_scopy_keeps_existing_destination_when_copy_fails(self):
@@ -398,6 +455,231 @@ exit 127
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(manifest.read_text(encoding="utf-8"), "")
+
+    def test_update_generates_fisher_manifest_from_live_plugin_list(self):
+        self.seed_update_sources()
+        manifest = self.fixture / "fisher" / "fisher install.list"
+
+        result = self.run_cmd(
+            "bash",
+            "update.sh",
+            extra_env={
+                "FAKE_FISH_LIST_OUTPUT": (
+                    "jorgebucaran/fisher\n"
+                    "jorgebucaran/autopair.fish\n"
+                    "PatrickF1/fzf.fish\n"
+                )
+            },
+        )
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(
+            manifest.read_text(encoding="utf-8"),
+            "jorgebucaran/autopair.fish\nPatrickF1/fzf.fish\n",
+        )
+
+    def test_update_generates_brewfile_from_brew_bundle_dump(self):
+        self.seed_update_sources()
+        brewfile = self.fixture / "packages" / "Brewfile"
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(brewfile.read_text(encoding="utf-8"), 'tap "homebrew/bundle"\n')
+
+    def test_update_cleans_repo_local_temp_artifacts_on_success(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(list(self.fixture.glob(".update.sh.*")), [])
+
+    def test_update_cleans_repo_local_temp_artifacts_on_snapshot_failure(self):
+        self.seed_update_sources()
+
+        self.write_stub(
+            "fish",
+            """#!/bin/bash
+exit 1
+""",
+        )
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(list(self.fixture.glob(".update.sh.*")), [])
+
+    def test_update_prunes_missing_managed_sources_from_repo(self):
+        self.seed_update_sources()
+
+        shutil.rmtree(self.home / ".claude" / "agents")
+        shutil.rmtree(self.home / ".config" / "opencode" / "prompts")
+        (self.home / ".gitconfig").unlink()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertFalse((self.fixture / "claude" / "agents").exists())
+        self.assertFalse((self.fixture / "opencode" / "prompts").exists())
+        self.assertFalse((self.fixture / "git" / ".gitconfig").exists())
+
+    def test_update_keeps_repo_unchanged_when_fisher_list_fails(self):
+        self.seed_update_sources()
+        expected = self.snapshot_managed_repo()
+
+        self.write_stub(
+            "fish",
+            """#!/bin/bash
+exit 1
+""",
+        )
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.snapshot_managed_repo(), expected)
+
+    def test_update_keeps_repo_unchanged_when_brew_dump_fails(self):
+        self.seed_update_sources()
+        expected = self.snapshot_managed_repo()
+
+        self.write_stub(
+            "brew",
+            """#!/bin/bash
+exit 1
+""",
+        )
+
+        result = self.run_cmd(
+            "bash",
+            "update.sh",
+            extra_env={
+                "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
+            },
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.snapshot_managed_repo(), expected)
+
+    def test_update_rolls_back_repo_when_apply_phase_fails(self):
+        self.seed_update_sources()
+        self.write_file(self.fixture / "fish" / "config.fish", "repo fish\n")
+        self.write_file(self.fixture / "claude" / "settings.json", '{"repo":true}\n')
+        self.write_file(self.fixture / "packages" / "Brewfile", 'tap "repo/stale"\n')
+        expected = self.snapshot_managed_repo()
+        fail_marker = self.root / "mv-failed"
+
+        self.write_stub(
+            "mv",
+            f"""#!/bin/bash
+if [ "${{1:-}}" != "${{1##*/stage/claude/settings.json}}" ] && [ ! -e "{fail_marker}" ]; then
+    : > "{fail_marker}"
+    exit 1
+fi
+
+exec /bin/mv "$@"
+""",
+        )
+
+        result = self.run_cmd(
+            "bash",
+            "update.sh",
+            extra_env={
+                "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
+            },
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertTrue(fail_marker.exists())
+        self.assertEqual(self.snapshot_managed_repo(), expected)
+
+    def test_update_keeps_repo_unchanged_when_backup_move_fails(self):
+        self.seed_update_sources()
+        self.write_file(self.fixture / "fish" / "config.fish", "repo fish\n")
+        expected = self.snapshot_managed_repo()
+        fail_marker = self.root / "mv-backup-failed"
+
+        self.write_stub(
+            "mv",
+            f"""#!/bin/bash
+if [ "${{2:-}}" != "${{2##*/backup/fish/config.fish}}" ] && [ ! -e "{fail_marker}" ]; then
+    : > "{fail_marker}"
+    exit 1
+fi
+
+exec /bin/mv "$@"
+""",
+        )
+
+        result = self.run_cmd(
+            "bash",
+            "update.sh",
+            extra_env={
+                "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
+            },
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertTrue(fail_marker.exists())
+        self.assertEqual(self.snapshot_managed_repo(), expected)
+
+    def test_update_reports_rollback_failures(self):
+        self.seed_update_sources()
+        self.write_file(self.fixture / "fish" / "config.fish", "repo fish\n")
+        self.write_file(self.fixture / "claude" / "settings.json", '{"repo":true}\n')
+        expected = self.snapshot_managed_repo()
+        expected.pop("fish/config.fish", None)
+        apply_marker = self.root / "mv-apply-failed"
+        rollback_marker = self.root / "mv-rollback-failed"
+
+        self.write_stub(
+            "mv",
+            f"""#!/bin/bash
+if [ "${{1:-}}" != "${{1##*/stage/claude/settings.json}}" ] && [ ! -e "{apply_marker}" ]; then
+    : > "{apply_marker}"
+    exit 1
+fi
+
+if [ "${{1:-}}" != "${{1##*/backup/fish/config.fish}}" ] && [ ! -e "{rollback_marker}" ]; then
+    : > "{rollback_marker}"
+    exit 1
+fi
+
+exec /bin/mv "$@"
+""",
+        )
+
+        result = self.run_cmd(
+            "bash",
+            "update.sh",
+            extra_env={
+                "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
+            },
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertTrue(apply_marker.exists())
+        self.assertTrue(rollback_marker.exists())
+        self.assertIn("Rollback failed", result.stderr)
+        temp_dir_match = re.search(r"Rollback artifacts kept at (.+)", result.stderr)
+        self.assertIsNotNone(temp_dir_match, msg=result.stderr)
+        artifacts_dir = Path(temp_dir_match.group(1).strip())
+        self.assertTrue(artifacts_dir.is_dir())
+        self.assertEqual(artifacts_dir.parent.resolve(), self.fixture.resolve())
+        self.assertTrue(artifacts_dir.name.startswith(".update.sh."))
+        current = self.snapshot_managed_repo()
+        self.assertNotIn("fish/config.fish", current)
+        self.assertEqual(current, expected)
+
+    def test_update_prunes_legacy_opencode_agent_directory(self):
+        self.seed_update_sources()
+        self.write_file(self.fixture / "opencode" / "agent" / "legacy.md", "legacy\n")
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertFalse((self.fixture / "opencode" / "agent").exists())
 
     def test_ssh_setup_restores_config(self):
         result = self.run_cmd("bash", "ssh/setup.sh")
