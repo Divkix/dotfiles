@@ -8,11 +8,14 @@ cd "$DIR" || exit 1
 . ../scripts/functions.sh
 
 SOURCE="$DIR"
-DESTINATION="$HOME/.config"
+DESTINATION="$HOME/.ssh"
 
-info "Setting up Starship..."
+info "Configuring SSH..."
 
 mkdir -p "$DESTINATION"
-scopy "$SOURCE/starship.toml" "$DESTINATION/starship.toml" || exit 1
+chmod 700 "$DESTINATION"
 
-success "Finished configuring Starship 🚀"
+scopy "$SOURCE/config" "$DESTINATION/config" || exit 1
+chmod 600 "$DESTINATION/config"
+
+success "Finished configuring SSH."
