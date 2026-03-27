@@ -28,3 +28,4 @@ palette = 13=#db61a2
 palette = 14=#2b7489
 palette = 15=#ffffff
 keybind = shift+enter=text:\n
+shell-integration-features = ssh-env,ssh-terminfo,sudo

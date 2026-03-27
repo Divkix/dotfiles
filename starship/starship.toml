@@ -55,7 +55,7 @@ format = '([\[$all_status$ahead_behind\]]($style)) '
 [hostname]
 ssh_only = false
 format = "@[$hostname]($style): "
-trim_at = "-"
+#trim_at = "-"
 style = "bold green"
 disabled = false
 
