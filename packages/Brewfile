@@ -138,6 +138,8 @@ cask "claude-code@latest"
 cask "codex"
 # AI-powered software engineering agent by Factory
 cask "droid"
+# Developer targeted fonts with a high number of glyphs (Nerd Fonts)
+cask "font-hack-nerd-font"
 # Web browser
 cask "google-chrome"
 # Tools to protect your emails and files

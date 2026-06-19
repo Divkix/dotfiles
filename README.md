@@ -15,20 +15,37 @@ Previously used on:
 - `fisher/`
 - `git/`
 - `ssh/`
-- `claude/`
-- `opencode/`
-- `ghostty/`
+- `claude/` — Claude Code (`~/.claude`)
+- `opencode/` — OpenCode (`~/.config/opencode`)
+- `factory/` — Factory / droid (`~/.factory`)
+- `codex/` — Codex (`~/.codex`)
+- `warp/` — Warp terminal (`~/.warp`)
 - `gnupg/`
 - `starship/`
 
+The AI agents share a single canonical instruction file, `opencode/AGENTS.md`. `bootstrap.sh`
+symlinks `~/.claude/CLAUDE.md` and `~/.factory/AGENTS.md` to it at runtime, so it stays a
+single source of truth and the repo never stores a machine-specific absolute symlink.
+
 `RayCast/` is only an encrypted backup artifact. It is not restored by `bootstrap.sh`.
 
-OpenCode is backed up as a curated subset of `~/.config/opencode`:
+Each agent/tool is backed up as a curated, secret-free subset of its live config:
 
-- `opencode.json`
-- `AGENTS.md`
-- `dcp.jsonc`
-- `prompts/`
+- **Claude** (`~/.claude`): `settings.json`, `agents/`, `commands/`. `CLAUDE.md` is the shared
+  symlink above. `~/.claude.json` is **not** managed — it is machine state (project paths,
+  costs, userID) and would leak in this public repo.
+- **OpenCode** (`~/.config/opencode`): `opencode.json`, `AGENTS.md`, `dcp.jsonc`, `prompts/`,
+  `instructions/`.
+- **Factory** (`~/.factory`): `settings.json` (with `customModels[].apiKey` redacted to `""`),
+  `mcp.json`, `droids/`. Auth, sessions, logs, cache, and history are excluded.
+- **Codex** (`~/.codex`): `config.toml` (with `[projects."..."]` trust paths stripped) and
+  `rules/`. Auth, history, and SQLite state are excluded.
+- **Warp** (`~/.warp`): `settings.toml` and `default_tab_configs/`.
+
+Because the repo is public, `update.sh` sanitizes on capture: it blanks Factory API keys and
+strips Codex per-project paths so secrets and private repo paths never get committed. For the
+same reason, Factory `settings.json` and Codex `config.toml` are only seeded on a fresh machine
+(never overwritten), so a live config holding a real key or trust grants is preserved.
 
 Local install artifacts such as `node_modules/`, package manager files, and other machine-specific state are intentionally excluded.
 
@@ -45,6 +62,15 @@ Head over to https://brew.sh and install the latest version of homebrew by copyi
 Use this command to install the dotfiles setup:
 
 `./bootstrap.sh`
+
+### Post-install manual steps
+
+A few things bootstrap intentionally cannot restore:
+
+- **Factory DeepSeek key**: `factory/settings.json` ships with `customModels[].apiKey` blanked.
+  Re-enter the DeepSeek API key in Factory (Settings → Models) on a fresh machine.
+- **Raycast**: import the encrypted backup from `RayCast/` via the Raycast app
+  (Settings → Advanced → Import). See `RayCast/README.md`.
 
 ## Updating the repo from the current machine
 

@@ -10,7 +10,6 @@
     }
   },
   "default_agent": "build",
-  "instructions": ["~/.config/opencode/instructions/morph-tools.md"],
   "mcp": {
     "browsermcp": {
       "command": ["bunx", "@browsermcp/mcp@latest"],
@@ -27,8 +26,7 @@
   },
   "plugin": [
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "opencode-pty@latest",
-    "git+https://github.com/JRedeker/opencode-morph-fast-apply"
+    "opencode-pty@latest"
   ],
   "small_model": "firepass/accounts/fireworks/routers/kimi-k2p6-turbo"
 }
