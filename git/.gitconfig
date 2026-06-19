@@ -13,7 +13,7 @@
 	gpgsign = true
 	template = /Users/divkix/.stCommitMsg
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [trailer "sign"]
 	key = "Signed-off-by: "
@@ -52,7 +52,7 @@
 	args = transfer
 	concurrent = true
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [coderabbit]
 	machineId = cli/8b836f09efb547c48aceecc236128f8f
