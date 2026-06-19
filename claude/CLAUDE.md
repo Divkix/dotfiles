@@ -1,1 +1,0 @@
-/Users/divkix/.config/opencode/AGENTS.md

@@ -5,3 +5,6 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 __pycache__/
+
+# Claude Code machine-state dump: leaks project paths, costs, userID. Not managed.
+claude/claude.json
