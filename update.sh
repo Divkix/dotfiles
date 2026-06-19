@@ -96,6 +96,40 @@ generate_brewfile() {
     [ -f "$staged_target" ]
 }
 
+stage_codex_config() {
+    local source="$HOME/.codex/config.toml"
+    local staged_target="$STAGE_DIR/codex/config.toml"
+
+    track_target "codex/config.toml"
+
+    if [ ! -f "$source" ]; then
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$staged_target")"
+    # Strip [projects."..."] tables so private repo paths never reach this public repo.
+    if ! awk '/^\[/ { skip = ($0 ~ /^\[projects\./) } !skip { print }' "$source" > "$staged_target"; then
+        return 1
+    fi
+}
+
+stage_factory_settings() {
+    local source="$HOME/.factory/settings.json"
+    local staged_target="$STAGE_DIR/factory/settings.json"
+
+    track_target "factory/settings.json"
+
+    if [ ! -f "$source" ]; then
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$staged_target")"
+    # Blank customModels API keys so secrets never reach this public repo.
+    if ! jq '(.customModels[]?.apiKey) |= ""' "$source" > "$staged_target"; then
+        return 1
+    fi
+}
+
 restore_backups() {
     local index
     local relative_target
@@ -192,10 +226,11 @@ stage_file "$fish_dir/conf.d/alias.fish" "fish/conf.d/alias.fish"
 
 claude_dir="$HOME/.claude"
 stage_file "$claude_dir/settings.json" "claude/settings.json"
-stage_file "$claude_dir/CLAUDE.md" "claude/CLAUDE.md"
+# ~/.claude/CLAUDE.md is a symlink to the canonical opencode AGENTS.md; recreated by
+# claude/setup.sh, so it is not captured here (avoids committing a non-portable symlink).
 stage_directory "$claude_dir/agents" "claude/agents"
 stage_directory "$claude_dir/commands" "claude/commands"
-stage_file "$HOME/.claude.json" "claude/claude.json"
+# ~/.claude.json is machine state (project paths, costs, userID) and is intentionally not synced.
 
 opencode_dir="$HOME/.config/opencode"
 stage_file "$opencode_dir/opencode.json" "opencode/opencode.json"
@@ -205,8 +240,16 @@ stage_directory "$opencode_dir/prompts" "opencode/prompts"
 # Keep the legacy repo-only agent directory pruned.
 track_target "opencode/agent"
 
-ghostty_dir="$HOME/.config/ghostty"
-stage_file "$ghostty_dir/config" "ghostty/config"
+warp_dir="$HOME/.warp"
+stage_file "$warp_dir/settings.toml" "warp/settings.toml"
+stage_directory "$warp_dir/default_tab_configs" "warp/default_tab_configs"
+
+stage_codex_config
+stage_file "$HOME/.codex/rules/default.rules" "codex/rules/default.rules"
+
+stage_factory_settings
+stage_file "$HOME/.factory/mcp.json" "factory/mcp.json"
+stage_directory "$HOME/.factory/droids" "factory/droids"
 
 generate_fisher_manifest
 

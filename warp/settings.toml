@@ -1,0 +1,136 @@
+[agents]
+cloud_conversation_storage_enabled = true
+
+[agents.warp_agent]
+is_any_ai_enabled = false
+
+[agents.warp_agent.input]
+nld_in_terminal_enabled = false
+
+[agents.warp_agent.other]
+show_agent_notifications = false
+
+[agents.third_party]
+should_render_cli_agent_toolbar = true
+
+[agents.third_party.cli_agent_toolbar_chip_selection_setting]
+
+[agents.third_party.cli_agent_toolbar_chip_selection_setting.custom]
+left = [
+  { context_chip = "username" },
+  "file_attach",
+  "voice_input",
+  { context_chip = "git_diff_stats" },
+  "share_session",
+  "file_explorer",
+]
+right = [
+  { context_chip = "working_directory" },
+  { context_chip = "shell_git_branch" },
+  "settings",
+  { context_chip = "time_24" },
+]
+
+[privacy]
+crash_reporting_enabled = false
+telemetry_enabled = false
+custom_secret_regex_list = [
+  { name = "IPv4 Address", pattern = '\b((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}\b' },
+  {
+    name = "IPv6 Address",
+    pattern = '\b((([0-9A-Fa-f]{1,4}:){1,6}:)|(([0-9A-Fa-f]{1,4}:){7}))([0-9A-Fa-f]{1,4})\b',
+  },
+  { name = "Slack App Token", pattern = '\bxapp-[0-9]+-[A-Za-z0-9_]+-[0-9]+-[a-f0-9]+\b' },
+  { name = "Phone Number", pattern = '\b(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b' },
+  {
+    name = "MAC Address",
+    pattern = '\b((([a-zA-z0-9]{2}[-:]){5}([a-zA-z0-9]{2}))|(([a-zA-z0-9]{2}:){5}([a-zA-z0-9]{2})))\b',
+  },
+  { name = "Google API Key", pattern = '\bAIza[0-9A-Za-z-_]{35}\b' },
+  {
+    name = "AWS Access ID",
+    pattern = '\b(AKIA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{12,}\b',
+  },
+  { name = "GitHub Classic Personal Access Token", pattern = '\bghp_[A-Za-z0-9_]{36}\b' },
+  { name = "GitHub Fine-Grained Personal Access Token", pattern = '\bgithub_pat_[A-Za-z0-9_]{82}\b' },
+  { name = "GitHub OAuth Access Token", pattern = '\bgho_[A-Za-z0-9_]{36}\b' },
+  { name = "GitHub User-to-Server Token", pattern = '\bghu_[A-Za-z0-9_]{36}\b' },
+  { name = "GitHub Server-to-Server Token", pattern = '\bghs_[A-Za-z0-9_]{36}\b' },
+  { name = "Stripe Key", pattern = '\b(?:r|s)k_(test|live)_[0-9a-zA-Z]{24}\b' },
+  { name = "Firebase Auth Domain", pattern = '\b([a-z0-9-]){1,30}(\.firebaseapp\.com)\b' },
+  { name = "JWT", pattern = '\b(ey[a-zA-z0-9_\-=]{10,}\.){2}[a-zA-z0-9_\-=]{10,}\b' },
+  { name = "OpenAI API Key", pattern = '\bsk-[a-zA-Z0-9]{48}\b' },
+  { name = "Anthropic API Key", pattern = '\bsk-ant-api\d{0,2}-[a-zA-Z0-9\-]{80,120}\b' },
+  { name = "Generic SK API Key", pattern = '\bsk-[a-zA-Z0-9\-]{10,100}\b' },
+  { name = "Fireworks API Key", pattern = '\bfw_[a-zA-Z0-9]{24}\b' },
+  { name = "Warp API Key", pattern = '\bwk-[0-9]+\.[A-Fa-f0-9.\-]+\b' },
+]
+
+[account]
+is_settings_sync_enabled = true
+
+[code]
+
+[code.editor]
+show_project_explorer = true
+show_code_review_button = true
+show_global_search = true
+auto_open_code_review_pane_on_first_agent_change = true
+
+[warp_drive]
+enabled = true
+
+[appearance]
+spacing = "normal"
+
+[appearance.vertical_tabs]
+enabled = true
+display_granularity = "panes"
+view_mode = "expanded"
+primary_info = "command"
+compact_subtitle = "branch"
+show_pr_link = true
+show_diff_stats = true
+
+[appearance.themes]
+system_theme = true
+selected_system_themes = { dark = "dark", light = "light" }
+
+[appearance.text]
+notebook_font_size = 14.0
+font_size = 13.0
+font_name = "Hack Nerd Font Mono"
+ai_font_name = "Hack Nerd Font Mono"
+match_ai_font = false
+
+[appearance.icon]
+app_icon = "original"
+
+[appearance.input]
+input_mode = "waterfall"
+
+[appearance.panes]
+should_dim_inactive_panes = false
+focus_pane_on_hover = false
+
+[appearance.window]
+zoom_level = 100
+
+[terminal]
+show_terminal_zero_state_block = false
+osc52_clipboard_access = "write_only"
+
+[terminal.input]
+input_box_type_setting = "classic"
+honor_ps1 = true
+
+[notifications]
+
+[notifications.preferences]
+is_agent_task_completed_enabled = true
+is_long_running_enabled = true
+is_needs_attention_enabled = true
+is_password_prompt_enabled = true
+long_running_threshold = 30
+mode = "dismissed"
+play_notification_sound = true

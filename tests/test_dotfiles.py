@@ -183,7 +183,9 @@ exit 0
             "fish",
             "claude",
             "opencode",
-            "ghostty",
+            "warp",
+            "codex",
+            "factory",
             "fisher",
             "git",
             "ssh",
@@ -238,7 +240,7 @@ exit 0
     def test_bootstrap_stops_after_first_failing_setup_script(self):
         bootstrap_log = self.logs_dir / "bootstrap.log"
         setup_paths = sorted(self.fixture.glob("*/setup.sh"))
-        failing_module = "ghostty"
+        failing_module = "git"
 
         for setup_path in setup_paths:
             module = setup_path.parent.name
@@ -299,21 +301,32 @@ exit 0
             )
         )
 
-    def test_claude_setup_restores_nested_files_and_root_config(self):
+    def test_claude_setup_restores_managed_files_without_machine_state(self):
+        self.write_file(self.fixture / "claude" / "agents" / "sample.md", "agent\n")
+        self.write_file(self.fixture / "claude" / "commands" / "sample.md", "command\n")
+
         result = self.run_cmd("bash", "claude/setup.sh")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertTrue((self.home / ".claude" / "CLAUDE.md").exists())
-        self.assertTrue(
-            (self.home / ".claude" / "agents" / "github-actions-expert.md").exists()
+        self.assertTrue((self.home / ".claude" / "settings.json").exists())
+        self.assertTrue((self.home / ".claude" / "agents" / "sample.md").exists())
+        self.assertTrue((self.home / ".claude" / "commands" / "sample.md").exists())
+        # CLAUDE.md is a runtime symlink to the canonical opencode AGENTS.md (portable,
+        # resolved via $HOME), not a committed file.
+        claude_md = self.home / ".claude" / "CLAUDE.md"
+        self.assertTrue(claude_md.is_symlink())
+        self.assertEqual(
+            os.readlink(claude_md),
+            str(self.home / ".config" / "opencode" / "AGENTS.md"),
         )
-        self.assertTrue(
-            (self.home / ".claude" / "commands" / "review-code.md").exists()
-        )
-        self.assertTrue((self.home / ".claude.json").exists())
+        # ~/.claude.json is machine state (project paths, costs, userID) and must not be
+        # managed or restored. claude.json must never land inside ~/.claude either.
+        self.assertFalse((self.home / ".claude.json").exists())
         self.assertFalse((self.home / ".claude" / "claude.json").exists())
 
     def test_claude_setup_prunes_stale_managed_subtrees(self):
+        self.write_file(self.fixture / "claude" / "agents" / "keep.md", "agent\n")
+        self.write_file(self.fixture / "claude" / "commands" / "keep.md", "command\n")
         self.write_file(self.home / ".claude" / "agents" / "stale.md", "stale\n")
         self.write_file(self.home / ".claude" / "commands" / "stale.md", "stale\n")
 
@@ -322,12 +335,8 @@ exit 0
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertFalse((self.home / ".claude" / "agents" / "stale.md").exists())
         self.assertFalse((self.home / ".claude" / "commands" / "stale.md").exists())
-        self.assertTrue(
-            (self.home / ".claude" / "agents" / "github-actions-expert.md").exists()
-        )
-        self.assertTrue(
-            (self.home / ".claude" / "commands" / "review-code.md").exists()
-        )
+        self.assertTrue((self.home / ".claude" / "agents" / "keep.md").exists())
+        self.assertTrue((self.home / ".claude" / "commands" / "keep.md").exists())
 
     def test_opencode_setup_restores_prompts_and_dcp_on_first_run(self):
         prompts_dir = self.fixture / "opencode" / "prompts"
@@ -385,14 +394,55 @@ exec /bin/rm \"$@\"
         self.assertNotEqual(result.returncode, 0)
         self.assertTrue(agent_dir.exists())
 
-    def test_ghostty_and_starship_create_first_run_destinations(self):
-        ghostty_result = self.run_cmd("bash", "ghostty/setup.sh")
+    def test_starship_creates_first_run_destination(self):
         starship_result = self.run_cmd("bash", "starship/setup.sh")
 
-        self.assertEqual(ghostty_result.returncode, 0, msg=ghostty_result.stderr)
         self.assertEqual(starship_result.returncode, 0, msg=starship_result.stderr)
-        self.assertTrue((self.home / ".config" / "ghostty" / "config").exists())
         self.assertTrue((self.home / ".config" / "starship.toml").exists())
+
+    def test_warp_setup_restores_settings_and_tab_configs(self):
+        result = self.run_cmd("bash", "warp/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertTrue((self.home / ".warp" / "settings.toml").exists())
+        self.assertTrue(
+            (self.home / ".warp" / "default_tab_configs" / "worktree.toml").exists()
+        )
+
+    def test_codex_setup_seeds_config_when_absent_and_preserves_existing(self):
+        first = self.run_cmd("bash", "codex/setup.sh")
+        self.assertEqual(first.returncode, 0, msg=first.stderr)
+        config_path = self.home / ".codex" / "config.toml"
+        self.assertTrue(config_path.exists())
+        self.assertTrue((self.home / ".codex" / "rules" / "default.rules").exists())
+
+        # A live config with trust grants must not be clobbered by a re-run.
+        config_path.write_text("model = \"live\"\n", encoding="utf-8")
+        second = self.run_cmd("bash", "codex/setup.sh")
+        self.assertEqual(second.returncode, 0, msg=second.stderr)
+        self.assertEqual(config_path.read_text(encoding="utf-8"), "model = \"live\"\n")
+
+    def test_factory_setup_restores_droids_mcp_and_preserves_live_settings(self):
+        first = self.run_cmd("bash", "factory/setup.sh")
+        self.assertEqual(first.returncode, 0, msg=first.stderr)
+        self.assertTrue((self.home / ".factory" / "mcp.json").exists())
+        self.assertTrue((self.home / ".factory" / "settings.json").exists())
+        self.assertTrue(any((self.home / ".factory" / "droids").glob("*.md")))
+        agents_link = self.home / ".factory" / "AGENTS.md"
+        self.assertTrue(agents_link.is_symlink())
+        self.assertEqual(
+            os.readlink(agents_link),
+            str(self.home / ".config" / "opencode" / "AGENTS.md"),
+        )
+
+        # A live settings.json holding a real API key must survive a re-run untouched.
+        settings_path = self.home / ".factory" / "settings.json"
+        settings_path.write_text('{"apiKey":"sk-live-secret"}\n', encoding="utf-8")
+        second = self.run_cmd("bash", "factory/setup.sh")
+        self.assertEqual(second.returncode, 0, msg=second.stderr)
+        self.assertEqual(
+            settings_path.read_text(encoding="utf-8"), '{"apiKey":"sk-live-secret"}\n'
+        )
 
     def test_fisher_setup_installs_each_plugin_once(self):
         list_file = self.fixture / "fisher" / "fisher install.list"
@@ -446,6 +496,56 @@ exit 127
         self.assertTrue((self.fixture / "opencode" / "AGENTS.md").exists())
         self.assertTrue((self.fixture / "opencode" / "dcp.jsonc").exists())
         self.assertTrue((self.fixture / "opencode" / "prompts" / "custom.md").exists())
+
+    def test_update_backs_up_warp_config(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertTrue((self.fixture / "warp" / "settings.toml").exists())
+        self.assertTrue(
+            (self.fixture / "warp" / "default_tab_configs" / "worktree.toml").exists()
+        )
+
+    def test_update_strips_codex_project_paths(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        config = (self.fixture / "codex" / "config.toml").read_text(encoding="utf-8")
+        # The model key survives; the private project path is scrubbed.
+        self.assertIn('model = "gpt-5.5"', config)
+        self.assertNotIn("[projects", config)
+        self.assertNotIn("private-secret-repo", config)
+        self.assertTrue((self.fixture / "codex" / "rules" / "default.rules").exists())
+
+    def test_update_redacts_factory_api_keys(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        settings = json.loads(
+            (self.fixture / "factory" / "settings.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(settings["customModels"][0]["apiKey"], "")
+        raw = (self.fixture / "factory" / "settings.json").read_text(encoding="utf-8")
+        self.assertNotIn("sk-live-secret-key", raw)
+        self.assertTrue((self.fixture / "factory" / "mcp.json").exists())
+        self.assertTrue((self.fixture / "factory" / "droids" / "reviewer.md").exists())
+
+    def test_update_ignores_claude_machine_state(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        # ~/.claude.json must never be captured into the (public) repo.
+        self.assertFalse((self.fixture / "claude" / "claude.json").exists())
+        # CLAUDE.md is a runtime symlink, not captured from the live machine.
+        self.assertFalse((self.fixture / "claude" / "CLAUDE.md").exists())
 
     def test_update_handles_empty_fisher_plugin_list(self):
         self.seed_update_sources()
@@ -739,32 +839,24 @@ exec /bin/mv "$@"
         self.assertEqual(gpg_conf.stat().st_mode & 0o777, 0o600)
         self.assertEqual(gpg_agent_conf.stat().st_mode & 0o777, 0o600)
 
-    def test_opencode_config_uses_matching_github_actions_prompt(self):
+    def test_git_setup_propagates_copy_failure(self):
+        # find emits a path whose source file does not exist, so scopy must fail the
+        # whole script rather than the failure being swallowed by a pipe-to-while subshell.
+        self.write_stub("find", '#!/bin/bash\nprintf "%s\\n" "./.gitmissing"\n')
+
+        result = self.run_cmd("bash", "git/setup.sh")
+
+        self.assertNotEqual(result.returncode, 0)
+
+    def test_opencode_config_has_no_dangling_instructions(self):
         config = json.loads(
             (self.fixture / "opencode" / "opencode.json").read_text(encoding="utf-8")
         )
 
-        self.assertEqual(
-            config["agent"]["github-actions-pro"]["prompt"],
-            "{file:./prompts/github-actions-expert.md}",
-        )
-
-    def test_opencode_config_uses_matching_typescript_prompt(self):
-        config = json.loads(
-            (self.fixture / "opencode" / "opencode.json").read_text(encoding="utf-8")
-        )
-
-        self.assertEqual(
-            config["agent"]["typescript-pro"]["prompt"],
-            "{file:./prompts/typescript-pro.md}",
-        )
-
-    def test_opencode_config_uses_relative_instructions_path(self):
-        config = json.loads(
-            (self.fixture / "opencode" / "opencode.json").read_text(encoding="utf-8")
-        )
-
-        self.assertEqual(config["instructions"], ["AGENTS.md"])
+        # opencode auto-loads AGENTS.md; it must not point at an unmanaged instructions
+        # file such as the removed morph-tools.md.
+        for ref in config.get("instructions", []):
+            self.assertNotIn("morph-tools", ref)
 
     def seed_update_sources(self) -> None:
         fish_dir = self.home / ".config" / "fish"
@@ -785,9 +877,9 @@ exec /bin/mv "$@"
 
         claude_dir = self.home / ".claude"
         self.write_file(claude_dir / "settings.json", "{}\n")
-        self.write_file(claude_dir / "CLAUDE.md", "# Claude\n")
         self.write_file(claude_dir / "agents" / "custom.md", "agent\n")
         self.write_file(claude_dir / "commands" / "review.md", "command\n")
+        # Machine-state file update.sh must ignore.
         self.write_file(self.home / ".claude.json", '{"theme":"system"}\n')
 
         opencode_dir = self.home / ".config" / "opencode"
@@ -801,8 +893,33 @@ exec /bin/mv "$@"
         )
         self.write_file(opencode_dir / "prompts" / "custom.md", "prompt\n")
 
-        ghostty_dir = self.home / ".config" / "ghostty"
-        self.write_file(ghostty_dir / "config", "theme = light\n")
+        warp_dir = self.home / ".warp"
+        self.write_file(warp_dir / "settings.toml", "[appearance]\nfont_size = 13.0\n")
+        self.write_file(
+            warp_dir / "default_tab_configs" / "worktree.toml", 'name = "Worktree"\n'
+        )
+
+        codex_dir = self.home / ".codex"
+        self.write_file(
+            codex_dir / "config.toml",
+            'model = "gpt-5.5"\n'
+            '[projects."/Users/divkix/private-secret-repo"]\n'
+            'trust_level = "trusted"\n\n'
+            "[features]\nmemories = true\n",
+        )
+        self.write_file(
+            codex_dir / "rules" / "default.rules",
+            'prefix_rule(pattern=["ls"], decision="allow")\n',
+        )
+
+        factory_dir = self.home / ".factory"
+        self.write_file(
+            factory_dir / "settings.json",
+            '{"theme":"factory-dark",'
+            '"customModels":[{"id":"x","apiKey":"sk-live-secret-key"}]}\n',
+        )
+        self.write_file(factory_dir / "mcp.json", '{"mcpServers":{}}\n')
+        self.write_file(factory_dir / "droids" / "reviewer.md", "# reviewer\n")
 
         self.write_file(self.home / ".gitconfig", "[user]\n  name = Test\n")
         self.write_file(self.home / ".gitignore_global", "node_modules\n")

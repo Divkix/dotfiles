@@ -1,0 +1,28 @@
+approvals_reviewer = "user"
+model = "gpt-5.5"
+model_reasoning_effort = "medium"
+suppress_unstable_features_warning = true
+plan_mode_reasoning_effort = "xhigh"
+service_tier = "default"
+[notice]
+fast_default_opt_out = true
+hide_rate_limit_model_nudge = true
+
+[notice.external_config_migration_prompts]
+home_last_prompted_at = 1780595780
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."superpowers@openai-curated"]
+enabled = true
+
+[features]
+terminal_resize_reflow = true
+memories = true
+external_migration = true
+goals = true
+mentions_v2 = true
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
