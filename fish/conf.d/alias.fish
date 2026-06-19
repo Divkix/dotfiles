@@ -1,8 +1,3 @@
 alias cat="bat"
 alias ls="lsd --icon-theme=unicode"
 alias rmd="trash"
-# alias python="uv run python"
-# alias python3="uv run python"
-# alias pip="uv pip"
-# alias pip3="uv pip"
-alias claude="~/.local/bin/claude"

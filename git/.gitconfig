@@ -13,7 +13,8 @@
 	gpgsign = true
 	template = /Users/divkix/.stCommitMsg
 [credential "https://github.com"]
-	helper = !gh auth git-credential
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [trailer "sign"]
 	key = "Signed-off-by: "
 	ifmissing = add
@@ -27,7 +28,7 @@
 	forceSignAnnotated = true
 	gpgSign = true
 [credential]
-	helper = osxkeychain
+	helper = cache --timeout=3600
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -50,3 +51,13 @@
 	path = git-xet
 	args = transfer
 	concurrent = true
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[coderabbit]
+	machineId = cli/8b836f09efb547c48aceecc236128f8f
+[alias]
+	prune-local = !git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -d
+	prune-local-d = !git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
+[fetch]
+	prune = true

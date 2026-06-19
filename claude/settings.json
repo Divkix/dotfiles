@@ -1,79 +1,18 @@
 {
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_EFFORT_LEVEL": "high",
-    "ENABLE_LSP_TOOLS": "1",
-    "ANTHROPIC_BASE_URL": "https://api.minimax.io/anthropic",
-    "ANTHROPIC_AUTH_TOKEN": "",
-    "API_TIMEOUT_MS": "3000000",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "ANTHROPIC_MODEL": "MiniMax-m2.7",
-    "ANTHROPIC_SMALL_FAST_MODEL": "MiniMax-m2.7",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "MiniMax-m2.7",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "MiniMax-m2.7",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "MiniMax-m2.7"
-  },
   "includeCoAuthoredBy": false,
   "permissions": {
-    "allow": [
-      "mcp__context7__get-library-docs",
-      "mcp__context7__resolve-library-id",
-      "mcp__ide__getDiagnostics",
-      "Bash(find:*)",
-      "Bash(git:*)",
-      "Bash(diff:*)",
-      "Bash(head:*)",
-      "Bash(awk:*)",
-      "Bash(tail:*)",
-      "Bash(grep:*)",
-      "Bash(cat:*)",
-      "Bash(less:*)",
-      "Bash(rg:*)",
-      "Bash(cp:*)",
-      "Bash(gh issue view:*)",
-      "WebFetch",
-      "WebSearch"
-    ],
-    "deny": [],
-    "ask": [],
-    "defaultMode": "auto"
+    "defaultMode": "plan"
   },
-  "enableAllProjectMcpServers": true,
-  "statusLine": {
-    "type": "command",
-    "command": "bunx -y ccstatusline@latest",
-    "padding": 0
-  },
+  "model": "opus[1m]",
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
-    "cloudflare@cloudflare": true,
-    "linear@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true
   },
-  "extraKnownMarketplaces": {
-    "cloudflare": {
-      "source": {
-        "source": "github",
-        "repo": "cloudflare/skills"
-      },
-      "autoUpdate": true
-    }
-  },
-  "effortLevel": "high",
-  "promptSuggestionEnabled": false,
-  "autoUpdatesChannel": "latest",
-  "voiceEnabled": false,
-  "autoDreamEnabled": true,
+  "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "remoteControlAtStartup": false
 }

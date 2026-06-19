@@ -34,13 +34,27 @@ set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/imagemagick-full/lib/pkgconfig"
 # add llvm
 fish_add_path /opt/homebrew/opt/llvm/bin
 
+# openssl
+set -x LDFLAGS "-L/opt/homebrew/opt/openssl@3/lib"
+set -x CPPFLAGS "-I/opt/homebrew/opt/openssl@3/include"
+set -x PKG_CONFIG_PATH "/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+
 # fzf config
 fzf_configure_bindings --directory=\cf
 set -g fzf_preview_dir_cmd lsd --all --icon never --color=always
 set -g fzf_fd_opts -t f -t l -p -H
 
-# enable exa in opencode
-set -gx OPENCODE_ENABLE_EXA true
+# enable experimental features in opencode
+set -gx OPENCODE_EXPERIMENTAL true
+set -gx OPENCODE_EXPERIMENTAL_NATIVE_LLM true
+set -gx OPENCODE_EXPERIMENTAL_WEBSOCKETS true
+set -gx OPENCODE_EXPERIMENTAL_WORKSPACES true
+
+# morphllm
+set -gx MORPH_API_KEY ""
+
+# commandcode api key for opencode auth
+set -gx COMMANDCODE_API_KEY ""
 
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH /Users/divkix/.lmstudio/bin
@@ -48,6 +62,14 @@ set -gx PATH $PATH /Users/divkix/.lmstudio/bin
 
 # Disable Telementry
 set -gx DO_NOT_TRACK 1
+set -gx DO_NOT_TRACK = "1";
+set -gx HOMEBREW_NO_ANALYTICS = "1";
+set -gx NEXT_TELEMETRY_DISABLED = "1";
+set -gx GATSBY_TELEMETRY_DISABLED = "1";
+set -gx VSCODE_TELEMETRY_LEVEL = "off";
+set -gx DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+set -gx POWERSHELL_TELEMETRY_OPTOUT = "1";
+set -gx FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT = "1";
 
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.

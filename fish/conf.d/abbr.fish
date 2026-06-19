@@ -2,6 +2,7 @@
 abbr -g -a l ls
 abbr -g -a la ls -a
 abbr -g -a ll ls -l
+abbr -g -a lla ls -la
 
 # git commands
 abbr -g -a g git
@@ -17,6 +18,8 @@ abbr -g -a gco git commit
 abbr -g -a gca git commit -a --amend
 abbr -g -a gcan git commit --amend -a --no-edit
 abbr -g -a gitweb "open (git remote get-url origin)"
+abbr -g -a gwp git worktree prune -v
+abbr -g -a gwl git worktree list
 
 # others
 abbr -g -a reload exec fish
@@ -29,10 +32,9 @@ abbr -g -a untar tar -zxvf
 # brew commands
 abbr -g -a bu "fisher update && brew update && brew upgrade"
 
-# claude code
-abbr -g -a yolo "claude --dangerously-skip-permissions --ide"
-abbr -g -a yolop "claude --dangerously-skip-permissions --ide -p"
-abbr -g -a yolow "claude --dangerously-skip-permissions --ide -w"
+# coding agents
+abbr -g -a oc "opencode"
+abbr -g -a yolo claude --dangerously-skip-permissions
 
 # aria2c download
-abbr -a fastdl 'aria2c -x16 -s16 -k1M'
+abbr -g -a fastdl 'aria2c -x16 -s16 -k1M'
