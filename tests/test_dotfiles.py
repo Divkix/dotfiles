@@ -34,6 +34,7 @@ class DotfilesScriptTests(unittest.TestCase):
         self.fish_log = self.logs_dir / "fish.log"
         self.fisher_log = self.logs_dir / "fisher.log"
         self.brew_log = self.logs_dir / "brew.log"
+        self.duti_log = self.logs_dir / "duti.log"
 
         self.write_stub(
             "sudo",
@@ -96,6 +97,13 @@ done
 exit 0
 """,
         )
+        self.write_stub(
+            "duti",
+            """#!/bin/bash
+printf '%s\n' \"$*\" >> \"$FAKE_DUTI_LOG\"
+exit 0
+""",
+        )
 
         self.env = os.environ.copy()
         self.env.update(
@@ -107,6 +115,7 @@ exit 0
                 "FAKE_FISHER_LOG": str(self.fisher_log),
                 "FAKE_BREW_LOG": str(self.brew_log),
                 "FAKE_SUDO_LOG": str(self.sudo_log),
+                "FAKE_DUTI_LOG": str(self.duti_log),
             }
         )
 
@@ -183,7 +192,7 @@ exit 0
             "fish",
             "claude",
             "opencode",
-            "warp",
+            "ghostty",
             "codex",
             "factory",
             "fisher",
@@ -400,13 +409,15 @@ exec /bin/rm \"$@\"
         self.assertEqual(starship_result.returncode, 0, msg=starship_result.stderr)
         self.assertTrue((self.home / ".config" / "starship.toml").exists())
 
-    def test_warp_setup_restores_settings_and_tab_configs(self):
-        result = self.run_cmd("bash", "warp/setup.sh")
+    def test_ghostty_setup_restores_config_and_sets_default_terminal(self):
+        result = self.run_cmd("bash", "ghostty/setup.sh")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertTrue((self.home / ".warp" / "settings.toml").exists())
-        self.assertTrue(
-            (self.home / ".warp" / "default_tab_configs" / "worktree.toml").exists()
+        self.assertTrue((self.home / ".config" / "ghostty" / "config").exists())
+        self.assertTrue(self.duti_log.exists())
+        self.assertIn(
+            "com.mitchellh.ghostty",
+            self.duti_log.read_text(encoding="utf-8"),
         )
 
     def test_codex_setup_seeds_config_when_absent_and_preserves_existing(self):
@@ -497,16 +508,13 @@ exit 127
         self.assertTrue((self.fixture / "opencode" / "dcp.jsonc").exists())
         self.assertTrue((self.fixture / "opencode" / "prompts" / "custom.md").exists())
 
-    def test_update_backs_up_warp_config(self):
+    def test_update_backs_up_ghostty_config(self):
         self.seed_update_sources()
 
         result = self.run_cmd("bash", "update.sh")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertTrue((self.fixture / "warp" / "settings.toml").exists())
-        self.assertTrue(
-            (self.fixture / "warp" / "default_tab_configs" / "worktree.toml").exists()
-        )
+        self.assertTrue((self.fixture / "ghostty" / "config").exists())
 
     def test_update_strips_codex_project_paths(self):
         self.seed_update_sources()
@@ -893,11 +901,8 @@ exec /bin/mv "$@"
         )
         self.write_file(opencode_dir / "prompts" / "custom.md", "prompt\n")
 
-        warp_dir = self.home / ".warp"
-        self.write_file(warp_dir / "settings.toml", "[appearance]\nfont_size = 13.0\n")
-        self.write_file(
-            warp_dir / "default_tab_configs" / "worktree.toml", 'name = "Worktree"\n'
-        )
+        ghostty_dir = self.home / ".config" / "ghostty"
+        self.write_file(ghostty_dir / "config", "theme = GitHub Dark\n")
 
         codex_dir = self.home / ".codex"
         self.write_file(

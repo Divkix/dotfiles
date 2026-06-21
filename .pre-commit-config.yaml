@@ -9,7 +9,4 @@ repos:
       - id: check-yaml
       - id: check-ast
       - id: check-toml
-        # Warp writes multi-line inline tables (valid for Warp, not strict TOML 1.0)
-        # and update.sh mirrors the file verbatim, so skip strict validation for it.
-        exclude: ^warp/settings\.toml$
       - id: check-merge-conflict

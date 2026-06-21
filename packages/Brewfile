@@ -1,7 +1,6 @@
 tap "anomalyco/tap", trusted: true
 tap "golangci/tap", trusted: true
 tap "oven-sh/bun", trusted: true
-tap "warpdl/tap", trusted: true
 # Static checker for GitHub Actions workflow files
 brew "actionlint"
 # Cryptography and SSL/TLS Toolkit
@@ -32,6 +31,8 @@ brew "cmake"
 brew "curl"
 # Debugger for the Go programming language
 brew "delve"
+# Select default apps for documents and URL schemes on macOS
+brew "duti"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
 # Banner-like program prints strings as ASCII art
@@ -140,6 +141,8 @@ cask "codex"
 cask "droid"
 # Developer targeted fonts with a high number of glyphs (Nerd Fonts)
 cask "font-hack-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
 # Web browser
 cask "google-chrome"
 # Tools to protect your emails and files
@@ -166,8 +169,6 @@ cask "tailscale-app"
 cask "temurin"
 # Free and open-source OpenVPN client
 cask "tunnelblick"
-# Rust-based terminal
-cask "warp"
 # Multiplayer code editor
 cask "zed"
 # Video communication and virtual meeting platform

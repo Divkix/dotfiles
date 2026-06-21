@@ -240,9 +240,7 @@ stage_directory "$opencode_dir/prompts" "opencode/prompts"
 # Keep the legacy repo-only agent directory pruned.
 track_target "opencode/agent"
 
-warp_dir="$HOME/.warp"
-stage_file "$warp_dir/settings.toml" "warp/settings.toml"
-stage_directory "$warp_dir/default_tab_configs" "warp/default_tab_configs"
+stage_file "$HOME/.config/ghostty/config" "ghostty/config"
 
 stage_codex_config
 stage_file "$HOME/.codex/rules/default.rules" "codex/rules/default.rules"

@@ -19,7 +19,7 @@ Previously used on:
 - `opencode/` — OpenCode (`~/.config/opencode`)
 - `factory/` — Factory / droid (`~/.factory`)
 - `codex/` — Codex (`~/.codex`)
-- `warp/` — Warp terminal (`~/.warp`)
+- `ghostty/` — Ghostty terminal (`~/.config/ghostty`)
 - `gnupg/`
 - `starship/`
 
@@ -40,7 +40,8 @@ Each agent/tool is backed up as a curated, secret-free subset of its live config
   `mcp.json`, `droids/`. Auth, sessions, logs, cache, and history are excluded.
 - **Codex** (`~/.codex`): `config.toml` (with `[projects."..."]` trust paths stripped) and
   `rules/`. Auth, history, and SQLite state are excluded.
-- **Warp** (`~/.warp`): `settings.toml` and `default_tab_configs/`.
+- **Ghostty** (`~/.config/ghostty`): `config`. `ghostty/setup.sh` also sets Ghostty as the
+  default terminal via `duti`.
 
 Because the repo is public, `update.sh` sanitizes on capture: it blanks Factory API keys and
 strips Codex per-project paths so secrets and private repo paths never get committed. For the
