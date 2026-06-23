@@ -1,0 +1,151 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "language_models": {
+    "openai_compatible": {},
+  },
+  "proxy": "",
+  "diff_view_style": "split",
+  "cli_default_open_behavior": "new_window",
+  "outline_panel": {
+    "dock": "right",
+  },
+  "collaboration_panel": {
+    "dock": "right",
+  },
+  "server_url": "https://zed.dev",
+  "git": {
+    "inline_blame": {
+      "show_commit_summary": true,
+    },
+  },
+  "project_panel": {
+    "dock": "right",
+    "diagnostic_badges": true,
+    "entry_spacing": "comfortable",
+  },
+  "tabs": {
+    "git_status": true,
+  },
+  "title_bar": {
+    "show_branch_status_icon": true,
+    "show_menus": false,
+  },
+  "status_bar": {
+    "show_active_file": true,
+  },
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+    },
+  },
+  "ui_font_family": ".SystemUIFont",
+  "buffer_line_height": "standard",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "show_wrap_guides": true,
+  "git_panel": {
+    "dock": "right",
+    "show_count_badge": false,
+    "tree_view": true,
+  },
+  "restore_on_startup": "launchpad",
+  "context_servers": {},
+  "agent_servers": {},
+  "agent": {
+    "notify_when_agent_waiting": "all_screens",
+    "sidebar_side": "right",
+    "dock": "left",
+    "inline_assistant_model": {
+      "provider": "zed.dev",
+      "model": "gpt-5.3-codex",
+      "enable_thinking": false,
+    },
+    "show_turn_stats": true,
+    "thinking_display": "auto",
+    "play_sound_when_agent_done": "always",
+    "default_profile": "write",
+    "default_model": {
+      "provider": "Fireworkds",
+      "model": "accounts/fireworks/routers/kimi-k2p6-turbo",
+      "enable_thinking": false,
+    },
+    "tool_permissions": {
+      "default": "allow",
+    },
+    "favorite_models": [
+      {
+        "provider": "Fireworkds",
+        "model": "accounts/fireworks/routers/kimi-k2p6-turbo",
+        "enable_thinking": false,
+      },
+    ],
+    "model_parameters": [],
+    "enable_feedback": false,
+  },
+  "calls": {
+    "mute_on_join": true,
+  },
+  "disable_ai": false,
+  "document_symbols": "on",
+  "document_folding_ranges": "on",
+  "semantic_tokens": "combined",
+  "icon_theme": "Material Icon Theme",
+  "edit_predictions": {
+    "allow_data_collection": "default",
+    "open_ai_compatible_api": {
+      "api_url": "",
+    },
+    "codestral": {
+      "api_url": "https://codestral.mistral.ai",
+    },
+    "provider": "zed",
+  },
+  "terminal": {
+    "dock": "bottom",
+    "shell": "system",
+    "show_count_badge": false,
+    "env": {
+      "FIG_NEW_SESSION": "\"1\"",
+    },
+    "font_family": "monospace",
+  },
+  "node": {
+    "npm_path": "bun",
+  },
+  "base_keymap": "VSCode",
+  "multi_cursor_modifier": "cmd_or_ctrl",
+  "minimap": {
+    "show": "never",
+  },
+  "current_line_highlight": "gutter",
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 5000,
+    },
+  },
+  "buffer_font_family": "Fira Code Retina",
+  "file_types": {
+    "tailwindcss": ["*.css", "*.css"],
+    "ini": ["*.env", "*.env"],
+  },
+  "colorize_brackets": true,
+  "auto_indent_on_paste": true,
+  "use_on_type_format": true,
+  "show_whitespaces": "none",
+  "show_edit_predictions": true,
+  "session": {
+    "trust_all_worktrees": false,
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 13.0,
+  "theme": "Ayu Dark",
+}

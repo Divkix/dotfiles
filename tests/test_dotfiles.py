@@ -193,6 +193,7 @@ exit 0
             "claude",
             "opencode",
             "ghostty",
+            "zed",
             "codex",
             "factory",
             "fisher",
@@ -420,6 +421,14 @@ exec /bin/rm \"$@\"
             self.duti_log.read_text(encoding="utf-8"),
         )
 
+    def test_zed_setup_restores_config(self):
+        result = self.run_cmd("bash", "zed/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        zed_dir = self.home / ".config" / "zed"
+        self.assertTrue((zed_dir / "settings.json").exists())
+        self.assertTrue((zed_dir / "keymap.json").exists())
+
     def test_codex_setup_seeds_config_when_absent_and_preserves_existing(self):
         first = self.run_cmd("bash", "codex/setup.sh")
         self.assertEqual(first.returncode, 0, msg=first.stderr)
@@ -515,6 +524,15 @@ exit 127
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertTrue((self.fixture / "ghostty" / "config").exists())
+
+    def test_update_backs_up_zed_config(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertTrue((self.fixture / "zed" / "settings.json").exists())
+        self.assertTrue((self.fixture / "zed" / "keymap.json").exists())
 
     def test_update_strips_codex_project_paths(self):
         self.seed_update_sources()
@@ -903,6 +921,10 @@ exec /bin/mv "$@"
 
         ghostty_dir = self.home / ".config" / "ghostty"
         self.write_file(ghostty_dir / "config", "theme = GitHub Dark\n")
+
+        zed_dir = self.home / ".config" / "zed"
+        self.write_file(zed_dir / "settings.json", '{"theme":"Ayu Dark"}\n')
+        self.write_file(zed_dir / "keymap.json", "[]\n")
 
         codex_dir = self.home / ".codex"
         self.write_file(

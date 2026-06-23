@@ -20,6 +20,7 @@ Previously used on:
 - `factory/` — Factory / droid (`~/.factory`)
 - `codex/` — Codex (`~/.codex`)
 - `ghostty/` — Ghostty terminal (`~/.config/ghostty`)
+- `zed/` — Zed editor (`~/.config/zed`)
 - `gnupg/`
 - `starship/`
 
@@ -42,6 +43,9 @@ Each agent/tool is backed up as a curated, secret-free subset of its live config
   `rules/`. Auth, history, and SQLite state are excluded.
 - **Ghostty** (`~/.config/ghostty`): `config`. `ghostty/setup.sh` also sets Ghostty as the
   default terminal via `duti`.
+- **Zed** (`~/.config/zed`): `settings.json` and `keymap.json`. The prompt-library database,
+  `settings_backup.json`, and `themes/` are excluded as machine state. No redaction is needed
+  because Zed stores provider API keys in the macOS keychain, not in `settings.json`.
 
 Because the repo is public, `update.sh` sanitizes on capture: it blanks Factory API keys and
 strips Codex per-project paths so secrets and private repo paths never get committed. For the

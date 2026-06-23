@@ -242,6 +242,10 @@ track_target "opencode/agent"
 
 stage_file "$HOME/.config/ghostty/config" "ghostty/config"
 
+zed_dir="$HOME/.config/zed"
+stage_file "$zed_dir/settings.json" "zed/settings.json"
+stage_file "$zed_dir/keymap.json" "zed/keymap.json"
+
 stage_codex_config
 stage_file "$HOME/.codex/rules/default.rules" "codex/rules/default.rules"
 
