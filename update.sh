@@ -130,6 +130,47 @@ stage_factory_settings() {
     fi
 }
 
+stage_zed_settings() {
+    local source="$HOME/.config/zed/settings.json"
+    local staged_target="$STAGE_DIR/zed/settings.json"
+    local ext_dir="$HOME/Library/Application Support/Zed/extensions/installed"
+    local entries
+
+    track_target "zed/settings.json"
+
+    if [ ! -f "$source" ]; then
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$staged_target")"
+
+    # No installed-extensions dir -> capture settings.json verbatim.
+    if [ ! -d "$ext_dir" ]; then
+        cp -P "$source" "$staged_target"
+        return 0
+    fi
+
+    # Build "<id>": true lines from installed extension folder names. The folder name
+    # is the extension ID; this is the source of truth for what is installed.
+    entries="$(find "$ext_dir" -mindepth 1 -maxdepth 1 -type d | LC_ALL=C sort | while IFS= read -r p; do
+        printf '    "%s": true,\n' "${p##*/}"
+    done)"
+
+    # Regenerate ONLY the auto_install_extensions block while preserving the rest of the
+    # JSONC (comments, key order, trailing commas). Matches the canonical multi-line form
+    # `  "auto_install_extensions": {` ... `  },`; any other shape is copied through
+    # untouched because the open-brace anchor never matches it. Entries are passed via the
+    # environment (ENVIRON) because awk -v cannot carry the embedded newlines.
+    if ! ZED_EXT_ENTRIES="$entries" awk '
+        /^  "auto_install_extensions": \{$/ { print; if (ENVIRON["ZED_EXT_ENTRIES"] != "") print ENVIRON["ZED_EXT_ENTRIES"]; skip=1; next }
+        skip && /^  \},?[[:space:]]*$/      { print; skip=0; next }
+        skip { next }
+        { print }
+    ' "$source" > "$staged_target"; then
+        return 1
+    fi
+}
+
 restore_backups() {
     local index
     local relative_target
@@ -242,9 +283,8 @@ track_target "opencode/agent"
 
 stage_file "$HOME/.config/ghostty/config" "ghostty/config"
 
-zed_dir="$HOME/.config/zed"
-stage_file "$zed_dir/settings.json" "zed/settings.json"
-stage_file "$zed_dir/keymap.json" "zed/keymap.json"
+stage_zed_settings
+stage_file "$HOME/.config/zed/keymap.json" "zed/keymap.json"
 
 stage_codex_config
 stage_file "$HOME/.codex/rules/default.rules" "codex/rules/default.rules"

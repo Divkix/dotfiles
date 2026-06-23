@@ -540,6 +540,27 @@ exit 127
         self.assertTrue((self.fixture / "zed" / "settings.json").exists())
         self.assertTrue((self.fixture / "zed" / "keymap.json").exists())
 
+    def test_update_regenerates_zed_auto_install_extensions(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        settings = (self.fixture / "zed" / "settings.json").read_text(encoding="utf-8")
+        # Installed extensions are rebuilt from the live installed/ dir, sorted.
+        self.assertIn('    "dockerfile": true,\n', settings)
+        self.assertIn('    "git-firefly": true,\n', settings)
+        self.assertIn('    "toml": true,\n', settings)
+        block = settings.split('"auto_install_extensions": {', 1)[1].split("},", 1)[0]
+        self.assertEqual(
+            [line for line in block.splitlines() if line.strip()],
+            ['    "dockerfile": true,', '    "git-firefly": true,', '    "toml": true,'],
+        )
+        # The stale entry is dropped; unrelated JSONC (comment, other key) is preserved.
+        self.assertNotIn("old-ext", settings)
+        self.assertIn("// managed by dotfiles", settings)
+        self.assertIn('"theme": "Ayu Dark"', settings)
+
     def test_update_strips_codex_project_paths(self):
         self.seed_update_sources()
 
@@ -929,8 +950,28 @@ exec /bin/mv "$@"
         self.write_file(ghostty_dir / "config", "theme = GitHub Dark\n")
 
         zed_dir = self.home / ".config" / "zed"
-        self.write_file(zed_dir / "settings.json", '{"theme":"Ayu Dark"}\n')
+        self.write_file(
+            zed_dir / "settings.json",
+            "{\n"
+            "  // managed by dotfiles\n"
+            '  "auto_install_extensions": {\n'
+            '    "old-ext": true,\n'
+            "  },\n"
+            '  "theme": "Ayu Dark",\n'
+            "}\n",
+        )
         self.write_file(zed_dir / "keymap.json", "[]\n")
+        zed_ext = (
+            self.home
+            / "Library"
+            / "Application Support"
+            / "Zed"
+            / "extensions"
+            / "installed"
+        )
+        (zed_ext / "dockerfile").mkdir(parents=True, exist_ok=True)
+        (zed_ext / "toml").mkdir(parents=True, exist_ok=True)
+        (zed_ext / "git-firefly").mkdir(parents=True, exist_ok=True)
 
         codex_dir = self.home / ".codex"
         self.write_file(
