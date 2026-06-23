@@ -45,7 +45,12 @@ Each agent/tool is backed up as a curated, secret-free subset of its live config
   default terminal via `duti`.
 - **Zed** (`~/.config/zed`): `settings.json` and `keymap.json`. The prompt-library database,
   `settings_backup.json`, and `themes/` are excluded as machine state. No redaction is needed
-  because Zed stores provider API keys in the macOS keychain, not in `settings.json`.
+  because Zed stores provider API keys in the macOS keychain, not in `settings.json`. Extensions
+  are synced declaratively through the `auto_install_extensions` block in `settings.json` (Zed's
+  recommended approach — it auto-installs them on launch). The compiled extension binaries under
+  `~/Library/Application Support/Zed/` are machine state and are not synced. After installing a
+  new Zed extension, add its ID to `auto_install_extensions` in `settings.json` and re-run
+  `./update.sh`.
 
 Because the repo is public, `update.sh` sanitizes on capture: it blanks Factory API keys and
 strips Codex per-project paths so secrets and private repo paths never get committed. For the

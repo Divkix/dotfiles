@@ -429,6 +429,12 @@ exec /bin/rm \"$@\"
         self.assertTrue((zed_dir / "settings.json").exists())
         self.assertTrue((zed_dir / "keymap.json").exists())
 
+    def test_zed_settings_declares_auto_install_extensions(self):
+        # Extensions are synced declaratively via the auto_install_extensions block in
+        # settings.json (Zed has no native extension sync); lock in that intent.
+        settings = (self.fixture / "zed" / "settings.json").read_text(encoding="utf-8")
+        self.assertIn("auto_install_extensions", settings)
+
     def test_codex_setup_seeds_config_when_absent_and_preserves_existing(self):
         first = self.run_cmd("bash", "codex/setup.sh")
         self.assertEqual(first.returncode, 0, msg=first.stderr)
