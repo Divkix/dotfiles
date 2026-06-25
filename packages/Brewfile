@@ -65,6 +65,8 @@ brew "gopls"
 brew "goreleaser"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Simple terminal UI for git commands
+brew "lazygit"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.14"
 # Next-gen compiler infrastructure
@@ -85,6 +87,8 @@ brew "oxfmt"
 brew "pinentry-mac"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
+# CLI for Playwright: record/generate code, inspect selectors, take screenshots
+brew "playwright-cli"
 # Fast, disk space efficient package manager
 brew "pnpm"
 # Framework for managing multi-language pre-commit hooks
@@ -137,9 +141,10 @@ cask "cap"
 cask "claude-code@latest"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
+# OpenAI's Codex desktop app for managing coding agents
+cask "codex-app"
 # AI-powered software engineering agent by Factory
 cask "droid"
-# Developer targeted fonts with a high number of glyphs (Nerd Fonts)
 cask "font-hack-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
@@ -159,8 +164,8 @@ cask "lm-studio"
 cask "macs-fan-control"
 # Replacement for Docker Desktop
 cask "orbstack"
-# Control your tools with a few keystrokes
-cask "raycast"
+# Store SSH keys in the Secure Enclave
+cask "secretive"
 # VPN client for secure internet access and private browsing
 cask "surfshark"
 # Mesh VPN based on WireGuard

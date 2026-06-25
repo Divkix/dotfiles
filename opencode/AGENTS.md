@@ -50,6 +50,16 @@ For CI failures: inspect logs, identify root cause, reproduce with the nearest l
 * Use `gh` for GitHub work when available; inspect the relevant PR, issue, review thread, or workflow run before changing anything.
 * Use worktrees when parallel implementation needs isolation.
 
+### Commit Signing (Secure Enclave SSH)
+
+Commits are signed with an SSH key (`gpg.format=ssh`, `user.signingkey=~/.ssh/DivMBP-Personal.pub`) held in the macOS Secure Enclave via the Secretive app.
+
+* The private key is **non-extractable by design** — only the `.pub` exists on disk. This is correct, not broken. Do not try to "restore" a private key file and do not change the global git signing config.
+* Git reaches the key through Secretive's **agent socket**, not a file. Spawned/non-interactive shells don't inherit `SSH_AUTH_SOCK`, so export it before any commit that signs:
+  `export SSH_AUTH_SOCK="$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"`
+  Verify with `ssh-add -l` (expect ECDSA `SHA256:hiugEgr5cJ6zAtzEDysD+MMNDo1a8xT2KglYl5qI9NM`).
+* Every signature requires a physical **Touch ID tap**, so SSH signing only works when the user is at the machine. If running headless/unattended, signing will hang — fall back to GPG (`git commit -S` uses GPG key `30695AF88CC00E38`, still on GitHub so commits stay Verified) and note it.
+
 ## Default Choices
 
 For greenfield decisions only, unless the repo or user specifies otherwise:

@@ -96,6 +96,31 @@ generate_brewfile() {
     [ -f "$staged_target" ]
 }
 
+stage_fish_config() {
+    local source="$1"
+    local staged_target="$STAGE_DIR/fish/config.fish"
+
+    track_target "fish/config.fish"
+
+    if [ ! -f "$source" ]; then
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$staged_target")"
+    # Blank secret-bearing `set -gx NAME "..."` exports (API keys, tokens, secrets,
+    # passwords) so they never reach this public repo. Matches on the variable name
+    # only; non-secret exports (PATH, SSH_AUTH_SOCK, DO_NOT_TRACK, ...) pass through.
+    if ! awk '
+        $1 == "set" && $2 == "-gx" && $3 ~ /(_KEY|_TOKEN|_SECRET|_PASSWORD|_PASSWD|APIKEY)$/ {
+            print "set -gx " $3 " \"\""
+            next
+        }
+        { print }
+    ' "$source" > "$staged_target"; then
+        return 1
+    fi
+}
+
 stage_codex_config() {
     local source="$HOME/.codex/config.toml"
     local staged_target="$STAGE_DIR/codex/config.toml"
@@ -258,7 +283,7 @@ cleanup() {
 trap 'cleanup "$?"' EXIT
 
 fish_dir="$HOME/.config/fish"
-stage_file "$fish_dir/config.fish" "fish/config.fish"
+stage_fish_config "$fish_dir/config.fish"
 stage_file "$fish_dir/functions/fish_prompt.fish" "fish/functions/fish_prompt.fish"
 stage_file "$fish_dir/functions/fish_greeting.fish" "fish/functions/fish_greeting.fish"
 stage_file "$fish_dir/functions/fish_prompt_loading_indicator.fish" "fish/functions/fish_prompt_loading_indicator.fish"

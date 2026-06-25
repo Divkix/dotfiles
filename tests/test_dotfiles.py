@@ -589,6 +589,30 @@ exit 127
         self.assertTrue((self.fixture / "factory" / "mcp.json").exists())
         self.assertTrue((self.fixture / "factory" / "droids" / "reviewer.md").exists())
 
+    def test_update_blanks_fish_secret_exports(self):
+        self.seed_update_sources()
+        fish_config = self.home / ".config" / "fish" / "config.fish"
+        self.write_file(
+            fish_config,
+            "set -gx PATH $PATH /opt/bin\n"
+            'set -gx MORPH_API_KEY "sk-live-secret-key"\n'
+            'set -gx COMMANDCODE_API_KEY "user_live_secret_token"\n'
+            "set -gx DO_NOT_TRACK 1\n",
+        )
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        staged = (self.fixture / "fish" / "config.fish").read_text(encoding="utf-8")
+        # Secret-bearing exports are blanked; their values never reach the repo.
+        self.assertNotIn("sk-live-secret-key", staged)
+        self.assertNotIn("user_live_secret_token", staged)
+        self.assertIn('set -gx MORPH_API_KEY ""', staged)
+        self.assertIn('set -gx COMMANDCODE_API_KEY ""', staged)
+        # Non-secret exports pass through untouched.
+        self.assertIn("set -gx PATH $PATH /opt/bin", staged)
+        self.assertIn("set -gx DO_NOT_TRACK 1", staged)
+
     def test_update_ignores_claude_machine_state(self):
         self.seed_update_sources()
 

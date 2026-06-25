@@ -1,7 +1,7 @@
 [user]
 	name = Divanshu Chauhan
 	email = divkix@divkix.me
-	signingkey = 30695AF88CC00E38
+	signingkey = /Users/divkix/.ssh/DivMBP-Personal.pub
 [core]
     eol = lf
     autocrlf = input
@@ -13,7 +13,7 @@
 	gpgsign = true
 	template = /Users/divkix/.stCommitMsg
 [credential "https://github.com"]
-	helper =
+	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [trailer "sign"]
 	key = "Signed-off-by: "
@@ -52,7 +52,7 @@
 	args = transfer
 	concurrent = true
 [credential "https://gist.github.com"]
-	helper =
+	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [coderabbit]
 	machineId = cli/8b836f09efb547c48aceecc236128f8f
@@ -61,3 +61,7 @@
 	prune-local-d = !git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
 [fetch]
 	prune = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /Users/divkix/.ssh/allowed_signers

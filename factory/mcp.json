@@ -4,12 +4,6 @@
       "type": "http",
       "url": "https://mcp.cloudflare.com/mcp",
       "disabled": false
-    },
-    "playwright": {
-      "type": "stdio",
-      "command": "bunx",
-      "args": ["-y", "@playwright/mcp@latest"],
-      "disabled": false
     }
   }
 }

@@ -1,6 +1,9 @@
 # setup gpg tty
 set -gx GPG_TTY (tty)
 
+# use Secretive (Secure Enclave) SSH agent for auth + commit signing
+set -gx SSH_AUTH_SOCK "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
+
 # eval homebrew
 eval (/opt/homebrew/bin/brew shellenv)
 
