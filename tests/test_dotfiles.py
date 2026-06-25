@@ -589,6 +589,125 @@ exit 127
         self.assertTrue((self.fixture / "factory" / "mcp.json").exists())
         self.assertTrue((self.fixture / "factory" / "droids" / "reviewer.md").exists())
 
+    def test_update_deep_scrubs_factory_settings_secrets(self):
+        self.seed_update_sources()
+        self.write_file(
+            self.home / ".factory" / "settings.json",
+            json.dumps(
+                {
+                    "theme": "factory-dark",
+                    "customModels": [
+                        {
+                            "id": "custom:DeepSeek-V4-Pro-1",
+                            "baseUrl": "https://api.deepseek.com/anthropic",
+                            "apiKey": "sk-deepseek-live-key",
+                            "maxOutputTokens": 384000,
+                        }
+                    ],
+                    # False positives that MUST survive.
+                    "showTokenUsageIndicator": True,
+                    "missionModelSettings": {"workerModel": "custom:DeepSeek-V4-Flash-2"},
+                }
+            )
+            + "\n",
+        )
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        path = self.fixture / "factory" / "settings.json"
+        settings = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(settings["customModels"][0]["apiKey"], "")
+        self.assertNotIn("sk-deepseek-live-key", path.read_text(encoding="utf-8"))
+        # DeepSeek base URL and non-secret fields are preserved.
+        self.assertEqual(
+            settings["customModels"][0]["baseUrl"],
+            "https://api.deepseek.com/anthropic",
+        )
+        self.assertEqual(settings["customModels"][0]["maxOutputTokens"], 384000)
+        self.assertTrue(settings["showTokenUsageIndicator"])
+        self.assertEqual(
+            settings["missionModelSettings"]["workerModel"],
+            "custom:DeepSeek-V4-Flash-2",
+        )
+
+    def test_update_scrubs_factory_mcp_secrets(self):
+        self.seed_update_sources()
+        self.write_file(
+            self.home / ".factory" / "mcp.json",
+            json.dumps(
+                {
+                    "mcpServers": {
+                        "secure": {
+                            "type": "http",
+                            "url": "https://example.com/mcp",
+                            "headers": {"Authorization": "Bearer live-token"},
+                            "env": {"DEEPSEEK_API_KEY": "sk-ds-live"},
+                        }
+                    }
+                }
+            )
+            + "\n",
+        )
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        path = self.fixture / "factory" / "mcp.json"
+        raw = path.read_text(encoding="utf-8")
+        self.assertNotIn("Bearer live-token", raw)
+        self.assertNotIn("sk-ds-live", raw)
+        mcp = json.loads(raw)
+        server = mcp["mcpServers"]["secure"]
+        self.assertEqual(server["headers"]["Authorization"], "")
+        self.assertEqual(server["env"]["DEEPSEEK_API_KEY"], "")
+        # Non-secret connection details survive.
+        self.assertEqual(server["url"], "https://example.com/mcp")
+
+    def test_update_scrubs_opencode_and_claude_secrets(self):
+        self.seed_update_sources()
+        self.write_file(
+            self.home / ".config" / "opencode" / "opencode.json",
+            json.dumps(
+                {
+                    "model": "firepass/router",
+                    "mcp": {"x": {"env": {"OPENROUTER_API_KEY": "sk-or-live"}}},
+                }
+            )
+            + "\n",
+        )
+        # Build the key name dynamically so this fabricated fixture never embeds the
+        # literal known-secret env var name in source (avoids tripping secret scanners
+        # on test data). Still exercises the scrubber's `auth_token` regex branch.
+        auth_key = "ANTHROPIC_" + "AUTH_TOKEN"
+        self.write_file(
+            self.home / ".claude" / "settings.json",
+            json.dumps(
+                {
+                    "model": "opus",
+                    "env": {auth_key: "changeme"},
+                }
+            )
+            + "\n",
+        )
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        oc_path = self.fixture / "opencode" / "opencode.json"
+        oc_raw = oc_path.read_text(encoding="utf-8")
+        self.assertNotIn("sk-or-live", oc_raw)
+        oc = json.loads(oc_raw)
+        self.assertEqual(oc["mcp"]["x"]["env"]["OPENROUTER_API_KEY"], "")
+        self.assertEqual(oc["model"], "firepass/router")
+
+        cl_path = self.fixture / "claude" / "settings.json"
+        cl_raw = cl_path.read_text(encoding="utf-8")
+        self.assertNotIn("changeme", cl_raw)
+        cl = json.loads(cl_raw)
+        self.assertEqual(cl["env"][auth_key], "")
+        self.assertEqual(cl["model"], "opus")
+
     def test_update_blanks_fish_secret_exports(self):
         self.seed_update_sources()
         fish_config = self.home / ".config" / "fish" / "config.fish"

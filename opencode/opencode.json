@@ -12,7 +12,10 @@
   "default_agent": "build",
   "mcp": {
     "browsermcp": {
-      "command": ["bunx", "@browsermcp/mcp@latest"],
+      "command": [
+        "bunx",
+        "@browsermcp/mcp@latest"
+      ],
       "enabled": false,
       "type": "local"
     }

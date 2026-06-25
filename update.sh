@@ -14,6 +14,28 @@ declare -a MANAGED_TARGETS=()
 declare -a APPLIED_TARGETS=()
 APPLY_IN_PROGRESS=0
 
+# jq program that recursively blanks every string value whose KEY name looks
+# secret-bearing (API keys, auth/refresh/access tokens, secrets, passwords, bearer
+# tokens, Authorization headers, credentials, private keys) anywhere in a JSON
+# document -- including nested customModels, MCP server `env`/`headers`, etc. Matching
+# is on the key name only, so non-secret keys keep their values (maxOutputTokens,
+# semantic_tokens, showTokenUsageIndicator, token_refresh_buffer_ms, ...).
+JSON_SECRET_SCRUB='
+def scrub:
+  if type == "object" then
+    with_entries(
+      if (.key | test("(?i)(api[_-]?key|access[_-]?key|secret|password|passwd|passphrase|(auth|access|refresh|id)[_-]?token|bearer|authorization|credential|private[_-]?key)"))
+         and (.value | type == "string")
+      then .value = ""
+      else .value |= scrub
+      end
+    )
+  elif type == "array" then map(scrub)
+  else .
+  end;
+scrub
+'
+
 track_target() {
     local relative_target="$1"
     local existing_target
@@ -138,19 +160,23 @@ stage_codex_config() {
     fi
 }
 
-stage_factory_settings() {
-    local source="$HOME/.factory/settings.json"
-    local staged_target="$STAGE_DIR/factory/settings.json"
+# Stage a JSON file with every secret-bearing value recursively blanked (see
+# JSON_SECRET_SCRUB). Use for any config that may hold API keys/tokens/headers
+# (Factory settings + mcp, opencode, claude). Defends against future keys (e.g. a
+# DeepSeek apiKey in customModels, or a token in an MCP server env) leaking here.
+stage_json_scrubbed() {
+    local source="$1"
+    local relative_target="$2"
+    local staged_target="$STAGE_DIR/$relative_target"
 
-    track_target "factory/settings.json"
+    track_target "$relative_target"
 
     if [ ! -f "$source" ]; then
         return 0
     fi
 
     mkdir -p "$(dirname "$staged_target")"
-    # Blank customModels API keys so secrets never reach this public repo.
-    if ! jq '(.customModels[]?.apiKey) |= ""' "$source" > "$staged_target"; then
+    if ! jq "$JSON_SECRET_SCRUB" "$source" > "$staged_target"; then
         return 1
     fi
 }
@@ -291,7 +317,7 @@ stage_file "$fish_dir/conf.d/abbr.fish" "fish/conf.d/abbr.fish"
 stage_file "$fish_dir/conf.d/alias.fish" "fish/conf.d/alias.fish"
 
 claude_dir="$HOME/.claude"
-stage_file "$claude_dir/settings.json" "claude/settings.json"
+stage_json_scrubbed "$claude_dir/settings.json" "claude/settings.json"
 # ~/.claude/CLAUDE.md is a symlink to the canonical opencode AGENTS.md; recreated by
 # claude/setup.sh, so it is not captured here (avoids committing a non-portable symlink).
 stage_directory "$claude_dir/agents" "claude/agents"
@@ -299,7 +325,7 @@ stage_directory "$claude_dir/commands" "claude/commands"
 # ~/.claude.json is machine state (project paths, costs, userID) and is intentionally not synced.
 
 opencode_dir="$HOME/.config/opencode"
-stage_file "$opencode_dir/opencode.json" "opencode/opencode.json"
+stage_json_scrubbed "$opencode_dir/opencode.json" "opencode/opencode.json"
 stage_file "$opencode_dir/AGENTS.md" "opencode/AGENTS.md"
 stage_file "$opencode_dir/dcp.jsonc" "opencode/dcp.jsonc"
 stage_directory "$opencode_dir/prompts" "opencode/prompts"
@@ -314,8 +340,8 @@ stage_file "$HOME/.config/zed/keymap.json" "zed/keymap.json"
 stage_codex_config
 stage_file "$HOME/.codex/rules/default.rules" "codex/rules/default.rules"
 
-stage_factory_settings
-stage_file "$HOME/.factory/mcp.json" "factory/mcp.json"
+stage_json_scrubbed "$HOME/.factory/settings.json" "factory/settings.json"
+stage_json_scrubbed "$HOME/.factory/mcp.json" "factory/mcp.json"
 stage_directory "$HOME/.factory/droids" "factory/droids"
 
 generate_fisher_manifest
