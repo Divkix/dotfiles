@@ -112,7 +112,9 @@ generate_brewfile() {
 
     track_target "packages/Brewfile"
     mkdir -p "$(dirname "$staged_target")"
-    if ! brew bundle dump --force --describe --file="$staged_target"; then
+    # No --describe: descriptions are the default since Homebrew 7; the flag is
+    # odisabled and errors out. Use --no-describe / HOMEBREW_BUNDLE_NO_DESCRIBE to opt out.
+    if ! brew bundle dump --force --file="$staged_target"; then
         return 1
     fi
     [ -f "$staged_target" ]
