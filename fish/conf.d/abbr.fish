@@ -30,7 +30,7 @@ abbr -g -a www python3 -m http.server 8000
 abbr -g -a untar tar -zxvf
 
 # brew commands
-abbr -g -a bu "fisher update && brew update && brew upgrade"
+abbr -g -a bu "fisher update && brew update && brew upgrade --yes && pnx skills update -g"
 
 # coding agents
 abbr -g -a oc "opencode"

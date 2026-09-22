@@ -1,9 +1,6 @@
 # setup gpg tty
 set -gx GPG_TTY (tty)
 
-# use Secretive (Secure Enclave) SSH agent for auth + commit signing
-set -gx SSH_AUTH_SOCK "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
-
 # eval homebrew
 eval (/opt/homebrew/bin/brew shellenv)
 
@@ -56,8 +53,11 @@ set -gx OPENCODE_EXPERIMENTAL_WORKSPACES true
 # morphllm
 set -gx MORPH_API_KEY ""
 
-# commandcode api key for opencode auth
-set -gx COMMANDCODE_API_KEY ""
+# set firecrawl key
+set -gx FIRECRAWL_API_KEY ""
+
+# set tinyfish api key
+set -gx TINYFISH_API_KEY ""
 
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH /Users/divkix/.lmstudio/bin
@@ -81,3 +81,10 @@ source ~/.orbstack/shell/init2.fish 2>/dev/null || :
 # starship prompt setup
 set -gx STARSHIP_CONFIG "$HOME/.config/starship.toml"
 starship init fish | source
+
+# pnpm
+set -gx PNPM_HOME "/Users/divkix/Library/pnpm"
+if not string match -q -- "$PNPM_HOME/bin" $PATH
+  set -gx PATH "$PNPM_HOME/bin" $PATH
+end
+# pnpm end

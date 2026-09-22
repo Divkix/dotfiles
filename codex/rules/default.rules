@@ -1,3 +1,0 @@
-prefix_rule(pattern=["gh", "issue", "view"], decision="allow")
-prefix_rule(pattern=["gh", "pr", "list"], decision="allow")
-prefix_rule(pattern=["git", "mv"], decision="allow")

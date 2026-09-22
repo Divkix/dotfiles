@@ -28,5 +28,10 @@
         }
       ]
     }
+  },
+  {
+    "bindings": {
+      "cmd-shift-t": "agent::NewTerminalThread"
+    }
   }
 ]

@@ -1,7 +1,7 @@
 [user]
 	name = Divanshu Chauhan
 	email = divkix@divkix.me
-	signingkey = /Users/divkix/.ssh/DivMBP-Personal.pub
+	signingkey = 30695AF88CC00E38
 [core]
     eol = lf
     autocrlf = input
@@ -57,11 +57,12 @@
 [coderabbit]
 	machineId = cli/8b836f09efb547c48aceecc236128f8f
 [alias]
-	prune-local = !git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -d
-	prune-local-d = !git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
+	prune-local = "!git fetch --prune && git branch --format='%(refname:short) %(upstream:track)' | awk '$2 ~ /gone/ {print $1}' | while read -r b; do git branch -d \"$b\" 2>/dev/null || { if [ -z \"$(git cherry HEAD \"$b\" 2>/dev/null | grep '^+')\" ]; then git branch -D \"$b\"; else echo \"kept $b — commits not in HEAD\"; fi; }; done"
+	prune-local-d = !git fetch --prune && git branch --format='%(refname:short) %(upstream:track)' | awk '$2 ~ /gone/ {print $1}' | xargs -r git branch -D
+	sync = !git pull \"$@\" && git prune-local
 [fetch]
 	prune = true
 [gpg]
-	format = ssh
+	format = openpgp
 [gpg "ssh"]
 	allowedSignersFile = /Users/divkix/.ssh/allowed_signers

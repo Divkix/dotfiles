@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "Cloudflare-MCP": {
-      "type": "http",
-      "url": "https://mcp.cloudflare.com/mcp",
-      "disabled": false
-    }
-  }
-}
