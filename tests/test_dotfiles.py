@@ -461,6 +461,28 @@ exit 127
         self.assertIn("set -gx PATH $PATH /opt/bin", staged)
         self.assertIn("set -gx DO_NOT_TRACK 1", staged)
 
+    def test_update_strips_trailing_whitespace_from_staged_files(self):
+        self.seed_update_sources()
+        # `gh auth setup-git` writes `helper = ` with a trailing space, which the repo's
+        # own trailing-whitespace pre-commit hook rejects.
+        self.write_file(
+            self.home / ".gitconfig",
+            '[credential "https://github.com"]\n'
+            "\thelper = \n"
+            "\thelper = !gh auth git-credential\n",
+        )
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        staged = (self.fixture / "git" / ".gitconfig").read_text(encoding="utf-8")
+        self.assertEqual(
+            staged,
+            '[credential "https://github.com"]\n'
+            "\thelper =\n"
+            "\thelper = !gh auth git-credential\n",
+        )
+
     def test_update_handles_empty_fisher_plugin_list(self):
         self.seed_update_sources()
         manifest = self.fixture / "fisher" / "fisher install.list"

@@ -194,6 +194,25 @@ stage_zed_settings() {
     fi
 }
 
+# The repo's pre-commit hook strips trailing whitespace, so normalize the captured copy
+# too: a live config with trailing spaces (e.g. the `helper = ` line `gh auth setup-git`
+# writes into ~/.gitconfig) would otherwise be re-captured dirty on every run. Symlinks
+# are skipped so link snapshots keep pointing at their target.
+strip_staged_trailing_whitespace() {
+    local staged_file
+    local temp_file="$TMP_DIR/strip.tmp"
+
+    while IFS= read -r staged_file; do
+        if ! awk '{ sub(/[[:space:]]+$/, ""); print }' "$staged_file" > "$temp_file"; then
+            return 1
+        fi
+
+        if ! mv "$temp_file" "$staged_file"; then
+            return 1
+        fi
+    done < <(find "$STAGE_DIR" -type f)
+}
+
 restore_backups() {
     local index
     local relative_target
@@ -309,6 +328,8 @@ generate_brewfile
 echo "brew bundle dump complete"
 
 stage_file "$HOME/.config/starship.toml" "starship/starship.toml"
+
+strip_staged_trailing_whitespace
 
 apply_staged_targets
 
