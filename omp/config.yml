@@ -1,0 +1,187 @@
+providers:
+  autoThinkingMaxEffort: xhigh
+  anthropic:
+    serverSideFallback: false
+  tinyModelDevice: auto
+  openai-codex:
+    codeMode: auto
+setupVersion: 2
+modelRoles:
+  slow: openai-codex/gpt-5.6-sol:high
+  task: opencode-go/mimo-v2.6-flash:high
+  default: opencode-go/deepseek-v4.1-flash:max
+  web: web/firecrawl
+  judge: typesafe/jev-latest
+  smol: opencode-go/mimo-v2.6-flash:auto
+  image: openrouter/meta/muse-image:auto
+defaultThinkingLevel: auto
+advisor:
+  enabled: false
+  syncBacklog: "3"
+retry:
+  fallbackChains:
+    web:
+      - web/tinyfish
+      - web/exa
+    judge:
+      - "@tiny"
+      - "@smol"
+      - "@default"
+    slow:
+      - xai-oauth/grok-4.7
+      - openrouter/xiaomi/mimo-v2.6-pro
+cycleOrder:
+  - smol
+  - default
+  - slow
+display:
+  showTokenUsage: true
+  cacheMissMarker: true
+  collapseCompacted: true
+  hideToolActivity: true
+memory:
+  backend: "off"
+mnemopi:
+  autoRetain: true
+  scoping: per-project-tagged
+task:
+  agentPrewalk:
+    {}
+  prewalk: false
+  enableEffort: false
+  isolation:
+    commits: generic
+    enabled: true
+  maxRecursionDepth: 2
+  showResolvedModelBadge: true
+  eager: preferred
+  enableLsp: false
+  agentAdvisor:
+    task: "off"
+bashInterceptor:
+  enabled: true
+symbolPreset: nerd
+statusLine:
+  compactThinkingLevel: false
+  separator: powerline-thin
+  sessionAccent: true
+  transparent: false
+error:
+  notify: "on"
+stt:
+  enabled: false
+  submitTrigger: never
+marketplace:
+  autoUpdate: auto
+power:
+  sleepPrevention: system
+features:
+  unexpectedStopDetection: smart
+autolearn:
+  enabled: false
+  autoContinue: true
+edit:
+  fuzzyMatch: true
+  mode: hashline
+python:
+  kernelMode: session
+astGrep:
+  enabled: true
+generate_image:
+  enabled: true
+checkpoint:
+  enabled: false
+github:
+  enabled: true
+security:
+  enabled: false
+web_search:
+  enabled: true
+hideThinkingBlock: true
+prewalk:
+  enabled: false
+dev:
+  autoqaConsent: granted
+bash:
+  autoBackground:
+    enabled: true
+  direnv: auto
+startup:
+  quiet: true
+tier:
+  openai: none
+  anthropic: none
+  google: none
+  subagent: inherit
+  advisor: flex
+includeWorkspaceTree: false
+images:
+  describeForTextModels: true
+followUpMode: one-at-a-time
+steeringMode: one-at-a-time
+interruptMode: immediate
+tools:
+  approvalMode: yolo
+ttsr:
+  contextMode: discard
+snapcompact:
+  toolResults: false
+read:
+  renderMarkdown: true
+  toolResultPreview: true
+speech:
+  enabled: false
+secrets:
+  enabled: false
+shellMinimizer:
+  sourceOutlineLevel: default
+colorBlindMode: false
+terminal:
+  showProgress: true
+tui:
+  textSizing: false
+  codexResetFireworks: false
+personality: pragmatic
+readLineNumbers: true
+disabledProviders:
+  - opencode
+  - claude
+  - codex
+  - claude-plugins
+  - gemini
+  - cursor
+  - github
+  - vscode
+  - mcp-json
+  - ssh-json
+title:
+  refreshOnReplan: true
+omitThinking: false
+eval:
+  rb: true
+async:
+  enabled: true
+textVerbosity: medium
+commands:
+  enableOpencodeProject: false
+  enableOpencodeUser: false
+  enableClaudeUser: false
+  enableClaudeProject: false
+theme:
+  dark: dark-volcanic
+composer:
+  shape: claude
+browser:
+  headless: true
+compaction:
+  enabled: true
+  thresholdTokens: 250000
+disabledExtensions:
+  []
+codexResets:
+  autoRedeem: "no"
+externalThinking: false
+isolation:
+  backend: auto
+contextPromotion:
+  enabled: false
