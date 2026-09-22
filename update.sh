@@ -72,12 +72,17 @@ generate_fisher_manifest() {
 
 generate_brewfile() {
     local staged_target="$STAGE_DIR/packages/Brewfile"
+    local brew_dir
 
     track_target "packages/Brewfile"
     mkdir -p "$(dirname "$staged_target")"
     # No --describe: descriptions are the default since Homebrew 7; the flag is
     # odisabled and errors out. Use --no-describe / HOMEBREW_BUNDLE_NO_DESCRIBE to opt out.
-    if ! brew bundle dump --force --file="$staged_target"; then
+    # Homebrew's bin dir goes first because brew detects global npm packages through PATH:
+    # with a node runtime shim ahead of it (e.g. ~/.vite-plus/bin) the dump reports that
+    # runtime's bundled npm/corepack instead of the real global packages.
+    brew_dir="$(dirname "$(command -v brew)")"
+    if ! PATH="$brew_dir:$PATH" brew bundle dump --force --file="$staged_target"; then
         return 1
     fi
     [ -f "$staged_target" ]
