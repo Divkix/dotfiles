@@ -1,4 +1,3 @@
-import json
 import os
 import re
 import shutil
@@ -190,12 +189,9 @@ exit 0
     def snapshot_managed_repo(self) -> dict[str, tuple[str, str | None]]:
         return self.snapshot_repo_paths(
             "fish",
-            "claude",
-            "opencode",
             "ghostty",
             "zed",
-            "codex",
-            "factory",
+            "omp",
             "fisher",
             "git",
             "ssh",
@@ -284,7 +280,7 @@ exit 0
     def test_scopy_creates_nested_parent_without_sudo_owned_tempdir(self):
         source = self.root / "source.conf"
         source.write_text("nested\n", encoding="utf-8")
-        destination = self.home / ".config" / "opencode" / "prompts" / "custom.md"
+        destination = self.home / ".config" / "nested" / "deep" / "custom.md"
 
         result = self.run_cmd(
             "bash",
@@ -310,99 +306,6 @@ exit 0
                 for prefix in ("mkdir ", "cp ", "mv ")
             )
         )
-
-    def test_claude_setup_restores_managed_files_without_machine_state(self):
-        self.write_file(self.fixture / "claude" / "agents" / "sample.md", "agent\n")
-        self.write_file(self.fixture / "claude" / "commands" / "sample.md", "command\n")
-
-        result = self.run_cmd("bash", "claude/setup.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertTrue((self.home / ".claude" / "settings.json").exists())
-        self.assertTrue((self.home / ".claude" / "agents" / "sample.md").exists())
-        self.assertTrue((self.home / ".claude" / "commands" / "sample.md").exists())
-        # CLAUDE.md is a runtime symlink to the canonical opencode AGENTS.md (portable,
-        # resolved via $HOME), not a committed file.
-        claude_md = self.home / ".claude" / "CLAUDE.md"
-        self.assertTrue(claude_md.is_symlink())
-        self.assertEqual(
-            os.readlink(claude_md),
-            str(self.home / ".config" / "opencode" / "AGENTS.md"),
-        )
-        # ~/.claude.json is machine state (project paths, costs, userID) and must not be
-        # managed or restored. claude.json must never land inside ~/.claude either.
-        self.assertFalse((self.home / ".claude.json").exists())
-        self.assertFalse((self.home / ".claude" / "claude.json").exists())
-
-    def test_claude_setup_prunes_stale_managed_subtrees(self):
-        self.write_file(self.fixture / "claude" / "agents" / "keep.md", "agent\n")
-        self.write_file(self.fixture / "claude" / "commands" / "keep.md", "command\n")
-        self.write_file(self.home / ".claude" / "agents" / "stale.md", "stale\n")
-        self.write_file(self.home / ".claude" / "commands" / "stale.md", "stale\n")
-
-        result = self.run_cmd("bash", "claude/setup.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertFalse((self.home / ".claude" / "agents" / "stale.md").exists())
-        self.assertFalse((self.home / ".claude" / "commands" / "stale.md").exists())
-        self.assertTrue((self.home / ".claude" / "agents" / "keep.md").exists())
-        self.assertTrue((self.home / ".claude" / "commands" / "keep.md").exists())
-
-    def test_opencode_setup_restores_prompts_and_dcp_on_first_run(self):
-        prompts_dir = self.fixture / "opencode" / "prompts"
-        prompts_dir.mkdir(parents=True, exist_ok=True)
-        self.write_file(prompts_dir / "custom.md", "prompt\n")
-        self.write_file(
-            self.fixture / "opencode" / "dcp.jsonc",
-            '{"$schema":"https://example.com/schema"}\n',
-        )
-
-        result = self.run_cmd("bash", "opencode/setup.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertTrue((self.home / ".config" / "opencode" / "opencode.json").exists())
-        self.assertTrue((self.home / ".config" / "opencode" / "AGENTS.md").exists())
-        self.assertTrue((self.home / ".config" / "opencode" / "dcp.jsonc").exists())
-        self.assertTrue(
-            (self.home / ".config" / "opencode" / "prompts" / "custom.md").exists()
-        )
-
-    def test_opencode_setup_prunes_stale_managed_files(self):
-        stale_root = self.home / ".config" / "opencode"
-        self.write_file(stale_root / "prompts" / "stale.md", "stale\n")
-        self.write_file(stale_root / "agent" / "legacy.md", "legacy\n")
-        self.write_file(stale_root / "dcp.jsonc", '{"stale":true}\n')
-
-        (self.fixture / "opencode" / "dcp.jsonc").unlink(missing_ok=True)
-
-        result = self.run_cmd("bash", "opencode/setup.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertFalse((stale_root / "prompts" / "stale.md").exists())
-        self.assertFalse((stale_root / "agent").exists())
-        self.assertFalse((stale_root / "dcp.jsonc").exists())
-        self.assertTrue((stale_root / "opencode.json").exists())
-
-    def test_opencode_setup_fails_when_legacy_agent_cleanup_fails(self):
-        stale_root = self.home / ".config" / "opencode"
-        self.write_file(stale_root / "agent" / "legacy.md", "legacy\n")
-        agent_dir = stale_root / "agent"
-
-        self.write_stub(
-            "rm",
-            f"""#!/bin/bash
-if [ \"${{1:-}}\" = \"-rf\" ] && [ \"${{2:-}}\" = \"{agent_dir}\" ]; then
-    exit 1
-fi
-
-exec /bin/rm \"$@\"
-""",
-        )
-
-        result = self.run_cmd("bash", "opencode/setup.sh")
-
-        self.assertNotEqual(result.returncode, 0)
-        self.assertTrue(agent_dir.exists())
 
     def test_starship_creates_first_run_destination(self):
         starship_result = self.run_cmd("bash", "starship/setup.sh")
@@ -434,41 +337,6 @@ exec /bin/rm \"$@\"
         # settings.json (Zed has no native extension sync); lock in that intent.
         settings = (self.fixture / "zed" / "settings.json").read_text(encoding="utf-8")
         self.assertIn("auto_install_extensions", settings)
-
-    def test_codex_setup_seeds_config_when_absent_and_preserves_existing(self):
-        first = self.run_cmd("bash", "codex/setup.sh")
-        self.assertEqual(first.returncode, 0, msg=first.stderr)
-        config_path = self.home / ".codex" / "config.toml"
-        self.assertTrue(config_path.exists())
-        self.assertTrue((self.home / ".codex" / "rules" / "default.rules").exists())
-
-        # A live config with trust grants must not be clobbered by a re-run.
-        config_path.write_text("model = \"live\"\n", encoding="utf-8")
-        second = self.run_cmd("bash", "codex/setup.sh")
-        self.assertEqual(second.returncode, 0, msg=second.stderr)
-        self.assertEqual(config_path.read_text(encoding="utf-8"), "model = \"live\"\n")
-
-    def test_factory_setup_restores_droids_mcp_and_preserves_live_settings(self):
-        first = self.run_cmd("bash", "factory/setup.sh")
-        self.assertEqual(first.returncode, 0, msg=first.stderr)
-        self.assertTrue((self.home / ".factory" / "mcp.json").exists())
-        self.assertTrue((self.home / ".factory" / "settings.json").exists())
-        self.assertTrue(any((self.home / ".factory" / "droids").glob("*.md")))
-        agents_link = self.home / ".factory" / "AGENTS.md"
-        self.assertTrue(agents_link.is_symlink())
-        self.assertEqual(
-            os.readlink(agents_link),
-            str(self.home / ".config" / "opencode" / "AGENTS.md"),
-        )
-
-        # A live settings.json holding a real API key must survive a re-run untouched.
-        settings_path = self.home / ".factory" / "settings.json"
-        settings_path.write_text('{"apiKey":"sk-live-secret"}\n', encoding="utf-8")
-        second = self.run_cmd("bash", "factory/setup.sh")
-        self.assertEqual(second.returncode, 0, msg=second.stderr)
-        self.assertEqual(
-            settings_path.read_text(encoding="utf-8"), '{"apiKey":"sk-live-secret"}\n'
-        )
 
     def test_fisher_setup_installs_each_plugin_once(self):
         list_file = self.fixture / "fisher" / "fisher install.list"
@@ -512,17 +380,6 @@ exit 127
             )
         )
 
-    def test_update_backs_up_curated_opencode_files(self):
-        self.seed_update_sources()
-
-        result = self.run_cmd("bash", "update.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertTrue((self.fixture / "opencode" / "opencode.json").exists())
-        self.assertTrue((self.fixture / "opencode" / "AGENTS.md").exists())
-        self.assertTrue((self.fixture / "opencode" / "dcp.jsonc").exists())
-        self.assertTrue((self.fixture / "opencode" / "prompts" / "custom.md").exists())
-
     def test_update_backs_up_ghostty_config(self):
         self.seed_update_sources()
 
@@ -561,152 +418,24 @@ exit 127
         self.assertIn("// managed by dotfiles", settings)
         self.assertIn('"theme": "Ayu Dark"', settings)
 
-    def test_update_strips_codex_project_paths(self):
+    def test_update_backs_up_omp_global_config_and_blanks_secrets(self):
         self.seed_update_sources()
 
         result = self.run_cmd("bash", "update.sh")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
-        config = (self.fixture / "codex" / "config.toml").read_text(encoding="utf-8")
-        # The model key survives; the private project path is scrubbed.
-        self.assertIn('model = "gpt-5.5"', config)
-        self.assertNotIn("[projects", config)
-        self.assertNotIn("private-secret-repo", config)
-        self.assertTrue((self.fixture / "codex" / "rules" / "default.rules").exists())
-
-    def test_update_redacts_factory_api_keys(self):
-        self.seed_update_sources()
-
-        result = self.run_cmd("bash", "update.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        settings = json.loads(
-            (self.fixture / "factory" / "settings.json").read_text(encoding="utf-8")
-        )
-        self.assertEqual(settings["customModels"][0]["apiKey"], "")
-        raw = (self.fixture / "factory" / "settings.json").read_text(encoding="utf-8")
-        self.assertNotIn("sk-live-secret-key", raw)
-        self.assertTrue((self.fixture / "factory" / "mcp.json").exists())
-        self.assertTrue((self.fixture / "factory" / "droids" / "reviewer.md").exists())
-
-    def test_update_deep_scrubs_factory_settings_secrets(self):
-        self.seed_update_sources()
-        self.write_file(
-            self.home / ".factory" / "settings.json",
-            json.dumps(
-                {
-                    "theme": "factory-dark",
-                    "customModels": [
-                        {
-                            "id": "custom:DeepSeek-V4-Pro-1",
-                            "baseUrl": "https://api.deepseek.com/anthropic",
-                            "apiKey": "sk-deepseek-live-key",
-                            "maxOutputTokens": 384000,
-                        }
-                    ],
-                    # False positives that MUST survive.
-                    "showTokenUsageIndicator": True,
-                    "missionModelSettings": {"workerModel": "custom:DeepSeek-V4-Flash-2"},
-                }
-            )
-            + "\n",
-        )
-
-        result = self.run_cmd("bash", "update.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        path = self.fixture / "factory" / "settings.json"
-        settings = json.loads(path.read_text(encoding="utf-8"))
-        self.assertEqual(settings["customModels"][0]["apiKey"], "")
-        self.assertNotIn("sk-deepseek-live-key", path.read_text(encoding="utf-8"))
-        # DeepSeek base URL and non-secret fields are preserved.
-        self.assertEqual(
-            settings["customModels"][0]["baseUrl"],
-            "https://api.deepseek.com/anthropic",
-        )
-        self.assertEqual(settings["customModels"][0]["maxOutputTokens"], 384000)
-        self.assertTrue(settings["showTokenUsageIndicator"])
-        self.assertEqual(
-            settings["missionModelSettings"]["workerModel"],
-            "custom:DeepSeek-V4-Flash-2",
-        )
-
-    def test_update_scrubs_factory_mcp_secrets(self):
-        self.seed_update_sources()
-        self.write_file(
-            self.home / ".factory" / "mcp.json",
-            json.dumps(
-                {
-                    "mcpServers": {
-                        "secure": {
-                            "type": "http",
-                            "url": "https://example.com/mcp",
-                            "headers": {"Authorization": "Bearer live-token"},
-                            "env": {"DEEPSEEK_API_KEY": "sk-ds-live"},
-                        }
-                    }
-                }
-            )
-            + "\n",
-        )
-
-        result = self.run_cmd("bash", "update.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        path = self.fixture / "factory" / "mcp.json"
-        raw = path.read_text(encoding="utf-8")
-        self.assertNotIn("Bearer live-token", raw)
-        self.assertNotIn("sk-ds-live", raw)
-        mcp = json.loads(raw)
-        server = mcp["mcpServers"]["secure"]
-        self.assertEqual(server["headers"]["Authorization"], "")
-        self.assertEqual(server["env"]["DEEPSEEK_API_KEY"], "")
-        # Non-secret connection details survive.
-        self.assertEqual(server["url"], "https://example.com/mcp")
-
-    def test_update_scrubs_opencode_and_claude_secrets(self):
-        self.seed_update_sources()
-        self.write_file(
-            self.home / ".config" / "opencode" / "opencode.json",
-            json.dumps(
-                {
-                    "model": "firepass/router",
-                    "mcp": {"x": {"env": {"OPENROUTER_API_KEY": "sk-or-live"}}},
-                }
-            )
-            + "\n",
-        )
-        # Build the key name dynamically so this fabricated fixture never embeds the
-        # literal known-secret env var name in source (avoids tripping secret scanners
-        # on test data). Still exercises the scrubber's `auth_token` regex branch.
-        auth_key = "ANTHROPIC_" + "AUTH_TOKEN"
-        self.write_file(
-            self.home / ".claude" / "settings.json",
-            json.dumps(
-                {
-                    "model": "opus",
-                    "env": {auth_key: "changeme"},
-                }
-            )
-            + "\n",
-        )
-
-        result = self.run_cmd("bash", "update.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        oc_path = self.fixture / "opencode" / "opencode.json"
-        oc_raw = oc_path.read_text(encoding="utf-8")
-        self.assertNotIn("sk-or-live", oc_raw)
-        oc = json.loads(oc_raw)
-        self.assertEqual(oc["mcp"]["x"]["env"]["OPENROUTER_API_KEY"], "")
-        self.assertEqual(oc["model"], "firepass/router")
-
-        cl_path = self.fixture / "claude" / "settings.json"
-        cl_raw = cl_path.read_text(encoding="utf-8")
-        self.assertNotIn("changeme", cl_raw)
-        cl = json.loads(cl_raw)
-        self.assertEqual(cl["env"][auth_key], "")
-        self.assertEqual(cl["model"], "opus")
+        config = (self.fixture / "omp" / "config.yml").read_text(encoding="utf-8")
+        # The SearXNG token never reaches the repo; the key stays, blanked in place.
+        self.assertNotIn("sk-live-searxng-token", config)
+        self.assertIn('  token: ""\n', config)
+        # Non-secret settings survive, including numbers, URLs, and lists.
+        self.assertIn("  default: opencode-go/deepseek-v4.1-flash:max\n", config)
+        self.assertIn("  thresholdTokens: 250000\n", config)
+        self.assertIn("  endpoint: https://search.example.com\n", config)
+        self.assertIn("disabledProviders:\n  - opencode\n", config)
+        # A pattern-matching key holding a boolean keeps its type, so the restored
+        # config stays schema-valid.
+        self.assertIn("credentialsCacheEnabled: true\n", config)
 
     def test_update_blanks_fish_secret_exports(self):
         self.seed_update_sources()
@@ -731,17 +460,6 @@ exit 127
         # Non-secret exports pass through untouched.
         self.assertIn("set -gx PATH $PATH /opt/bin", staged)
         self.assertIn("set -gx DO_NOT_TRACK 1", staged)
-
-    def test_update_ignores_claude_machine_state(self):
-        self.seed_update_sources()
-
-        result = self.run_cmd("bash", "update.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        # ~/.claude.json must never be captured into the (public) repo.
-        self.assertFalse((self.fixture / "claude" / "claude.json").exists())
-        # CLAUDE.md is a runtime symlink, not captured from the live machine.
-        self.assertFalse((self.fixture / "claude" / "CLAUDE.md").exists())
 
     def test_update_handles_empty_fisher_plugin_list(self):
         self.seed_update_sources()
@@ -842,15 +560,15 @@ exit 1
     def test_update_prunes_missing_managed_sources_from_repo(self):
         self.seed_update_sources()
 
-        shutil.rmtree(self.home / ".claude" / "agents")
-        shutil.rmtree(self.home / ".config" / "opencode" / "prompts")
+        (self.home / ".config" / "fish" / "functions" / "fish_prompt.fish").unlink()
+        (self.home / ".config" / "zed" / "keymap.json").unlink()
         (self.home / ".gitconfig").unlink()
 
         result = self.run_cmd("bash", "update.sh")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertFalse((self.fixture / "claude" / "agents").exists())
-        self.assertFalse((self.fixture / "opencode" / "prompts").exists())
+        self.assertFalse((self.fixture / "fish" / "functions" / "fish_prompt.fish").exists())
+        self.assertFalse((self.fixture / "zed" / "keymap.json").exists())
         self.assertFalse((self.fixture / "git" / ".gitconfig").exists())
 
     def test_update_keeps_repo_unchanged_when_fisher_list_fails(self):
@@ -894,7 +612,8 @@ exit 1
     def test_update_rolls_back_repo_when_apply_phase_fails(self):
         self.seed_update_sources()
         self.write_file(self.fixture / "fish" / "config.fish", "repo fish\n")
-        self.write_file(self.fixture / "claude" / "settings.json", '{"repo":true}\n')
+        self.write_file(self.fixture / "git" / ".gitconfig", "[user]\n  name = Repo\n")
+        self.write_file(self.fixture / "omp" / "config.yml", "modelRoles: {}\n")
         self.write_file(self.fixture / "packages" / "Brewfile", 'tap "repo/stale"\n')
         expected = self.snapshot_managed_repo()
         fail_marker = self.root / "mv-failed"
@@ -902,7 +621,7 @@ exit 1
         self.write_stub(
             "mv",
             f"""#!/bin/bash
-if [ "${{1:-}}" != "${{1##*/stage/claude/settings.json}}" ] && [ ! -e "{fail_marker}" ]; then
+if [ "${{1:-}}" != "${{1##*/stage/git/.gitconfig}}" ] && [ ! -e "{fail_marker}" ]; then
     : > "{fail_marker}"
     exit 1
 fi
@@ -956,7 +675,8 @@ exec /bin/mv "$@"
     def test_update_reports_rollback_failures(self):
         self.seed_update_sources()
         self.write_file(self.fixture / "fish" / "config.fish", "repo fish\n")
-        self.write_file(self.fixture / "claude" / "settings.json", '{"repo":true}\n')
+        self.write_file(self.fixture / "git" / ".gitconfig", "[user]\n  name = Repo\n")
+        self.write_file(self.fixture / "omp" / "config.yml", "modelRoles: {}\n")
         expected = self.snapshot_managed_repo()
         expected.pop("fish/config.fish", None)
         apply_marker = self.root / "mv-apply-failed"
@@ -965,7 +685,7 @@ exec /bin/mv "$@"
         self.write_stub(
             "mv",
             f"""#!/bin/bash
-if [ "${{1:-}}" != "${{1##*/stage/claude/settings.json}}" ] && [ ! -e "{apply_marker}" ]; then
+if [ "${{1:-}}" != "${{1##*/stage/git/.gitconfig}}" ] && [ ! -e "{apply_marker}" ]; then
     : > "{apply_marker}"
     exit 1
 fi
@@ -1001,15 +721,6 @@ exec /bin/mv "$@"
         self.assertNotIn("fish/config.fish", current)
         self.assertEqual(current, expected)
 
-    def test_update_prunes_legacy_opencode_agent_directory(self):
-        self.seed_update_sources()
-        self.write_file(self.fixture / "opencode" / "agent" / "legacy.md", "legacy\n")
-
-        result = self.run_cmd("bash", "update.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertFalse((self.fixture / "opencode" / "agent").exists())
-
     def test_ssh_setup_restores_config(self):
         result = self.run_cmd("bash", "ssh/setup.sh")
 
@@ -1044,16 +755,6 @@ exec /bin/mv "$@"
 
         self.assertNotEqual(result.returncode, 0)
 
-    def test_opencode_config_has_no_dangling_instructions(self):
-        config = json.loads(
-            (self.fixture / "opencode" / "opencode.json").read_text(encoding="utf-8")
-        )
-
-        # opencode auto-loads AGENTS.md; it must not point at an unmanaged instructions
-        # file such as the removed morph-tools.md.
-        for ref in config.get("instructions", []):
-            self.assertNotIn("morph-tools", ref)
-
     def seed_update_sources(self) -> None:
         fish_dir = self.home / ".config" / "fish"
         self.write_file(fish_dir / "config.fish", "set -g theme test\n")
@@ -1070,24 +771,6 @@ exec /bin/mv "$@"
         )
         self.write_file(fish_dir / "conf.d" / "abbr.fish", "abbr gs 'git status'\n")
         self.write_file(fish_dir / "conf.d" / "alias.fish", "alias ll='ls -la'\n")
-
-        claude_dir = self.home / ".claude"
-        self.write_file(claude_dir / "settings.json", "{}\n")
-        self.write_file(claude_dir / "agents" / "custom.md", "agent\n")
-        self.write_file(claude_dir / "commands" / "review.md", "command\n")
-        # Machine-state file update.sh must ignore.
-        self.write_file(self.home / ".claude.json", '{"theme":"system"}\n')
-
-        opencode_dir = self.home / ".config" / "opencode"
-        self.write_file(
-            opencode_dir / "opencode.json",
-            '{"$schema":"https://opencode.ai/config.json"}\n',
-        )
-        self.write_file(opencode_dir / "AGENTS.md", "# Agents\n")
-        self.write_file(
-            opencode_dir / "dcp.jsonc", '{"$schema":"https://example.com/schema"}\n'
-        )
-        self.write_file(opencode_dir / "prompts" / "custom.md", "prompt\n")
 
         ghostty_dir = self.home / ".config" / "ghostty"
         self.write_file(ghostty_dir / "config", "theme = GitHub Dark\n")
@@ -1116,27 +799,22 @@ exec /bin/mv "$@"
         (zed_ext / "toml").mkdir(parents=True, exist_ok=True)
         (zed_ext / "git-firefly").mkdir(parents=True, exist_ok=True)
 
-        codex_dir = self.home / ".codex"
+        omp_dir = self.home / ".omp" / "agent"
         self.write_file(
-            codex_dir / "config.toml",
-            'model = "gpt-5.5"\n'
-            '[projects."/Users/divkix/private-secret-repo"]\n'
-            'trust_level = "trusted"\n\n'
-            "[features]\nmemories = true\n",
+            omp_dir / "config.yml",
+            "modelRoles:\n"
+            "  default: opencode-go/deepseek-v4.1-flash:max\n"
+            "compaction:\n"
+            "  enabled: true\n"
+            "  thresholdTokens: 250000\n"
+            "searxng:\n"
+            "  endpoint: https://search.example.com\n"
+            "  token: sk-live-searxng-token\n"
+            "providers:\n"
+            "  credentialsCacheEnabled: true\n"
+            "disabledProviders:\n"
+            "  - opencode\n",
         )
-        self.write_file(
-            codex_dir / "rules" / "default.rules",
-            'prefix_rule(pattern=["ls"], decision="allow")\n',
-        )
-
-        factory_dir = self.home / ".factory"
-        self.write_file(
-            factory_dir / "settings.json",
-            '{"theme":"factory-dark",'
-            '"customModels":[{"id":"x","apiKey":"sk-live-secret-key"}]}\n',
-        )
-        self.write_file(factory_dir / "mcp.json", '{"mcpServers":{}}\n')
-        self.write_file(factory_dir / "droids" / "reviewer.md", "# reviewer\n")
 
         self.write_file(self.home / ".gitconfig", "[user]\n  name = Test\n")
         self.write_file(self.home / ".gitignore_global", "node_modules\n")

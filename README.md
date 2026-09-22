@@ -15,32 +15,20 @@ Previously used on:
 - `fisher/`
 - `git/`
 - `ssh/`
-- `claude/` — Claude Code (`~/.claude`)
-- `opencode/` — OpenCode (`~/.config/opencode`)
-- `factory/` — Factory / droid (`~/.factory`)
-- `codex/` — Codex (`~/.codex`)
+- `omp/` — Oh My Pi agent (`~/.omp/agent`)
 - `ghostty/` — Ghostty terminal (`~/.config/ghostty`)
 - `zed/` — Zed editor (`~/.config/zed`)
 - `gnupg/`
 - `starship/`
 
-The AI agents share a single canonical instruction file, `opencode/AGENTS.md`. `bootstrap.sh`
-symlinks `~/.claude/CLAUDE.md` and `~/.factory/AGENTS.md` to it at runtime, so it stays a
-single source of truth and the repo never stores a machine-specific absolute symlink.
-
 `RayCast/` is only an encrypted backup artifact. It is not restored by `bootstrap.sh`.
 
-Each agent/tool is backed up as a curated, secret-free subset of its live config:
+Each tool is backed up as a curated, secret-free subset of its live config:
 
-- **Claude** (`~/.claude`): `settings.json`, `agents/`, `commands/`. `CLAUDE.md` is the shared
-  symlink above. `~/.claude.json` is **not** managed — it is machine state (project paths,
-  costs, userID) and would leak in this public repo.
-- **OpenCode** (`~/.config/opencode`): `opencode.json`, `AGENTS.md`, `dcp.jsonc`, `prompts/`,
-  `instructions/`.
-- **Factory** (`~/.factory`): `settings.json` (with `customModels[].apiKey` redacted to `""`),
-  `mcp.json`, `droids/`. Auth, sessions, logs, cache, and history are excluded.
-- **Codex** (`~/.codex`): `config.toml` (with `[projects."..."]` trust paths stripped) and
-  `rules/`. Auth, history, and SQLite state are excluded.
+- **OMP** (`~/.omp/agent`): `config.yml` (with secret-bearing values such as `searxng.token`,
+  `searxng.basicPassword`, and `auth.broker.token` blanked to `""`; booleans and numbers are
+  left as-is). Provider credentials live in the `agent.db` auth store, sessions and history are
+  machine state, and `models.yml` can pin literal API keys — none of those are synced.
 - **Ghostty** (`~/.config/ghostty`): `config`. `ghostty/setup.sh` also sets Ghostty as the
   default terminal via `duti`.
 - **Zed** (`~/.config/zed`): `settings.json` and `keymap.json`. The prompt-library database,
@@ -55,10 +43,9 @@ Each agent/tool is backed up as a curated, secret-free subset of its live config
   extension binaries under `~/Library/Application Support/Zed/` are machine state and are not
   synced.
 
-Because the repo is public, `update.sh` sanitizes on capture: it blanks Factory API keys and
-strips Codex per-project paths so secrets and private repo paths never get committed. For the
-same reason, Factory `settings.json` and Codex `config.toml` are only seeded on a fresh machine
-(never overwritten), so a live config holding a real key or trust grants is preserved.
+Because the repo is public, `update.sh` sanitizes on capture: it blanks secret-bearing
+`set -gx` exports in `fish/config.fish` and secret values in `omp/config.yml`, so keys and
+tokens never get committed.
 
 Local install artifacts such as `node_modules/`, package manager files, and other machine-specific state are intentionally excluded.
 
@@ -80,8 +67,8 @@ Use this command to install the dotfiles setup:
 
 A few things bootstrap intentionally cannot restore:
 
-- **Factory DeepSeek key**: `factory/settings.json` ships with `customModels[].apiKey` blanked.
-  Re-enter the DeepSeek API key in Factory (Settings → Models) on a fresh machine.
+- **OMP provider credentials**: `omp/config.yml` ships without them — stored credentials live in
+  `~/.omp/agent/agent.db` (not in this repo). Run `omp` and `/login <provider>` on a fresh machine.
 - **Raycast**: import the encrypted backup from `RayCast/` via the Raycast app
   (Settings → Advanced → Import). See `RayCast/README.md`.
 

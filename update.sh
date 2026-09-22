@@ -14,28 +14,6 @@ declare -a MANAGED_TARGETS=()
 declare -a APPLIED_TARGETS=()
 APPLY_IN_PROGRESS=0
 
-# jq program that recursively blanks every string value whose KEY name looks
-# secret-bearing (API keys, auth/refresh/access tokens, secrets, passwords, bearer
-# tokens, Authorization headers, credentials, private keys) anywhere in a JSON
-# document -- including nested customModels, MCP server `env`/`headers`, etc. Matching
-# is on the key name only, so non-secret keys keep their values (maxOutputTokens,
-# semantic_tokens, showTokenUsageIndicator, token_refresh_buffer_ms, ...).
-JSON_SECRET_SCRUB='
-def scrub:
-  if type == "object" then
-    with_entries(
-      if (.key | test("(?i)(api[_-]?key|access[_-]?key|secret|password|passwd|passphrase|(auth|access|refresh|id)[_-]?token|bearer|authorization|credential|private[_-]?key)"))
-         and (.value | type == "string")
-      then .value = ""
-      else .value |= scrub
-      end
-    )
-  elif type == "array" then map(scrub)
-  else .
-  end;
-scrub
-'
-
 track_target() {
     local relative_target="$1"
     local existing_target
@@ -64,21 +42,6 @@ stage_file() {
 
     mkdir -p "$(dirname "$staged_target")"
     cp -P -v "$source" "$staged_target"
-}
-
-stage_directory() {
-    local source_dir="$1"
-    local relative_target="$2"
-    local staged_target="$STAGE_DIR/$relative_target"
-
-    track_target "$relative_target"
-
-    if [ ! -d "$source_dir" ]; then
-        return 0
-    fi
-
-    mkdir -p "$staged_target"
-    cp -v -R "$source_dir"/. "$staged_target"/
 }
 
 generate_fisher_manifest() {
@@ -145,40 +108,47 @@ stage_fish_config() {
     fi
 }
 
-stage_codex_config() {
-    local source="$HOME/.codex/config.toml"
-    local staged_target="$STAGE_DIR/codex/config.toml"
+# Stage the OMP agent global config (~/.omp/agent/config.yml). Provider credentials
+# normally live elsewhere (the agent.db auth store, environment variables, models.yml),
+# but config.yml has documented secret fields (searxng.token, searxng.basicPassword,
+# auth.broker.token), so secret-bearing values are blanked on capture.
+stage_omp_config() {
+    local source="$HOME/.omp/agent/config.yml"
+    local staged_target="$STAGE_DIR/omp/config.yml"
 
-    track_target "codex/config.toml"
-
-    if [ ! -f "$source" ]; then
-        return 0
-    fi
-
-    mkdir -p "$(dirname "$staged_target")"
-    # Strip [projects."..."] tables so private repo paths never reach this public repo.
-    if ! awk '/^\[/ { skip = ($0 ~ /^\[projects\./) } !skip { print }' "$source" > "$staged_target"; then
-        return 1
-    fi
-}
-
-# Stage a JSON file with every secret-bearing value recursively blanked (see
-# JSON_SECRET_SCRUB). Use for any config that may hold API keys/tokens/headers
-# (Factory settings + mcp, opencode, claude). Defends against future keys (e.g. a
-# DeepSeek apiKey in customModels, or a token in an MCP server env) leaking here.
-stage_json_scrubbed() {
-    local source="$1"
-    local relative_target="$2"
-    local staged_target="$STAGE_DIR/$relative_target"
-
-    track_target "$relative_target"
+    track_target "omp/config.yml"
 
     if [ ! -f "$source" ]; then
         return 0
     fi
 
     mkdir -p "$(dirname "$staged_target")"
-    if ! jq "$JSON_SECRET_SCRUB" "$source" > "$staged_target"; then
+    # Blank the inline scalar value of any `key: value` line whose key name looks
+    # secret-bearing (API keys, tokens, secrets, passwords, credentials, private keys),
+    # including nested/dotted leaves such as `searxng.token`. Boolean and numeric values
+    # are left alone so a matched non-secret key keeps its type and the file stays
+    # schema-valid. Nested blocks under a secret-named key and quoted keys are not
+    # scrubbed.
+    if ! awk '
+        {
+            line = $0
+            if (line ~ /^[[:space:]]*[A-Za-z0-9_.-]+[[:space:]]*:/) {
+                key = line
+                sub(/[[:space:]]*:.*$/, "", key)
+                sub(/^[[:space:]]+/, "", key)
+                value = line
+                sub(/^[^:]*:[[:space:]]*/, "", value)
+                if (value != "" &&
+                    tolower(key) ~ /(api[_-]?key|access[_-]?key|secret|password|passwd|passphrase|(auth|access|refresh|id)[_-]?token|bearer|authorization|credential|private[_-]?key|(^|[._-])(key|token|secret)([._-]|$))/ &&
+                    tolower(value) !~ /^(true|false|null|~|yes|no|on|off)$/ &&
+                    value !~ /^-?[0-9]+([.][0-9]+)?$/) {
+                    sub(/[[:space:]]*:.*$/, "", line)
+                    line = line ": \"\""
+                }
+            }
+            print line
+        }
+    ' "$source" > "$staged_target"; then
         return 1
     fi
 }
@@ -318,33 +288,12 @@ stage_file "$fish_dir/functions/fish_prompt_loading_indicator.fish" "fish/functi
 stage_file "$fish_dir/conf.d/abbr.fish" "fish/conf.d/abbr.fish"
 stage_file "$fish_dir/conf.d/alias.fish" "fish/conf.d/alias.fish"
 
-claude_dir="$HOME/.claude"
-stage_json_scrubbed "$claude_dir/settings.json" "claude/settings.json"
-# ~/.claude/CLAUDE.md is a symlink to the canonical opencode AGENTS.md; recreated by
-# claude/setup.sh, so it is not captured here (avoids committing a non-portable symlink).
-stage_directory "$claude_dir/agents" "claude/agents"
-stage_directory "$claude_dir/commands" "claude/commands"
-# ~/.claude.json is machine state (project paths, costs, userID) and is intentionally not synced.
-
-opencode_dir="$HOME/.config/opencode"
-stage_json_scrubbed "$opencode_dir/opencode.json" "opencode/opencode.json"
-stage_file "$opencode_dir/AGENTS.md" "opencode/AGENTS.md"
-stage_file "$opencode_dir/dcp.jsonc" "opencode/dcp.jsonc"
-stage_directory "$opencode_dir/prompts" "opencode/prompts"
-# Keep the legacy repo-only agent directory pruned.
-track_target "opencode/agent"
-
 stage_file "$HOME/.config/ghostty/config" "ghostty/config"
 
 stage_zed_settings
 stage_file "$HOME/.config/zed/keymap.json" "zed/keymap.json"
 
-stage_codex_config
-stage_file "$HOME/.codex/rules/default.rules" "codex/rules/default.rules"
-
-stage_json_scrubbed "$HOME/.factory/settings.json" "factory/settings.json"
-stage_json_scrubbed "$HOME/.factory/mcp.json" "factory/mcp.json"
-stage_directory "$HOME/.factory/droids" "factory/droids"
+stage_omp_config
 
 generate_fisher_manifest
 

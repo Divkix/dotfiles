@@ -16,6 +16,6 @@ jobs:
         with:
           python-version: "3.x"
       - name: Verify required tools
-        run: jq --version && awk --version 2>/dev/null | head -1 || true
+        run: awk --version 2>/dev/null | head -1 || true
       - name: Run dotfiles regression tests
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
