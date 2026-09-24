@@ -131,8 +131,6 @@ brew "typescript"
 brew "typescript-language-server"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
-# Unified toolchain and entry point for web development
-brew "vite-plus"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
 # Internet file retriever
@@ -172,6 +170,8 @@ cask "google-chrome"
 cask "gpg-suite"
 # Chromium-based web browser
 cask "helium-browser"
+# Open-source desktop AI agent
+cask "hermes-desktop"
 # Menu bar application that displays the CPU speed limit due to thermal issues
 cask "hot"
 # Free and open-source media player
@@ -215,5 +215,6 @@ go "go.uber.org/mock/mockgen"
 go "github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen"
 go "github.com/mgechev/revive"
 go "honnef.co/go/tools/cmd/staticcheck"
+uv "browser-use"
 uv "trafilatura"
 npm "@earendil-works/pi-coding-agent"

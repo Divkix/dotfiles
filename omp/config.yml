@@ -7,12 +7,11 @@ providers:
     codeMode: auto
 setupVersion: 2
 modelRoles:
-  slow: openai-codex/gpt-5.6-sol:high
-  task: opencode-go/mimo-v2.6-flash:high
-  default: opencode-go/deepseek-v4.1-flash:max
+  task: openai-codex/gpt-6-luna:xhigh
+  default: openai-codex/gpt-6-sol:xhigh
   web: web/firecrawl
   judge: typesafe/jev-latest
-  smol: opencode-go/mimo-v2.6-flash:auto
+  smol: openai-codex/gpt-6-luna:auto
   image: openrouter/meta/muse-image:auto
 defaultThinkingLevel: auto
 advisor:
@@ -27,9 +26,6 @@ retry:
       - "@tiny"
       - "@smol"
       - "@default"
-    slow:
-      - xai-oauth/grok-4.7
-      - openrouter/xiaomi/mimo-v2.6-pro
 cycleOrder:
   - smol
   - default
@@ -144,16 +140,7 @@ tui:
 personality: pragmatic
 readLineNumbers: true
 disabledProviders:
-  - opencode
-  - claude
-  - codex
-  - claude-plugins
-  - gemini
-  - cursor
-  - github
-  - vscode
-  - mcp-json
-  - ssh-json
+  []
 title:
   refreshOnReplan: true
 omitThinking: false
@@ -170,7 +157,7 @@ commands:
 theme:
   dark: dark-volcanic
 composer:
-  shape: claude
+  shape: rule
 browser:
   headless: true
 compaction:
@@ -184,4 +171,11 @@ externalThinking: false
 isolation:
   backend: auto
 contextPromotion:
+  enabled: false
+enabledProviders:
+  []
+spelling:
+  autocomplete: true
+  typoDetection: false
+plan:
   enabled: false
