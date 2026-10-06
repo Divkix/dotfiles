@@ -277,6 +277,41 @@ generate_macos_defaults() {
     done < "$keys_file"
 }
 
+# Codex records per-machine state in config.toml: trusted project paths, the hook trust hash
+# (regenerated on first launch), and model-picker counters. Drop those sections and keep the
+# real preferences.
+stage_codex_config() {
+    local source="$HOME/.codex/config.toml"
+    local staged_target="$STAGE_DIR/codex/config.toml"
+
+    track_target "codex/config.toml"
+
+    if [ ! -f "$source" ]; then
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$staged_target")"
+    awk '
+        /^\[/ { skip = ($0 ~ /^\[(projects|hooks\.state|tui\.model_availability_nux)[].]/) }
+        !skip { print }
+    ' "$source" > "$staged_target"
+}
+
+# hooks.json embeds absolute paths; store them with __HOME__ so the file is portable.
+stage_codex_hooks() {
+    local source="$HOME/.codex/hooks.json"
+    local staged_target="$STAGE_DIR/codex/hooks.json"
+
+    track_target "codex/hooks.json"
+
+    if [ ! -f "$source" ]; then
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$staged_target")"
+    sed "s#$HOME#__HOME__#g" "$source" > "$staged_target"
+}
+
 stage_zed_settings() {
     local source="$HOME/.config/zed/settings.json"
     local staged_target="$STAGE_DIR/zed/settings.json"
@@ -443,6 +478,10 @@ stage_file "$HOME/.omp/agent/AGENTS.md" "omp/AGENTS.md"
 stage_claude_settings
 stage_file "$HOME/.claude/hooks/herdr-agent-state.sh" "claude/hooks/herdr-agent-state.sh"
 generate_skills_manifest
+
+stage_codex_config
+stage_codex_hooks
+stage_file "$HOME/.codex/herdr-agent-state.sh" "codex/herdr-agent-state.sh"
 
 stage_file "$HOME/.config/herdr/config.toml" "herdr/config.toml"
 generate_herdr_plugins_manifest

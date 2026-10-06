@@ -240,6 +240,7 @@ exit 0
             "zed",
             "omp",
             "claude",
+            "codex",
             "skills",
             "herdr",
             "worktrunk",
@@ -902,6 +903,41 @@ exit 0
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(len(self.defaults_log.read_text(encoding="utf-8").splitlines()), 2)
 
+    def test_update_captures_codex_config_without_machine_state_or_auth(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        codex_dir = self.fixture / "codex"
+        self.assertEqual(
+            (codex_dir / "config.toml").read_text(encoding="utf-8"),
+            'model = "m"\n\n[tui]\nscreen_reader_detection_done = true\n\n[features]\nhooks = true\n\n',
+        )
+        hooks = (codex_dir / "hooks.json").read_text(encoding="utf-8")
+        self.assertIn("__HOME__/.codex/herdr-agent-state.sh", hooks)
+        self.assertNotIn(str(self.home), hooks)
+        self.assertTrue((codex_dir / "herdr-agent-state.sh").is_file())
+        self.assertFalse((codex_dir / "auth.json").exists())
+
+    def test_codex_setup_restores_config_hooks_and_executable_hook(self):
+        self.write_file(self.fixture / "codex" / "config.toml", 'model = "m"\n')
+        self.write_file(
+            self.fixture / "codex" / "hooks.json", '{"c": "__HOME__/.codex/h.sh"}\n'
+        )
+        self.write_file(self.fixture / "codex" / "herdr-agent-state.sh", "#!/bin/sh\n")
+
+        result = self.run_cmd("bash", "codex/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        codex_dir = self.home / ".codex"
+        self.assertEqual((codex_dir / "config.toml").read_text(encoding="utf-8"), 'model = "m"\n')
+        self.assertEqual(
+            (codex_dir / "hooks.json").read_text(encoding="utf-8"),
+            f'{{"c": "{self.home}/.codex/h.sh"}}\n',
+        )
+        self.assertTrue(os.access(codex_dir / "herdr-agent-state.sh", os.X_OK))
+
     def test_update_captures_goup_function(self):
         self.seed_update_sources()
 
@@ -1237,6 +1273,37 @@ exec /bin/mv "$@"
         self.write_file(
             claude_dir / "hooks" / "herdr-agent-state.sh", "#!/bin/sh\necho hook\n"
         )
+        codex_dir = self.home / ".codex"
+        self.write_file(
+            codex_dir / "config.toml",
+            'model = "m"\n'
+            "\n"
+            '[projects."' + str(self.home) + '/work"]\n'
+            'trust_level = "trusted"\n'
+            "\n"
+            "[tui]\n"
+            "screen_reader_detection_done = true\n"
+            "\n"
+            "[tui.model_availability_nux]\n"
+            '"m" = 3\n'
+            "\n"
+            "[features]\n"
+            "hooks = true\n"
+            "\n"
+            "[hooks.state]\n"
+            "\n"
+            '[hooks.state."' + str(self.home) + '/.codex/hooks.json:session_start:0:0"]\n'
+            'trusted_hash = "sha256:abc"\n',
+        )
+        self.write_file(
+            codex_dir / "hooks.json",
+            "{\n"
+            '  "command": "bash \'' + str(self.home) + '/.codex/herdr-agent-state.sh\' session"\n'
+            "}\n",
+        )
+        self.write_file(codex_dir / "herdr-agent-state.sh", "#!/bin/sh\necho codex hook\n")
+        self.write_file(codex_dir / "auth.json", '{"secret": "never"}\n')
+
         self.write_file(
             self.home / ".agents" / ".skill-lock.json",
             '{"version": 3, "lastSelectedAgents": ["claude-code", "codex"],'
