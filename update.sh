@@ -291,9 +291,13 @@ stage_codex_config() {
     fi
 
     mkdir -p "$(dirname "$staged_target")"
+    # Blank lines are re-emitted only before kept content, so dropped sections leave neither
+    # a stray gap nor a trailing blank line.
     awk '
         /^\[/ { skip = ($0 ~ /^\[(projects|hooks\.state|tui\.model_availability_nux)[].]/) }
-        !skip { print }
+        skip { next }
+        /^$/ { blank = 1; next }
+        { if (n++ && (blank || /^\[/)) print ""; blank = 0; print }
     ' "$source" > "$staged_target"
 }
 

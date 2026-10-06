@@ -912,7 +912,7 @@ exit 0
         codex_dir = self.fixture / "codex"
         self.assertEqual(
             (codex_dir / "config.toml").read_text(encoding="utf-8"),
-            'model = "m"\n\n[tui]\nscreen_reader_detection_done = true\n\n[features]\nhooks = true\n\n',
+            'model = "m"\n\n[tui]\nscreen_reader_detection_done = true\n\n[features]\nhooks = true\n',
         )
         hooks = (codex_dir / "hooks.json").read_text(encoding="utf-8")
         self.assertIn("__HOME__/.codex/herdr-agent-state.sh", hooks)
