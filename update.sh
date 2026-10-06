@@ -243,6 +243,40 @@ generate_herdr_plugins_manifest() {
     ' | LC_ALL=C sort > "$staged_target"
 }
 
+# Snapshot the current value of every key in macos/keys.list as tab-separated
+# "<domain> <key> <type> <value>" lines; macos/setup.sh writes them back. Keys that are unset or
+# not scalar (arrays, dicts) are skipped. Without `defaults` the snapshot is left alone.
+generate_macos_defaults() {
+    local keys_file="$REPO_ROOT/macos/keys.list"
+    local staged_target="$STAGE_DIR/macos/defaults.list"
+    local domain key type value
+
+    if ! command -v defaults >/dev/null 2>&1; then
+        echo "defaults not available; leaving macos/defaults.list untouched" >&2
+        return 0
+    fi
+
+    track_target "macos/defaults.list"
+    mkdir -p "$(dirname "$staged_target")"
+    : > "$staged_target"
+
+    while read -r domain key || [ -n "$domain" ]; do
+        case "$domain" in
+        "" | \#*) continue ;;
+        esac
+
+        type="$(defaults read-type "$domain" "$key" 2>/dev/null </dev/null)" || continue
+        type="${type#Type is }"
+        case "$type" in
+        boolean | integer | float | string) ;;
+        *) continue ;;
+        esac
+
+        value="$(defaults read "$domain" "$key" 2>/dev/null </dev/null)" || continue
+        printf '%s\t%s\t%s\t%s\n' "$domain" "$key" "$type" "$value" >> "$staged_target"
+    done < "$keys_file"
+}
+
 stage_zed_settings() {
     local source="$HOME/.config/zed/settings.json"
     local staged_target="$STAGE_DIR/zed/settings.json"
@@ -428,6 +462,8 @@ stage_file "$gnupg_dir/gpg-agent.conf" "gnupg/gpg-agent.conf"
 
 generate_brewfile
 echo "brew bundle dump complete"
+
+generate_macos_defaults
 
 stage_file "$HOME/.config/starship.toml" "starship/starship.toml"
 

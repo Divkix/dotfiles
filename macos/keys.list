@@ -1,0 +1,56 @@
+# Curated macOS preferences to back up: "<domain> <key>" per line.
+# update.sh reads each live value into defaults.list; macos/setup.sh writes them back.
+# Only scalar values (bool/int/float/string) are supported; arrays and dicts are skipped.
+# Keys that are not set on this machine are skipped too.
+NSGlobalDomain AppleInterfaceStyle
+NSGlobalDomain AppleAccentColor
+NSGlobalDomain AppleHighlightColor
+NSGlobalDomain AppleMiniaturizeOnDoubleClick
+NSGlobalDomain NSAutomaticSpellingCorrectionEnabled
+NSGlobalDomain NSAutomaticCapitalizationEnabled
+NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled
+NSGlobalDomain WebAutomaticSpellingCorrectionEnabled
+NSGlobalDomain NSTableViewDefaultSizeMode
+NSGlobalDomain KeyRepeat
+NSGlobalDomain InitialKeyRepeat
+com.apple.dock tilesize
+com.apple.dock largesize
+com.apple.dock magnification
+com.apple.dock orientation
+com.apple.dock autohide
+com.apple.dock show-recents
+com.apple.dock minimize-to-application
+com.apple.dock expose-group-apps
+com.apple.dock wvous-br-corner
+com.apple.dock wvous-br-modifier
+com.apple.finder ShowPathbar
+com.apple.finder ShowStatusBar
+com.apple.finder FXPreferredViewStyle
+com.apple.finder NewWindowTarget
+com.apple.finder ShowExternalHardDrivesOnDesktop
+com.apple.finder ShowHardDrivesOnDesktop
+com.apple.finder ShowRemovableMediaOnDesktop
+com.apple.finder FXRemoveOldTrashItems
+com.apple.AppleMultitouchTrackpad Clicking
+com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag
+com.apple.AppleMultitouchTrackpad TrackpadRightClick
+com.apple.AppleMultitouchTrackpad FirstClickThreshold
+com.apple.AppleMultitouchTrackpad SecondClickThreshold
+com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture
+com.apple.AppleMultitouchTrackpad TrackpadFourFingerHorizSwipeGesture
+com.apple.AppleMultitouchTrackpad TrackpadPinch
+com.apple.AppleMultitouchTrackpad TrackpadScroll
+com.apple.AppleMultitouchTrackpad TrackpadTwoFingerDoubleTapGesture
+com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking
+com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag
+com.apple.screencapture location
+com.apple.menuextra.clock ShowSeconds
+com.apple.menuextra.clock ShowDayOfWeek
+com.apple.menuextra.clock ShowDate
+com.apple.menuextra.clock IsAnalog
+com.apple.WindowManager EnableStandardClickToShowDesktop
+com.apple.WindowManager EnableTiledWindowMargins
+com.apple.WindowManager HideDesktop
+com.apple.ActivityMonitor ShowCategory
+com.apple.universalaccess reduceTransparency
+com.apple.HIToolbox AppleFnUsageType

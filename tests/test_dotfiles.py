@@ -35,6 +35,8 @@ class DotfilesScriptTests(unittest.TestCase):
         self.brew_log = self.logs_dir / "brew.log"
         self.duti_log = self.logs_dir / "duti.log"
         self.herdr_log = self.logs_dir / "herdr.log"
+        self.defaults_log = self.logs_dir / "defaults.log"
+        self.killall_log = self.logs_dir / "killall.log"
 
         self.write_stub(
             "sudo",
@@ -105,6 +107,33 @@ exit 0
 """,
         )
 
+        # Real `defaults`/`killall` would read and restart the developer's own Dock and Finder.
+        self.write_stub(
+            "defaults",
+            """#!/bin/bash
+printf '%s\\n' "$*" >> "$FAKE_DEFAULTS_LOG"
+case "$1 $2 $3" in
+"read-type com.apple.dock tilesize") echo "Type is float";;
+"read com.apple.dock tilesize") echo 62;;
+"read-type NSGlobalDomain AppleHighlightColor") echo "Type is string";;
+"read NSGlobalDomain AppleHighlightColor") echo "1.000000 0.733333 0.721569 Red";;
+"read-type com.apple.dock autohide") echo "Type is boolean";;
+"read com.apple.dock autohide") echo 0;;
+"read-type NSGlobalDomain AppleLanguages") echo "Type is array";;
+"read NSGlobalDomain AppleLanguages") printf '(\\n    "en-US"\\n)\\n';;
+read-type*) exit 1;;
+esac
+exit 0
+""",
+        )
+        self.write_stub(
+            "killall",
+            """#!/bin/bash
+printf '%s\\n' "$*" >> "$FAKE_KILLALL_LOG"
+exit 0
+""",
+        )
+
         self.write_stub(
             "herdr",
             """#!/bin/bash
@@ -131,6 +160,8 @@ exit 0
                 "FAKE_SUDO_LOG": str(self.sudo_log),
                 "FAKE_DUTI_LOG": str(self.duti_log),
                 "FAKE_HERDR_LOG": str(self.herdr_log),
+                "FAKE_DEFAULTS_LOG": str(self.defaults_log),
+                "FAKE_KILLALL_LOG": str(self.killall_log),
             }
         )
 
@@ -214,6 +245,7 @@ exit 0
             "worktrunk",
             "btop",
             "gh",
+            "macos",
             "fisher",
             "git",
             "ssh",
@@ -799,6 +831,76 @@ exit 0
             (self.fixture / "herdr" / "plugins.list").read_text(encoding="utf-8"),
             "acme/a-plugin/sub\nzed/b-plugin\n",
         )
+
+    def test_update_snapshots_scalar_macos_defaults_only(self):
+        self.write_file(
+            self.fixture / "macos" / "keys.list",
+            "# comment\n"
+            "com.apple.dock tilesize\n"
+            "com.apple.dock autohide\n"
+            "NSGlobalDomain AppleHighlightColor\n"
+            "NSGlobalDomain AppleLanguages\n"
+            "com.apple.finder NotSetAnywhere\n",
+        )
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        # Arrays and unset keys are dropped; spaces inside a value survive.
+        self.assertEqual(
+            (self.fixture / "macos" / "defaults.list").read_text(encoding="utf-8"),
+            "com.apple.dock\ttilesize\tfloat\t62\n"
+            "com.apple.dock\tautohide\tboolean\t0\n"
+            "NSGlobalDomain\tAppleHighlightColor\tstring\t1.000000 0.733333 0.721569 Red\n",
+        )
+
+    def test_macos_setup_writes_each_typed_default_and_restarts_ui(self):
+        self.write_file(
+            self.fixture / "macos" / "defaults.list",
+            "com.apple.dock\ttilesize\tfloat\t62\n"
+            "com.apple.dock\tautohide\tboolean\t0\n"
+            "com.apple.dock\tmagnification\tboolean\t1\n"
+            "com.apple.dock\twvous-br-corner\tinteger\t1\n"
+            "NSGlobalDomain\tAppleHighlightColor\tstring\t1.000000 0.733333 0.721569 Red\n",
+        )
+
+        result = self.run_cmd("bash", "macos/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(
+            self.defaults_log.read_text(encoding="utf-8").splitlines(),
+            [
+                "write com.apple.dock tilesize -float 62",
+                "write com.apple.dock autohide -bool false",
+                "write com.apple.dock magnification -bool true",
+                "write com.apple.dock wvous-br-corner -int 1",
+                "write NSGlobalDomain AppleHighlightColor -string 1.000000 0.733333 0.721569 Red",
+            ],
+        )
+        self.assertEqual(
+            self.killall_log.read_text(encoding="utf-8").splitlines(),
+            ["Dock", "Finder", "SystemUIServer"],
+        )
+
+    def test_macos_setup_continues_past_a_failing_write(self):
+        self.write_stub(
+            "defaults",
+            """#!/bin/bash
+printf '%s\\n' "$*" >> "$FAKE_DEFAULTS_LOG"
+case "$*" in *tilesize*) exit 1;; esac
+exit 0
+""",
+        )
+        self.write_file(
+            self.fixture / "macos" / "defaults.list",
+            "com.apple.dock\ttilesize\tfloat\t62\ncom.apple.dock\tautohide\tboolean\t1\n",
+        )
+
+        result = self.run_cmd("bash", "macos/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(len(self.defaults_log.read_text(encoding="utf-8").splitlines()), 2)
 
     def test_update_captures_goup_function(self):
         self.seed_update_sources()

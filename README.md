@@ -22,6 +22,7 @@ Previously used on:
 - `worktrunk/` — Worktrunk (`~/.config/worktrunk`)
 - `btop/` — btop (`~/.config/btop`)
 - `gh/` — GitHub CLI (`~/.config/gh`)
+- `macos/` — macOS system preferences (`defaults`)
 - `ghostty/` — Ghostty terminal (`~/.config/ghostty`)
 - `zed/` — Zed editor (`~/.config/zed`)
 - `gnupg/`
@@ -64,6 +65,14 @@ Each tool is backed up as a curated, secret-free subset of its live config:
   breaks on the next btop upgrade.
 - **GitHub CLI** (`~/.config/gh`): `config.yml` only. `hosts.yml` is login state; run
   `gh auth login` on a new machine.
+- **macOS settings** (`macos/`): `keys.list` is the curated list of `<domain> <key>` preferences
+  (Dock, Finder, trackpad, appearance, clock, screenshots, window manager). `update.sh` reads each
+  live value into `defaults.list` (tab-separated, with its `defaults` type) and `macos/setup.sh`
+  writes them back with `defaults write`, then restarts Dock, Finder and the menu bar. To track
+  another setting, add a line to `keys.list` and run `./update.sh`. Only scalar values are
+  supported; arrays/dicts (e.g. `AppleLanguages`, keyboard shortcuts) and unset keys are skipped.
+  Some keys (trackpad, global) need a log out and back in, and `com.apple.universalaccess` may need
+  a privacy grant; failures warn without stopping bootstrap. The computer name is not captured.
 - **Ghostty** (`~/.config/ghostty`): `config`. `ghostty/setup.sh` also sets Ghostty as the
   default terminal via `duti`.
 - **Zed** (`~/.config/zed`): `settings.json` and `keymap.json`. The prompt-library database,
