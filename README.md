@@ -25,7 +25,8 @@ Previously used on:
 
 Each tool is backed up as a curated, secret-free subset of its live config:
 
-- **OMP** (`~/.omp/agent`): `config.yml` (with secret-bearing values such as `searxng.token`,
+- **OMP** (`~/.omp/agent`): `AGENTS.md` (the global agent rules, also linked as Claude Code's
+  `~/.claude/CLAUDE.md`) and `config.yml` (with secret-bearing values such as `searxng.token`,
   `searxng.basicPassword`, and `auth.broker.token` blanked to `""`; booleans and numbers are
   left as-is). Provider credentials live in the `agent.db` auth store, sessions and history are
   machine state, and `models.yml` can pin literal API keys — none of those are synced.

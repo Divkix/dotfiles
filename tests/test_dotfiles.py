@@ -437,6 +437,28 @@ exit 127
         # config stays schema-valid.
         self.assertIn("credentialsCacheEnabled: true\n", config)
 
+    def test_omp_setup_restores_config_and_agents_md(self):
+        result = self.run_cmd("bash", "omp/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        omp_dir = self.home / ".omp" / "agent"
+        self.assertTrue((omp_dir / "config.yml").exists())
+        self.assertEqual(
+            (omp_dir / "AGENTS.md").read_text(encoding="utf-8"),
+            (REPO_ROOT / "omp" / "AGENTS.md").read_text(encoding="utf-8"),
+        )
+
+    def test_update_backs_up_omp_agents_md(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(
+            (self.fixture / "omp" / "AGENTS.md").read_text(encoding="utf-8"),
+            "# global agent rules\n",
+        )
+
     def test_update_blanks_fish_secret_exports(self):
         self.seed_update_sources()
         fish_config = self.home / ".config" / "fish" / "config.fish"
@@ -837,6 +859,7 @@ exec /bin/mv "$@"
             "disabledProviders:\n"
             "  - opencode\n",
         )
+        self.write_file(omp_dir / "AGENTS.md", "# global agent rules\n")
 
         self.write_file(self.home / ".gitconfig", "[user]\n  name = Test\n")
         self.write_file(self.home / ".gitignore_global", "node_modules\n")

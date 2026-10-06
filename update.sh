@@ -318,6 +318,7 @@ stage_zed_settings
 stage_file "$HOME/.config/zed/keymap.json" "zed/keymap.json"
 
 stage_omp_config
+stage_file "$HOME/.omp/agent/AGENTS.md" "omp/AGENTS.md"
 
 generate_fisher_manifest
 
