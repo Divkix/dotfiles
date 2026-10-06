@@ -9,7 +9,8 @@ cd "$DIR" || exit 1
 
 MANIFEST="defaults.list"
 
-if [ "$(uname -s)" != "Darwin" ] || ! command -v defaults >/dev/null 2>&1; then
+# `defaults` only exists on macOS, so its absence is the platform check.
+if ! command -v defaults >/dev/null 2>&1; then
     info "Not macOS; skipping macOS settings."
     exit 0
 fi
