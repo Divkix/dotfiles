@@ -6,12 +6,11 @@
     eol = lf
     autocrlf = input
     editor = zed --wait          # was: code --wait --new-window
-    excludesfile = /Users/divkix/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [format]
 	signoff = true
 [commit]
 	gpgsign = true
-	template = /Users/divkix/.stCommitMsg
 [credential "https://github.com"]
 	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
@@ -65,4 +64,4 @@
 [gpg]
 	format = openpgp
 [gpg "ssh"]
-	allowedSignersFile = /Users/divkix/.ssh/allowed_signers
+	allowedSignersFile = ~/.ssh/allowed_signers
