@@ -1,0 +1,14 @@
+# agents: amp cline codex cursor droid gemini-cli github-copilot kilo kimi-code-cli opencode warp zed claude-code
+anthropics/skills frontend-design
+backnotprop/bro bro clean-room facts readback recap status
+blader/humanizer humanizer
+divkix/agent-skills exhaustive-site-audit
+dmmulroy/anti-slop install-anti-slop
+dreambigou/eli5 eli5
+every-app/open-seo competitive-landscape competitor-analysis keyword-clustering keyword-research link-prospecting local-seo seo-audit seo-coach seo-project-setup seo-report simple-issue-description
+factory-ai/factory-plugins simplify
+microsoft/playwright-cli playwright-cli
+planetscale/database-skills postgres
+upstash/context7 context7-cli
+vercel-labs/agent-browser agent-browser
+vercel-labs/skills find-skills

@@ -1,0 +1,37 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "model": "sonnet",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '__HOME__/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "medium"
+    },
+    "claude-sonnet-5-5": {
+      "effortLevel": "high"
+    }
+  },
+  "autoCompactWindow": 250000,
+  "advisorModel": "opus",
+  "tui": "fullscreen",
+  "theme": "dark",
+  "autoContinueAtUsageLimit": true
+}

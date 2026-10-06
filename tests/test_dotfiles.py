@@ -192,6 +192,8 @@ exit 0
             "ghostty",
             "zed",
             "omp",
+            "claude",
+            "skills",
             "fisher",
             "git",
             "ssh",
@@ -457,6 +459,109 @@ exit 127
         self.assertEqual(
             (self.fixture / "omp" / "AGENTS.md").read_text(encoding="utf-8"),
             "# global agent rules\n",
+        )
+
+    def test_claude_setup_restores_settings_hook_and_links_claude_md(self):
+        result = self.run_cmd("bash", "claude/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        claude_dir = self.home / ".claude"
+        settings = (claude_dir / "settings.json").read_text(encoding="utf-8")
+        # __HOME__ placeholders become this machine's home directory.
+        self.assertNotIn("__HOME__", settings)
+        self.assertIn(f"{self.home}/.claude/hooks/herdr-agent-state.sh", settings)
+        hook = claude_dir / "hooks" / "herdr-agent-state.sh"
+        self.assertTrue(os.access(hook, os.X_OK))
+        self.assertEqual(
+            os.readlink(claude_dir / "CLAUDE.md"),
+            str(self.home / ".omp" / "agent" / "AGENTS.md"),
+        )
+
+    def test_claude_setup_keeps_existing_claude_md_as_backup(self):
+        claude_dir = self.home / ".claude"
+        self.write_file(claude_dir / "CLAUDE.md", "my own rules\n")
+
+        result = self.run_cmd("bash", "claude/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertTrue((claude_dir / "CLAUDE.md").is_symlink())
+        self.assertEqual(
+            (claude_dir / "CLAUDE.md.bak").read_text(encoding="utf-8"),
+            "my own rules\n",
+        )
+
+    def test_skills_setup_installs_each_source_for_listed_agents(self):
+        pnpm_log = self.logs_dir / "pnpm.log"
+        self.write_stub(
+            "pnpm",
+            f"""#!/bin/bash
+printf '%s\\n' "$*" >> '{pnpm_log}'
+cat > /dev/null
+exit 0
+""",
+        )
+        self.write_file(
+            self.fixture / "skills" / "skills.list",
+            "# agents: claude-code codex\n"
+            "owner/one skill-a skill-b\n"
+            "owner/two skill-c\n",
+        )
+
+        result = self.run_cmd("bash", "skills/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(
+            pnpm_log.read_text(encoding="utf-8").splitlines(),
+            [
+                "dlx skills add owner/one -g -y -s skill-a skill-b -a claude-code codex",
+                "dlx skills add owner/two -g -y -s skill-c -a claude-code codex",
+            ],
+        )
+
+    def test_skills_setup_continues_past_a_failing_source(self):
+        pnpm_log = self.logs_dir / "pnpm.log"
+        self.write_stub(
+            "pnpm",
+            f"""#!/bin/bash
+printf '%s\\n' "$*" >> '{pnpm_log}'
+cat > /dev/null
+case "$*" in *owner/one*) exit 1;; esac
+exit 0
+""",
+        )
+        self.write_file(
+            self.fixture / "skills" / "skills.list",
+            "# agents: claude-code\nowner/one a\nowner/two b\n",
+        )
+
+        result = self.run_cmd("bash", "skills/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(len(pnpm_log.read_text(encoding="utf-8").splitlines()), 2)
+
+    def test_update_captures_claude_settings_hook_and_skills_manifest(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        settings = (self.fixture / "claude" / "settings.json").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("__HOME__/.claude/hooks/herdr-agent-state.sh", settings)
+        self.assertNotIn(str(self.home), settings)
+        self.assertEqual(
+            (self.fixture / "claude" / "hooks" / "herdr-agent-state.sh").read_text(
+                encoding="utf-8"
+            ),
+            "#!/bin/sh\necho hook\n",
+        )
+        # Grouped by source, skills sorted, lock hashes and timestamps left out.
+        self.assertEqual(
+            (self.fixture / "skills" / "skills.list").read_text(encoding="utf-8"),
+            "# agents: claude-code codex\n"
+            "owner/one skill-a skill-b\n"
+            "owner/two skill-c\n",
         )
 
     def test_update_blanks_fish_secret_exports(self):
@@ -860,6 +965,25 @@ exec /bin/mv "$@"
             "  - opencode\n",
         )
         self.write_file(omp_dir / "AGENTS.md", "# global agent rules\n")
+
+        claude_dir = self.home / ".claude"
+        self.write_file(
+            claude_dir / "settings.json",
+            "{\n"
+            '  "command": "bash \'' + str(self.home) + '/.claude/hooks/herdr-agent-state.sh\' session"\n'
+            "}\n",
+        )
+        self.write_file(
+            claude_dir / "hooks" / "herdr-agent-state.sh", "#!/bin/sh\necho hook\n"
+        )
+        self.write_file(
+            self.home / ".agents" / ".skill-lock.json",
+            '{"version": 3, "lastSelectedAgents": ["claude-code", "codex"],'
+            ' "skills": {'
+            '"skill-b": {"source": "owner/one", "computedHash": "x"},'
+            '"skill-c": {"source": "owner/two", "computedHash": "y"},'
+            '"skill-a": {"source": "owner/one", "computedHash": "z"}}}',
+        )
 
         self.write_file(self.home / ".gitconfig", "[user]\n  name = Test\n")
         self.write_file(self.home / ".gitignore_global", "node_modules\n")

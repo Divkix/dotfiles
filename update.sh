@@ -158,6 +158,45 @@ stage_omp_config() {
     fi
 }
 
+# Stage ~/.claude/settings.json with the home directory replaced by __HOME__ (claude/setup.sh
+# swaps it back). Hook commands embed absolute paths inside quotes, where $HOME would not
+# expand, and the snapshot should not carry the username. ~/.claude.json (OAuth account,
+# user id) and the rest of ~/.claude (history, sessions, caches) are machine state, not synced.
+stage_claude_settings() {
+    local source="$HOME/.claude/settings.json"
+    local staged_target="$STAGE_DIR/claude/settings.json"
+
+    track_target "claude/settings.json"
+
+    if [ ! -f "$source" ]; then
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$staged_target")"
+    sed "s#$HOME#__HOME__#g" "$source" > "$staged_target"
+}
+
+# Snapshot the globally installed agent skills as "<source> <skill> ..." lines from the
+# skills CLI lock file. The lock's hashes and timestamps are left out so the manifest only
+# changes when the set of skills does; skills/setup.sh reinstalls from it.
+generate_skills_manifest() {
+    local lock="$HOME/.agents/.skill-lock.json"
+    local staged_target="$STAGE_DIR/skills/skills.list"
+
+    track_target "skills/skills.list"
+
+    if [ ! -f "$lock" ]; then
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$staged_target")"
+    jq -r '
+        "# agents: \(.lastSelectedAgents | join(" "))",
+        (.skills | to_entries | group_by(.value.source)[]
+            | "\(.[0].value.source) \(map(.key) | sort | join(" "))")
+    ' "$lock" > "$staged_target"
+}
+
 stage_zed_settings() {
     local source="$HOME/.config/zed/settings.json"
     local staged_target="$STAGE_DIR/zed/settings.json"
@@ -319,6 +358,10 @@ stage_file "$HOME/.config/zed/keymap.json" "zed/keymap.json"
 
 stage_omp_config
 stage_file "$HOME/.omp/agent/AGENTS.md" "omp/AGENTS.md"
+
+stage_claude_settings
+stage_file "$HOME/.claude/hooks/herdr-agent-state.sh" "claude/hooks/herdr-agent-state.sh"
+generate_skills_manifest
 
 generate_fisher_manifest
 
