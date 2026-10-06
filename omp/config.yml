@@ -7,11 +7,11 @@ providers:
     codeMode: auto
 setupVersion: 2
 modelRoles:
-  task: openai-codex/gpt-6-luna:xhigh
-  default: openai-codex/gpt-6-sol:xhigh
+  task: opencode-go/deepseek-v4.1-flash:max
+  default: openai-codex/gpt-6.1-sol:high
   web: web/firecrawl
-  judge: typesafe/jev-latest
-  smol: openai-codex/gpt-6-luna:auto
+  judge: openrouter/~typesafe/jev-latest:auto
+  smol: opencode-go/deepseek-v4.1-flash:auto
   image: openrouter/meta/muse-image:auto
 defaultThinkingLevel: auto
 advisor:
@@ -20,8 +20,8 @@ advisor:
 retry:
   fallbackChains:
     web:
-      - web/tinyfish
       - web/exa
+      - web/tinyfish
     judge:
       - "@tiny"
       - "@smol"
@@ -34,7 +34,7 @@ display:
   showTokenUsage: true
   cacheMissMarker: true
   collapseCompacted: true
-  hideToolActivity: true
+  hideToolActivity: false
 memory:
   backend: "off"
 mnemopi:
@@ -93,7 +93,7 @@ security:
   enabled: false
 web_search:
   enabled: true
-hideThinkingBlock: true
+hideThinkingBlock: false
 prewalk:
   enabled: false
 dev:
@@ -175,7 +175,7 @@ contextPromotion:
 enabledProviders:
   []
 spelling:
-  autocomplete: true
+  autocomplete: auto
   typoDetection: false
 plan:
   enabled: false

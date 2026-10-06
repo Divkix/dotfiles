@@ -3,10 +3,8 @@ tap "can1357/tap"
 tap "clerk/stable"
 tap "golangci/tap", trusted: true
 tap "oven-sh/bun", trusted: true
-tap "pgrundev/tap"
 tap "planetscale/tap"
-# Static checker for GitHub Actions workflow files
-brew "actionlint"
+tap "warpdl/tap", trusted: true
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
 # Open-source, cross-platform JavaScript runtime environment
@@ -57,8 +55,6 @@ brew "git"
 brew "git-delta"
 # Quickly rewrite git repository history
 brew "git-filter-repo"
-# Git LFS plugin that uploads and downloads using the Xet protocol
-brew "git-xet"
 # Render markdown on the CLI
 brew "glow"
 # GNU Privacy Guard (OpenPGP)
@@ -73,8 +69,6 @@ brew "gopls"
 brew "goreleaser"
 # Agent multiplexer that lives in your terminal
 brew "herdr"
-# Command-line benchmarking tool
-brew "hyperfine"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Simple terminal UI for git commands
@@ -97,8 +91,6 @@ brew "ncdu"
 brew "oxfmt"
 # High-performance linter for JavaScript and TypeScript written in Rust
 brew "oxlint"
-# Pinentry for GPG on Mac
-brew "pinentry-mac"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # CLI for Playwright: record/generate code, inspect selectors, take screenshots
@@ -121,8 +113,6 @@ brew "rust"
 brew "rust-analyzer"
 # Cross-shell prompt for astronauts
 brew "starship"
-# Postgres development platform
-brew "supabase"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Language for application scale JavaScript development
@@ -145,10 +135,6 @@ brew "can1357/tap/omp", trusted: true
 brew "clerk/stable/clerk", trusted: true
 # Fast linters runner for Go.
 brew "golangci/tap/golangci-lint"
-# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
-brew "oven-sh/bun/bun"
-# In-database observability for PostgreSQL
-brew "pgrundev/tap/pgbot", trusted: true
 # The PlanetScale CLI
 brew "planetscale/tap/pscale", trusted: true
 # View, create, manipulate, print and manage files in Portable Document Format
@@ -159,19 +145,13 @@ cask "anydesk"
 cask "cap"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
-# AI-powered software engineering agent by Factory
-cask "droid"
 cask "font-hack-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Web browser
-cask "google-chrome"
 # Tools to protect your emails and files
 cask "gpg-suite"
 # Chromium-based web browser
 cask "helium-browser"
-# Open-source desktop AI agent
-cask "hermes-desktop"
 # Menu bar application that displays the CPU speed limit due to thermal issues
 cask "hot"
 # Free and open-source media player
@@ -192,6 +172,8 @@ cask "surfshark"
 cask "tailscale-app"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
+# Desktop application for Unsloth Studio
+cask "unsloth"
 # Voice-to-text dictation with AI-powered auto-editing
 cask "wispr-flow"
 # Multiplayer code editor
@@ -217,4 +199,4 @@ go "github.com/mgechev/revive"
 go "honnef.co/go/tools/cmd/staticcheck"
 uv "browser-use"
 uv "trafilatura"
-npm "@earendil-works/pi-coding-agent"
+npm "@rynfar/meridian"
