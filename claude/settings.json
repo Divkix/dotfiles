@@ -3,6 +3,9 @@
     "commit": "",
     "pr": ""
   },
+  "permissions": {
+    "defaultMode": "auto"
+  },
   "model": "sonnet",
   "hooks": {
     "SessionStart": [
@@ -18,6 +21,10 @@
       }
     ]
   },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "enableWorkflows": true,
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "codex@openai-codex": true
@@ -40,7 +47,10 @@
   },
   "autoCompactWindow": 250000,
   "advisorModel": "opus",
+  "askUserQuestionTimeout": "5m",
   "tui": "fullscreen",
   "theme": "dark",
-  "autoContinueAtUsageLimit": true
+  "autoContinueAtUsageLimit": true,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true
 }
