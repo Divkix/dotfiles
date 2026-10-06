@@ -63,10 +63,16 @@ brew "gnupg"
 brew "go"
 # Stricter gofmt
 brew "gofumpt"
+# Go formatter that additionally inserts import statements
+brew "goimports"
 # Language server for the Go language
 brew "gopls"
 # Deliver Go binaries as fast and easily as possible
 brew "goreleaser"
+# Golang security checker
+brew "gosec"
+# Database client and tools for the Go vulnerability database
+brew "govulncheck"
 # Agent multiplexer that lives in your terminal
 brew "herdr"
 # Lightweight and flexible command-line JSON processor
@@ -103,6 +109,8 @@ brew "python@3.14"
 brew "pre-commit"
 # Rsync for cloud storage
 brew "rclone"
+# Fast, configurable, extensible, flexible, and beautiful linter for Go
+brew "revive"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Extremely fast Python linter, written in Rust
@@ -113,6 +121,8 @@ brew "rust"
 brew "rust-analyzer"
 # Cross-shell prompt for astronauts
 brew "starship"
+# State of the art linter for the Go programming language
+brew "staticcheck"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Language for application scale JavaScript development
@@ -183,20 +193,12 @@ cask "zoom"
 go "github.com/air-verse/air"
 go "golang.org/x/perf/cmd/benchstat"
 go "golang.org/x/tools/cmd/deadcode"
-go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/fzipp/gocyclo/cmd/gocyclo"
 go "github.com/loov/goda"
 go "github.com/kisielk/godepgraph"
-go "golang.org/x/tools/cmd/goimports"
-go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
-go "golang.org/x/tools/gopls"
-go "github.com/securego/gosec/v2/cmd/gosec"
-go "golang.org/x/vuln/cmd/govulncheck"
 go "github.com/gordonklaus/ineffassign"
 go "go.uber.org/mock/mockgen"
 go "github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen"
-go "github.com/mgechev/revive"
-go "honnef.co/go/tools/cmd/staticcheck"
 uv "browser-use"
 uv "trafilatura"
 npm "@rynfar/meridian"
