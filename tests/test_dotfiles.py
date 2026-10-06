@@ -34,6 +34,7 @@ class DotfilesScriptTests(unittest.TestCase):
         self.fisher_log = self.logs_dir / "fisher.log"
         self.brew_log = self.logs_dir / "brew.log"
         self.duti_log = self.logs_dir / "duti.log"
+        self.herdr_log = self.logs_dir / "herdr.log"
 
         self.write_stub(
             "sudo",
@@ -104,6 +105,20 @@ exit 0
 """,
         )
 
+        self.write_stub(
+            "herdr",
+            """#!/bin/bash
+printf '%s\\n' "$*" >> "$FAKE_HERDR_LOG"
+if [ "${1:-} ${2:-} ${3:-}" = "plugin list --json" ]; then
+    printf '{"id":"1","result":{"type":"plugin_list","plugins":['
+    printf '{"source":{"kind":"github","owner":"zed","repo":"b-plugin"}},'
+    printf '{"source":{"kind":"github","owner":"acme","repo":"a-plugin","subdir":"sub"}},'
+    printf '{"source":{"kind":"link"}}]}}'
+fi
+exit 0
+""",
+        )
+
         self.env = os.environ.copy()
         self.env.update(
             {
@@ -115,6 +130,7 @@ exit 0
                 "FAKE_BREW_LOG": str(self.brew_log),
                 "FAKE_SUDO_LOG": str(self.sudo_log),
                 "FAKE_DUTI_LOG": str(self.duti_log),
+                "FAKE_HERDR_LOG": str(self.herdr_log),
             }
         )
 
@@ -194,6 +210,10 @@ exit 0
             "omp",
             "claude",
             "skills",
+            "herdr",
+            "worktrunk",
+            "btop",
+            "gh",
             "fisher",
             "git",
             "ssh",
@@ -710,6 +730,76 @@ exit 0
             ["bundle", "bundle --file=Brewfile.appstore"],
         )
 
+    def test_simple_config_setups_restore_their_files(self):
+        expected = {
+            "worktrunk": ".config/worktrunk/config.toml",
+            "btop": ".config/btop/btop.conf",
+            "gh": ".config/gh/config.yml",
+        }
+
+        for module, destination in expected.items():
+            with self.subTest(module=module):
+                result = self.run_cmd("bash", f"{module}/setup.sh")
+
+                self.assertEqual(result.returncode, 0, msg=result.stderr)
+                self.assertTrue((self.home / destination).is_file())
+
+    def test_herdr_setup_restores_config_and_installs_each_plugin(self):
+        self.write_file(
+            self.fixture / "herdr" / "plugins.list",
+            "owner/one\nowner/two/sub\n",
+        )
+
+        result = self.run_cmd("bash", "herdr/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertTrue((self.home / ".config" / "herdr" / "config.toml").is_file())
+        self.assertEqual(
+            self.herdr_log.read_text(encoding="utf-8").splitlines(),
+            ["plugin install -y owner/one", "plugin install -y owner/two/sub"],
+        )
+
+    def test_herdr_setup_continues_past_a_failing_plugin(self):
+        self.write_stub(
+            "herdr",
+            """#!/bin/bash
+printf '%s\\n' "$*" >> "$FAKE_HERDR_LOG"
+cat > /dev/null
+case "$*" in *owner/one*) exit 1;; esac
+exit 0
+""",
+        )
+        self.write_file(
+            self.fixture / "herdr" / "plugins.list", "owner/one\nowner/two\n"
+        )
+
+        result = self.run_cmd("bash", "herdr/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(len(self.herdr_log.read_text(encoding="utf-8").splitlines()), 2)
+
+    def test_update_captures_herdr_worktrunk_btop_and_gh_configs(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(
+            (self.fixture / "herdr" / "config.toml").read_text(encoding="utf-8"),
+            "onboarding = false\n",
+        )
+        self.assertEqual(
+            (self.fixture / "btop" / "btop.conf").read_text(encoding="utf-8"),
+            'color_theme = "tomorrow-night"\n',
+        )
+        self.assertTrue((self.fixture / "worktrunk" / "config.toml").is_file())
+        self.assertTrue((self.fixture / "gh" / "config.yml").is_file())
+        # Sorted GitHub plugins only; the locally linked one has no source to reinstall from.
+        self.assertEqual(
+            (self.fixture / "herdr" / "plugins.list").read_text(encoding="utf-8"),
+            "acme/a-plugin/sub\nzed/b-plugin\n",
+        )
+
     def test_update_preserves_single_file_symlinks(self):
         self.seed_update_sources()
         abbr_path = self.home / ".config" / "fish" / "conf.d" / "abbr.fish"
@@ -1037,6 +1127,12 @@ exec /bin/mv "$@"
             '"skill-c": {"source": "owner/two", "computedHash": "y"},'
             '"skill-a": {"source": "owner/one", "computedHash": "z"}}}',
         )
+
+        config_dir = self.home / ".config"
+        self.write_file(config_dir / "herdr" / "config.toml", "onboarding = false\n")
+        self.write_file(config_dir / "worktrunk" / "config.toml", "[commit]\n")
+        self.write_file(config_dir / "btop" / "btop.conf", 'color_theme = "tomorrow-night"\n')
+        self.write_file(config_dir / "gh" / "config.yml", "git_protocol: https\n")
 
         self.write_file(self.home / ".gitconfig", "[user]\n  name = Test\n")
         self.write_file(self.home / ".gitignore_global", "node_modules\n")

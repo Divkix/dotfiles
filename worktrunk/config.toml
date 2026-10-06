@@ -1,0 +1,2 @@
+[commit.generation]
+command = "droid exec --auto high -f /dev/stdin"

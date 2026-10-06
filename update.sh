@@ -224,6 +224,25 @@ generate_skills_manifest() {
     ' "$lock" > "$staged_target"
 }
 
+# Snapshot the installed herdr plugins as GitHub "owner/repo[/subdir]" lines; herdr/setup.sh
+# reinstalls them. Locally linked plugins have no GitHub source and are skipped. Without herdr
+# the snapshot is left alone rather than emptied.
+generate_herdr_plugins_manifest() {
+    local staged_target="$STAGE_DIR/herdr/plugins.list"
+
+    if ! command -v herdr >/dev/null 2>&1; then
+        echo "herdr not installed; leaving herdr/plugins.list untouched" >&2
+        return 0
+    fi
+
+    track_target "herdr/plugins.list"
+    mkdir -p "$(dirname "$staged_target")"
+    herdr plugin list --json </dev/null | jq -r '
+        .result.plugins[] | select(.source.kind == "github")
+        | "\(.source.owner)/\(.source.repo)\(if .source.subdir then "/" + .source.subdir else "" end)"
+    ' | LC_ALL=C sort > "$staged_target"
+}
+
 stage_zed_settings() {
     local source="$HOME/.config/zed/settings.json"
     local staged_target="$STAGE_DIR/zed/settings.json"
@@ -389,6 +408,12 @@ stage_file "$HOME/.omp/agent/AGENTS.md" "omp/AGENTS.md"
 stage_claude_settings
 stage_file "$HOME/.claude/hooks/herdr-agent-state.sh" "claude/hooks/herdr-agent-state.sh"
 generate_skills_manifest
+
+stage_file "$HOME/.config/herdr/config.toml" "herdr/config.toml"
+generate_herdr_plugins_manifest
+stage_file "$HOME/.config/worktrunk/config.toml" "worktrunk/config.toml"
+stage_file "$HOME/.config/btop/btop.conf" "btop/btop.conf"
+stage_file "$HOME/.config/gh/config.yml" "gh/config.yml"
 
 generate_fisher_manifest
 
