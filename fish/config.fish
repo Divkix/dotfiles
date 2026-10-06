@@ -13,31 +13,16 @@ fish_add_path "$HOME/go/bin"
 fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.bun/bin"
 
-# add curl
+# keg-only curl first on PATH
 fish_add_path "/opt/homebrew/opt/curl/bin"
-set -gx LDFLAGS "-L/opt/homebrew/opt/curl/lib"
-set -gx CPPFLAGS "-I/opt/homebrew/opt/curl/include"
-set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/curl/lib/pkgconfig"
-
-# add fmpeg
-fish_add_path /opt/homebrew/opt/ffmpeg-full/bin
-set -gx LDFLAGS "-L/opt/homebrew/opt/ffmpeg-full/lib"
-set -gx CPPFLAGS "-I/opt/homebrew/opt/ffmpeg-full/include"
-set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/ffmpeg-full/lib/pkgconfig"
-
-# add imagemagick
-fish_add_path /opt/homebrew/opt/imagemagick-full/bin
-set -gx LDFLAGS "-L/opt/homebrew/opt/imagemagick-full/lib"
-set -gx CPPFLAGS "-I/opt/homebrew/opt/imagemagick-full/include"
-set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/imagemagick-full/lib/pkgconfig"
 
 # add llvm
 fish_add_path /opt/homebrew/opt/llvm/bin
 
-# openssl
-set -x LDFLAGS "-L/opt/homebrew/opt/openssl@3/lib"
-set -x CPPFLAGS "-I/opt/homebrew/opt/openssl@3/include"
-set -x PKG_CONFIG_PATH "/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+# build flags for keg-only curl + openssl (one assignment each; later `set`s used to clobber earlier ones)
+set -gx LDFLAGS "-L/opt/homebrew/opt/curl/lib -L/opt/homebrew/opt/openssl@3/lib"
+set -gx CPPFLAGS "-I/opt/homebrew/opt/curl/include -I/opt/homebrew/opt/openssl@3/include"
+set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/curl/lib/pkgconfig:/opt/homebrew/opt/openssl@3/lib/pkgconfig"
 
 # fzf config
 fzf_configure_bindings --directory=\cf
@@ -60,19 +45,18 @@ set -gx FIRECRAWL_API_KEY ""
 set -gx TINYFISH_API_KEY ""
 
 # Added by LM Studio CLI (lms)
-set -gx PATH $PATH /Users/divkix/.lmstudio/bin
+fish_add_path --append "$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
 
-# Disable Telementry
+# Disable Telemetry
 set -gx DO_NOT_TRACK 1
-set -gx DO_NOT_TRACK = "1";
-set -gx HOMEBREW_NO_ANALYTICS = "1";
-set -gx NEXT_TELEMETRY_DISABLED = "1";
-set -gx GATSBY_TELEMETRY_DISABLED = "1";
-set -gx VSCODE_TELEMETRY_LEVEL = "off";
-set -gx DOTNET_CLI_TELEMETRY_OPTOUT = "1";
-set -gx POWERSHELL_TELEMETRY_OPTOUT = "1";
-set -gx FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT = "1";
+set -gx HOMEBREW_NO_ANALYTICS 1
+set -gx NEXT_TELEMETRY_DISABLED 1
+set -gx GATSBY_TELEMETRY_DISABLED 1
+set -gx VSCODE_TELEMETRY_LEVEL off
+set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
+set -gx POWERSHELL_TELEMETRY_OPTOUT 1
+set -gx FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT 1
 
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.
@@ -83,7 +67,7 @@ set -gx STARSHIP_CONFIG "$HOME/.config/starship.toml"
 starship init fish | source
 
 # pnpm
-set -gx PNPM_HOME "/Users/divkix/Library/pnpm"
+set -gx PNPM_HOME "$HOME/Library/pnpm"
 if not string match -q -- "$PNPM_HOME/bin" $PATH
   set -gx PATH "$PNPM_HOME/bin" $PATH
 end
