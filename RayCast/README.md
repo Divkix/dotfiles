@@ -13,5 +13,3 @@ refresh it.
 
 Raycast → Settings → Advanced → **Export**, set a password, and save the `.rayconfig` into this
 folder. Commit the new file and delete the stale one so only the current export is tracked.
-
-> Note: the checked-in export predates the migration to Raycast v2 — re-export from v2 to refresh it.
