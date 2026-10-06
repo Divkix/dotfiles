@@ -52,12 +52,9 @@ Local install artifacts such as `node_modules/`, package manager files, and othe
 ## Installation
 These steps must be followed to ensure smooth installation:
 
-### Install homebrew
-Head over to https://brew.sh and install the latest version of homebrew by copying the command from the given text box.
-
 ### Run the bootstrap.sh file
 
-`bootstrap.sh` prompts for sudo, installs packages from `packages/Brewfile`, applies the managed config listed above, and sets fish as the login shell if needed.
+`bootstrap.sh` prompts for sudo, installs Homebrew if it is missing, installs packages from `packages/Brewfile`, applies the managed config listed above, and sets fish as the login shell if needed.
 
 Use this command to install the dotfiles setup:
 
@@ -65,7 +62,22 @@ Use this command to install the dotfiles setup:
 
 ### Post-install manual steps
 
+> **Do not run `./bootstrap.sh` on a machine whose live config you want to keep.** It overwrites
+> `~/.config/fish/config.fish` and `~/.omp/agent/config.yml` with the repo copies, whose secret
+> values (`*_API_KEY`, tokens) are blanked. Run `./update.sh` first if you want the repo to match.
+
 A few things bootstrap intentionally cannot restore:
+
+- **API keys**: the `set -gx *_API_KEY ""` lines in `fish/config.fish` are blanked. Re-enter them
+  in `~/.config/fish/config.fish` (e.g. `MORPH_API_KEY`, `FIRECRAWL_API_KEY`, `TINYFISH_API_KEY`).
+- **GPG signing key**: commits and tags are signed (`commit.gpgsign`, `tag.gpgSign`) with the key
+  in `git/.gitconfig` / `gnupg/gpg.conf`. The private key is not in this repo. Import it
+  (`gpg --import`) or generate a new one and update `signingkey` and `default-key`; otherwise
+  `git commit` fails.
+- **SSH keys**: keys live in Secretive (Secure Enclave) and cannot be exported. Create new ones in
+  Secretive and register them on GitHub, then rebuild `~/.ssh/allowed_signers` (referenced by
+  `gpg.ssh.allowedSignersFile`; not stored here).
+- **`gh` login**: run `gh auth login` (git uses `gh` as its credential helper).
 
 - **OMP provider credentials**: `omp/config.yml` ships without them — stored credentials live in
   `~/.omp/agent/agent.db` (not in this repo). Run `omp` and `/login <provider>` on a fresh machine.

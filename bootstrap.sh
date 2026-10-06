@@ -28,6 +28,16 @@ else
     exit 1
 fi
 
+if ! command -v brew >/dev/null 2>&1 && [ ! -x /opt/homebrew/bin/brew ]; then
+    info "Installing Homebrew..."
+    if ! /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
+        cleanup_sudo_keepalive
+        error "Failed installing Homebrew."
+        exit 1
+    fi
+fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # Package control must be executed first in order for the rest to work
 if ! bash "./packages/setup.sh"; then
     cleanup_sudo_keepalive
