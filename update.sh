@@ -72,6 +72,9 @@ generate_fisher_manifest() {
 
 generate_brewfile() {
     local staged_target="$STAGE_DIR/packages/Brewfile"
+    local appstore_target="$STAGE_DIR/packages/Brewfile.appstore"
+    local skip_file="$REPO_ROOT/packages/appstore.skip"
+    local full_dump="$TMP_DIR/Brewfile.full"
     local brew_dir
 
     track_target "packages/Brewfile"
@@ -82,10 +85,34 @@ generate_brewfile() {
     # with a node runtime shim ahead of it (e.g. ~/.vite-plus/bin) the dump reports that
     # runtime's bundled npm/corepack instead of the real global packages.
     brew_dir="$(dirname "$(command -v brew)")"
-    if ! PATH="$brew_dir:$PATH" brew bundle dump --force --file="$staged_target"; then
+    if ! PATH="$brew_dir:$PATH" brew bundle dump --force --file="$full_dump"; then
         return 1
     fi
-    [ -f "$staged_target" ]
+    [ -f "$full_dump" ] || return 1
+
+    # App Store apps live in their own file: `brew bundle` fails outright when the Mac is not
+    # signed in to the App Store, and that must not take the whole Brewfile down with it.
+    awk '!/^mas /' "$full_dump" > "$staged_target"
+
+    # Without mas the dump has no App Store entries, so keep the existing snapshot rather
+    # than wiping it.
+    if ! command -v mas >/dev/null 2>&1; then
+        echo "mas not installed; leaving packages/Brewfile.appstore untouched" >&2
+        return 0
+    fi
+
+    track_target "packages/Brewfile.appstore"
+    # packages/appstore.skip lists app ids (one per line, '#' comments allowed) that are
+    # installed here but should not be restored elsewhere.
+    awk -v skip="$skip_file" '
+        BEGIN {
+            while ((getline entry < skip) > 0) {
+                sub(/#.*/, "", entry); gsub(/[[:space:]]/, "", entry)
+                if (entry != "") skipped[entry] = 1
+            }
+        }
+        /^mas / && !($NF in skipped)
+    ' "$full_dump" > "$appstore_target"
 }
 
 stage_fish_config() {

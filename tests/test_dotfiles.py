@@ -657,6 +657,59 @@ exit 0
             brewfile.read_text(encoding="utf-8"), 'tap "homebrew/bundle"\n'
         )
 
+    def test_update_splits_app_store_apps_into_their_own_brewfile(self):
+        self.seed_update_sources()
+        self.write_stub("mas", "#!/bin/bash\nexit 0\n")
+        self.write_stub(
+            "brew",
+            """#!/bin/bash
+for arg in "$@"; do
+    case "$arg" in
+        --file=*)
+            printf 'tap "x/y"\\nbrew "mas"\\nmas "Keep Me", id: 111\\nmas "Skip Me", id: 222\\n' > "${arg#--file=}"
+            ;;
+    esac
+done
+exit 0
+""",
+        )
+        self.write_file(
+            self.fixture / "packages" / "appstore.skip",
+            "# not restored\n222 # Skip Me\n",
+        )
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(
+            (self.fixture / "packages" / "Brewfile").read_text(encoding="utf-8"),
+            'tap "x/y"\nbrew "mas"\n',
+        )
+        self.assertEqual(
+            (self.fixture / "packages" / "Brewfile.appstore").read_text(
+                encoding="utf-8"
+            ),
+            'mas "Keep Me", id: 111\n',
+        )
+
+    def test_packages_setup_installs_app_store_apps_and_tolerates_failure(self):
+        self.write_stub(
+            "brew",
+            """#!/bin/bash
+printf '%s\\n' "$*" >> "$FAKE_BREW_LOG"
+case "$*" in *Brewfile.appstore*) exit 1;; esac
+exit 0
+""",
+        )
+
+        result = self.run_cmd("bash", "packages/setup.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(
+            self.brew_log.read_text(encoding="utf-8").splitlines(),
+            ["bundle", "bundle --file=Brewfile.appstore"],
+        )
+
     def test_update_preserves_single_file_symlinks(self):
         self.seed_update_sources()
         abbr_path = self.home / ".config" / "fish" / "conf.d" / "abbr.fish"

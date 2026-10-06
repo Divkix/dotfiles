@@ -87,6 +87,8 @@ brew "llvm"
 brew "lolcat"
 # Clone of ls with colorful output, file type icons, and more
 brew "lsd"
+# Mac App Store command-line interface
+brew "mas"
 # Interpreter for the AWK Programming Language
 brew "mawk"
 # Free (GNU) replacement for the Pico text editor

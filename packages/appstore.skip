@@ -1,0 +1,5 @@
+# App Store app ids that update.sh leaves out of Brewfile.appstore.
+462054704 # Microsoft Word
+462058435 # Microsoft Excel
+462062816 # Microsoft PowerPoint
+1474276998 # HP
