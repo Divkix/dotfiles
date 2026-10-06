@@ -800,6 +800,19 @@ exit 0
             "acme/a-plugin/sub\nzed/b-plugin\n",
         )
 
+    def test_update_captures_goup_function(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(
+            (self.fixture / "fish" / "functions" / "goup.fish").read_text(
+                encoding="utf-8"
+            ),
+            "function goup; end\n",
+        )
+
     def test_update_preserves_single_file_symlinks(self):
         self.seed_update_sources()
         abbr_path = self.home / ".config" / "fish" / "conf.d" / "abbr.fish"
@@ -1060,6 +1073,9 @@ exec /bin/mv "$@"
         self.write_file(
             fish_dir / "functions" / "fish_prompt_loading_indicator.fish",
             "function fish_prompt_loading_indicator; end\n",
+        )
+        self.write_file(
+            fish_dir / "functions" / "goup.fish", "function goup; end\n"
         )
         self.write_file(fish_dir / "conf.d" / "abbr.fish", "abbr gs 'git status'\n")
         self.write_file(fish_dir / "conf.d" / "alias.fish", "alias ll='ls -la'\n")

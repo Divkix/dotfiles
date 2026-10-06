@@ -394,6 +394,7 @@ stage_fish_config "$fish_dir/config.fish"
 stage_file "$fish_dir/functions/fish_prompt.fish" "fish/functions/fish_prompt.fish"
 stage_file "$fish_dir/functions/fish_greeting.fish" "fish/functions/fish_greeting.fish"
 stage_file "$fish_dir/functions/fish_prompt_loading_indicator.fish" "fish/functions/fish_prompt_loading_indicator.fish"
+stage_file "$fish_dir/functions/goup.fish" "fish/functions/goup.fish"
 stage_file "$fish_dir/conf.d/abbr.fish" "fish/conf.d/abbr.fish"
 stage_file "$fish_dir/conf.d/alias.fish" "fish/conf.d/alias.fish"
 
