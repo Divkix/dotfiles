@@ -6,7 +6,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "sonnet",
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -46,11 +46,10 @@
     }
   },
   "autoCompactWindow": 250000,
-  "advisorModel": "opus",
   "askUserQuestionTimeout": "5m",
   "tui": "fullscreen",
   "theme": "dark",
   "autoContinueAtUsageLimit": true,
-  "remoteControlAtStartup": true,
+  "remoteControlAtStartup": false,
   "agentPushNotifEnabled": true
 }
