@@ -8,11 +8,12 @@ providers:
 setupVersion: 2
 modelRoles:
   task: opencode-go/deepseek-v4.1-flash:max
-  default: openai-codex/gpt-6.1-sol:high
+  default: anthropic/claude-opus-5-5:medium
   web: web/firecrawl
   judge: openrouter/~typesafe/jev-latest:auto
   smol: opencode-go/deepseek-v4.1-flash:auto
   image: openrouter/meta/muse-image:auto
+  slow: openai-codex/gpt-6.1-sol:auto
 defaultThinkingLevel: auto
 advisor:
   enabled: false
@@ -34,7 +35,7 @@ display:
   showTokenUsage: true
   cacheMissMarker: true
   collapseCompacted: true
-  hideToolActivity: false
+  hideToolActivity: true
 memory:
   backend: "off"
 mnemopi:
@@ -93,7 +94,7 @@ security:
   enabled: false
 web_search:
   enabled: true
-hideThinkingBlock: false
+hideThinkingBlock: true
 prewalk:
   enabled: false
 dev:
