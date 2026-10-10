@@ -5,12 +5,12 @@ tap "golangci/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 tap "planetscale/tap"
 tap "warpdl/tap", trusted: true
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@3"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Browser automation CLI for AI agents
 brew "agent-browser"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
 # Pyright fork with various improvements and built-in pylance features
 brew "basedpyright"
 # GNU internationalization (i18n) and localization (l10n) library
