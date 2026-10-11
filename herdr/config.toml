@@ -13,10 +13,6 @@ agent_panel_sort = "spaces"
 pane_history = false
 switch_ascii_input_source_in_prefix = false
 
-[keys]
-remove_worktree = "prefix+d"
-open_worktree = "prefix+shift+o"
-
 [[keys.command]]              # open in a split beside your work
 key = "prefix+f"
 type = "shell"

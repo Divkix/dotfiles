@@ -8,9 +8,9 @@ providers:
 setupVersion: 2
 modelRoles:
   task: opencode-go/deepseek-v4.1-flash:max
-  default: anthropic/claude-opus-5-5:medium
+  default: openai-codex/gpt-6.1-sol:high
   web: web/firecrawl
-  judge: openrouter/~typesafe/jev-latest:auto
+  judge: openrouter/microsoft/microsoft-decision-1
   smol: opencode-go/deepseek-v4.1-flash:auto
   image: openrouter/meta/muse-image:auto
   slow: openai-codex/gpt-6.1-sol:auto
@@ -42,8 +42,7 @@ mnemopi:
   autoRetain: true
   scoping: per-project-tagged
 task:
-  agentPrewalk:
-    {}
+  agentPrewalk: {}
   prewalk: false
   enableEffort: false
   isolation:
@@ -140,8 +139,7 @@ tui:
   codexResetFireworks: false
 personality: pragmatic
 readLineNumbers: true
-disabledProviders:
-  []
+disabledProviders: []
 title:
   refreshOnReplan: true
 omitThinking: false
@@ -164,8 +162,7 @@ browser:
 compaction:
   enabled: true
   thresholdTokens: 250000
-disabledExtensions:
-  []
+disabledExtensions: []
 codexResets:
   autoRedeem: "no"
 externalThinking: false
@@ -173,8 +170,7 @@ isolation:
   backend: auto
 contextPromotion:
   enabled: false
-enabledProviders:
-  []
+enabledProviders: []
 spelling:
   autocomplete: auto
   typoDetection: false
