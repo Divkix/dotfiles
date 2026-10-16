@@ -10,10 +10,9 @@ modelRoles:
   task: opencode-go/deepseek-v4.1-flash:max
   default: openai-codex/gpt-6.1-sol:high
   web: web/firecrawl
-  judge: openrouter/microsoft/microsoft-decision-1
+  judge: openrouter/~typesafe/jev-latest:auto
   smol: opencode-go/deepseek-v4.1-flash:auto
   image: openrouter/meta/muse-image:auto
-  slow: openai-codex/gpt-6.1-sol:auto
 defaultThinkingLevel: auto
 advisor:
   enabled: false

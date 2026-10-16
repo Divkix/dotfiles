@@ -1,9 +1,13 @@
 model = "gpt-6.1-sol"
 model_reasoning_effort = "high"
-approvals_reviewer = "user"
+approval_policy = "on-request"
+approvals_reviewer = "auto_review"
 
 [tui]
 screen_reader_detection_done = true
 
 [features]
 hooks = true
+analytics_plan_history = true
+login_shell_package_path = true
+daemon_auto_start = false

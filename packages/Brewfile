@@ -105,10 +105,10 @@ brew "pkgconf"
 brew "playwright-cli"
 # Fast, disk space efficient package manager
 brew "pnpm"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.14"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
 # Rsync for cloud storage
 brew "rclone"
 # Fast, configurable, extensible, flexible, and beautiful linter for Go
@@ -161,7 +161,7 @@ cask "cap"
 cask "codex"
 cask "font-hack-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
-cask "ghostty"
+cask "ghostty@tip"
 # Tools to protect your emails and files
 cask "gpg-suite"
 # AI teammates that work across your apps and tools
