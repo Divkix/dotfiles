@@ -72,3 +72,6 @@ if not string match -q -- "$PNPM_HOME/bin" $PATH
   set -gx PATH "$PNPM_HOME/bin" $PATH
 end
 # pnpm end
+
+# Claude Code: force-enable /advisor (remote flag tengu_sage_compass2 evaluates off)
+set -gx CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL 1

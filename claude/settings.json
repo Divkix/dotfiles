@@ -6,6 +6,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -26,7 +27,9 @@
   "enableWorkflows": true,
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
-    "codex@openai-codex": true
+    "codex@openai-codex": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
@@ -50,7 +53,10 @@
   "autoCompactWindow": 250000,
   "askUserQuestionTimeout": "5m",
   "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
   "theme": "dark",
+  "editorMode": "normal",
+  "autoCompactEnabled": true,
   "autoContinueAtUsageLimit": true,
   "remoteControlAtStartup": false,
   "agentPushNotifEnabled": true
