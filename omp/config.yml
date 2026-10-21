@@ -7,12 +7,10 @@ providers:
     codeMode: auto
 setupVersion: 2
 modelRoles:
-  task: opencode-go/deepseek-v4.1-flash:max
-  default: openai-codex/gpt-6.1-sol:high
   web: web/firecrawl
-  judge: openrouter/~typesafe/jev-latest:auto
-  smol: opencode-go/deepseek-v4.1-flash:auto
+  judge: openrouter/~typesafe/jev-latest
   image: openrouter/meta/muse-image:auto
+  default: opencode-go/deepseek-v4.1-flash:max
 defaultThinkingLevel: auto
 advisor:
   enabled: false
