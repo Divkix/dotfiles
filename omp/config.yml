@@ -11,10 +11,13 @@ modelRoles:
   judge: openrouter/~typesafe/jev-latest
   image: openrouter/meta/muse-image:auto
   default: opencode-go/deepseek-v4.1-flash:max
+  advisor: openai-codex/gpt-6.1-sol:auto
 defaultThinkingLevel: auto
 advisor:
-  enabled: false
-  syncBacklog: "3"
+  enabled: true
+  syncBacklog: strict
+  reviewMode: agent-end
+  continueSeverity: concern
 retry:
   fallbackChains:
     web:
@@ -32,7 +35,8 @@ display:
   showTokenUsage: true
   cacheMissMarker: true
   collapseCompacted: true
-  hideToolActivity: true
+  hideToolActivity: false
+  showTurnTime: false
 memory:
   backend: "off"
 mnemopi:
@@ -56,9 +60,11 @@ bashInterceptor:
 symbolPreset: nerd
 statusLine:
   compactThinkingLevel: false
-  separator: powerline-thin
+  separator: powerline
   sessionAccent: true
   transparent: false
+  preset: nerd
+  showHookStatus: true
 error:
   notify: "on"
 stt:
@@ -76,6 +82,7 @@ autolearn:
 edit:
   fuzzyMatch: true
   mode: hashline
+  streamingAbort: false
 python:
   kernelMode: session
 astGrep:
@@ -90,9 +97,10 @@ security:
   enabled: false
 web_search:
   enabled: true
-hideThinkingBlock: true
+hideThinkingBlock: false
 prewalk:
   enabled: false
+  auto: suggest
 dev:
   autoqaConsent: granted
 bash:
@@ -106,7 +114,7 @@ tier:
   anthropic: none
   google: none
   subagent: inherit
-  advisor: flex
+  advisor: none
 includeWorkspaceTree: false
 images:
   describeForTextModels: true
@@ -133,8 +141,10 @@ terminal:
   showProgress: true
 tui:
   textSizing: false
-  codexResetFireworks: false
-personality: pragmatic
+  codexResetFireworks: true
+  hyperlinks: auto
+  tight: false
+personality: default
 readLineNumbers: true
 disabledProviders: []
 title:
@@ -142,9 +152,11 @@ title:
 omitThinking: false
 eval:
   rb: true
+  autoBackground:
+    enabled: false
 async:
   enabled: true
-textVerbosity: medium
+textVerbosity: low
 commands:
   enableOpencodeProject: false
   enableOpencodeUser: false
@@ -154,11 +166,15 @@ theme:
   dark: dark-volcanic
 composer:
   shape: rule
+  tokenRate: true
+  predictions: true
 browser:
   headless: true
 compaction:
   enabled: true
   thresholdTokens: 250000
+  experimentalContextManagement: false
+  idleEnabled: false
 disabledExtensions: []
 codexResets:
   autoRedeem: "no"
