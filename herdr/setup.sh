@@ -15,6 +15,8 @@ info "Setting up herdr..."
 
 mkdir -p "$DESTINATION"
 scopy "$SOURCE/config.toml" "$DESTINATION/config.toml" || exit 1
+scopy "$SOURCE/close-worktree.sh" "$DESTINATION/close-worktree.sh" || exit 1
+chmod 755 "$DESTINATION/close-worktree.sh"
 
 # Plugins are listed as GitHub "owner/repo[/subdir]" lines. A failing plugin is reported
 # but does not stop the rest or abort bootstrap: installs need the network.

@@ -488,6 +488,7 @@ stage_codex_hooks
 stage_file "$HOME/.codex/herdr-agent-state.sh" "codex/herdr-agent-state.sh"
 
 stage_file "$HOME/.config/herdr/config.toml" "herdr/config.toml"
+stage_file "$HOME/.config/herdr/close-worktree.sh" "herdr/close-worktree.sh"
 generate_herdr_plugins_manifest
 stage_file "$HOME/.config/worktrunk/config.toml" "worktrunk/config.toml"
 stage_file "$HOME/.config/btop/btop.conf" "btop/btop.conf"
