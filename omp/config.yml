@@ -10,8 +10,10 @@ modelRoles:
   web: web/firecrawl
   judge: openrouter/~typesafe/jev-latest
   image: openrouter/meta/muse-image:auto
-  default: opencode-go/deepseek-v4.1-flash:max
-  advisor: openai-codex/gpt-6.1-sol:auto
+  smol: anthropic/claude-haiku-5-5:max
+  default: anthropic/claude-opus-5-5:medium
+  advisor: openai-codex/gpt-6.1-sol:xhigh
+  task: openai-codex/gpt-6.1-sol:auto
 defaultThinkingLevel: auto
 advisor:
   enabled: true
@@ -21,7 +23,6 @@ advisor:
 retry:
   fallbackChains:
     web:
-      - web/exa
       - web/tinyfish
     judge:
       - "@tiny"
@@ -63,7 +64,7 @@ statusLine:
   separator: powerline
   sessionAccent: true
   transparent: false
-  preset: nerd
+  preset: default
   showHookStatus: true
 error:
   notify: "on"
@@ -100,7 +101,7 @@ web_search:
 hideThinkingBlock: false
 prewalk:
   enabled: false
-  auto: suggest
+  auto: "off"
 dev:
   autoqaConsent: granted
 bash:
@@ -144,7 +145,7 @@ tui:
   codexResetFireworks: true
   hyperlinks: auto
   tight: false
-personality: default
+personality: pragmatic
 readLineNumbers: true
 disabledProviders: []
 title:

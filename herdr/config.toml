@@ -42,9 +42,15 @@ description = "Worktree: switch / create from default branch"
 
 [[keys.command]]
 key = "prefix+shift+d"
+type = "pane"
+command = "bash ~/.config/herdr/close-worktree.sh"
+description = "Worktree: close workspace + remove checkout"
+
+[[keys.command]]
+key = "prefix+alt+d"
 type = "plugin_action"
 command = "worktrunk.remove"
-description = "Worktree: remove"
+description = "Worktree: remove (picker)"
 
 [[keys.command]]
 key = "prefix+shift+m"
