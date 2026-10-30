@@ -10,12 +10,12 @@ modelRoles:
   web: web/firecrawl
   judge: openrouter/~typesafe/jev-latest
   image: openrouter/meta/muse-image:auto
-  smol: anthropic/claude-haiku-5-5:max
-  default: anthropic/claude-opus-5-5:medium
-  advisor: openai-codex/gpt-6.1-sol:xhigh
+  smol: opencode-go/deepseek-v4.1-flash:max
+  default: anthropic/claude-opus-5-5:xhigh
+  task: openai-codex/gpt-6.1-sol:xhigh
 defaultThinkingLevel: auto
 advisor:
-  enabled: true
+  enabled: false
   syncBacklog: strict
   reviewMode: agent-end
   continueSeverity: concern

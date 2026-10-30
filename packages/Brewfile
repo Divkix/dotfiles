@@ -155,7 +155,7 @@ cask "cap"
 cask "codex"
 cask "font-hack-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
-cask "ghostty@tip"
+cask "ghostty"
 # Tools to protect your emails and files
 cask "gpg-suite"
 # Chromium-based web browser

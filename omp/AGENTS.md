@@ -26,4 +26,4 @@ Big PRs (>400 lines / 3+ ideas, feature branches only): `gh stack init/add → r
 Delegate substantial multi-file or investigative work; keep main context clean. Trivial one-step tasks: do them yourself. Parent plans, decomposes, decides — one writer per cwd. Use only agents this harness exposes; if one you want isn't in the roster, say so rather than silently substituting. Vague request → scout first, then 2–3 sharp questions before planning. Split large tasks into smaller, manageable pieces for atomic commits.
 
 ## Done
-Changed files + exact validation command and its result + risks/blockers as brief. No completion claim without a command that shows it.
+Exact validation command and its result + risks/blockers as brief. No completion claim without a command that shows it.
