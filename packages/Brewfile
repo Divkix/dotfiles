@@ -158,6 +158,8 @@ cask "font-hack-nerd-font"
 cask "ghostty"
 # Tools to protect your emails and files
 cask "gpg-suite"
+# Speech to text application
+cask "handy"
 # Chromium-based web browser
 cask "helium-browser"
 # Free and open-source media player
@@ -176,8 +178,6 @@ cask "crmne/tap/spotifast", trusted: true
 cask "tailscale-app"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
-# Voice-to-text dictation with AI-powered auto-editing
-cask "wispr-flow"
 # Multiplayer code editor
 cask "zed"
 # Video communication and virtual meeting platform
