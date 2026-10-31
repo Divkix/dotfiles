@@ -158,8 +158,8 @@ cask "font-hack-nerd-font"
 cask "ghostty"
 # Tools to protect your emails and files
 cask "gpg-suite"
-# Speech to text application
-cask "handy"
+# AI teammates that work across your apps and tools
+cask "grok-bot"
 # Chromium-based web browser
 cask "helium-browser"
 # Local voice dictation

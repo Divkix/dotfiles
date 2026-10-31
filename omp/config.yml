@@ -35,7 +35,7 @@ display:
   showTokenUsage: true
   cacheMissMarker: true
   collapseCompacted: true
-  hideToolActivity: true
+  hideToolActivity: false
   showTurnTime: false
 memory:
   backend: "off"
