@@ -162,6 +162,8 @@ cask "gpg-suite"
 cask "handy"
 # Chromium-based web browser
 cask "helium-browser"
+# Local voice dictation
+cask "anomalyco/tap/hex", trusted: true
 # Free and open-source media player
 cask "iina"
 # File archiver
