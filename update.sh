@@ -316,6 +316,39 @@ stage_codex_hooks() {
     sed "s#$HOME#__HOME__#g" "$source" > "$staged_target"
 }
 
+# Hex keeps its app settings (hotkeys, model, vocabulary replacements, modes, capture routing)
+# in settings.json. String values under secret-named keys (capture routing's jevApiKey) become
+# null, and the home directory in folder paths becomes __HOME__ (hex/setup.sh swaps it back).
+# Dictation history, the local API token, downloaded models, and onboarding markers in the same
+# directory are machine state and are not synced.
+stage_hex_settings() {
+    local source="$HOME/Library/Application Support/hex/settings.json"
+    local staged_target="$STAGE_DIR/hex/settings.json"
+
+    track_target "hex/settings.json"
+
+    if [ ! -f "$source" ]; then
+        return 0
+    fi
+
+    mkdir -p "$(dirname "$staged_target")"
+    jq --arg home "$HOME" '
+        walk(
+            if type == "object" then
+                with_entries(
+                    if (.key | test("(api[_-]?key|token|secret|password)$"; "i"))
+                        and (.value | type) == "string"
+                    then .value = null
+                    else .
+                    end
+                )
+            elif type == "string" then split($home) | join("__HOME__")
+            else .
+            end
+        )
+    ' "$source" > "$staged_target"
+}
+
 stage_zed_settings() {
     local source="$HOME/.config/zed/settings.json"
     local staged_target="$STAGE_DIR/zed/settings.json"
@@ -493,6 +526,8 @@ generate_herdr_plugins_manifest
 stage_file "$HOME/.config/worktrunk/config.toml" "worktrunk/config.toml"
 stage_file "$HOME/.config/btop/btop.conf" "btop/btop.conf"
 stage_file "$HOME/.config/gh/config.yml" "gh/config.yml"
+stage_file "$HOME/.config/hex/hex.config.ts" "hex/hex.config.ts"
+stage_hex_settings
 
 generate_fisher_manifest
 

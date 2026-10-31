@@ -1,0 +1,389 @@
+{
+  "release_microphone_while_idle": false,
+  "sound_effects": false,
+  "sound_effect_volume": 0.5,
+  "sound_theme": "classic",
+  "microphone": null,
+  "avoid_bluetooth_microphone": true,
+  "recording_audio_behavior": "do_nothing",
+  "recording_duck_volume": 0.2,
+  "pause_browser_media": false,
+  "double_tap_lock": true,
+  "double_tap_only": false,
+  "shortcut_mode": "hold",
+  "dictation_hotkey": {
+    "keys": [
+      {
+        "modifier": "fn"
+      }
+    ]
+  },
+  "paste_last_hotkey": {
+    "keys": [
+      {
+        "modifier": "option",
+        "side": "any"
+      },
+      {
+        "modifier": "shift",
+        "side": "any"
+      },
+      {
+        "code": 9,
+        "label": "V"
+      }
+    ]
+  },
+  "show_dock_icon": false,
+  "transcription": {
+    "model": "parakeet_unified_en",
+    "language": "en",
+    "recognition_hints": ""
+  },
+  "transcription_recents": [
+    {
+      "model": "parakeet_unified_en",
+      "language": "en",
+      "recognition_hints": ""
+    }
+  ],
+  "keyboard_model_switching": {
+    "enabled": false,
+    "mappings": {}
+  },
+  "dictation_processing": {
+    "default_mode": {
+      "name": "Global",
+      "applications": [],
+      "browser_hosts": [],
+      "replacements": [
+        {
+          "matched_phrase": "into mean",
+          "output": "into main"
+        },
+        {
+          "matched_phrase": "in mean",
+          "output": "in main"
+        },
+        {
+          "matched_phrase": "on mean",
+          "output": "on main"
+        },
+        {
+          "matched_phrase": "from mean",
+          "output": "from main"
+        },
+        {
+          "matched_phrase": "request to mean",
+          "output": "request to main"
+        },
+        {
+          "matched_phrase": "PR to mean",
+          "output": "PR to main"
+        },
+        {
+          "matched_phrase": "push to mean",
+          "output": "push to main"
+        },
+        {
+          "matched_phrase": "merge to mean",
+          "output": "merge to main"
+        },
+        {
+          "matched_phrase": "commit to mean",
+          "output": "commit to main"
+        },
+        {
+          "matched_phrase": "switch to mean",
+          "output": "switch to main"
+        },
+        {
+          "matched_phrase": "checkout to mean",
+          "output": "checkout to main"
+        },
+        {
+          "matched_phrase": "mean branch",
+          "output": "main branch"
+        },
+        {
+          "matched_phrase": "deploy the plot",
+          "output": "deploy the bot"
+        },
+        {
+          "matched_phrase": "pay token",
+          "output": "API token"
+        },
+        {
+          "matched_phrase": "HandyDot computer",
+          "output": "handy.computer"
+        },
+        {
+          "matched_phrase": "handy dot computer",
+          "output": "handy.computer"
+        },
+        {
+          "matched_phrase": "whisper flow",
+          "output": "Wispr Flow"
+        },
+        {
+          "matched_phrase": "whisperflow",
+          "output": "Wispr Flow"
+        },
+        {
+          "matched_phrase": "granula",
+          "output": "Granola"
+        },
+        {
+          "matched_phrase": "paracate",
+          "output": "Parakeet"
+        },
+        {
+          "matched_phrase": "parokeet",
+          "output": "Parakeet"
+        },
+        {
+          "matched_phrase": "nemotron",
+          "output": "Nemotron"
+        },
+        {
+          "matched_phrase": "nematron",
+          "output": "Nemotron"
+        },
+        {
+          "matched_phrase": "work trees",
+          "output": "worktrees"
+        },
+        {
+          "matched_phrase": "work tree",
+          "output": "worktree"
+        },
+        {
+          "matched_phrase": "Mr.",
+          "output": "MR"
+        },
+        {
+          "matched_phrase": "OMP",
+          "output": "omp"
+        },
+        {
+          "matched_phrase": "jitlab",
+          "output": "GitLab"
+        },
+        {
+          "matched_phrase": "gitlab",
+          "output": "GitLab"
+        },
+        {
+          "matched_phrase": "glab",
+          "output": "glab"
+        },
+        {
+          "matched_phrase": "vinuxed",
+          "output": "vinext"
+        },
+        {
+          "matched_phrase": "cleric",
+          "output": "Clairic"
+        },
+        {
+          "matched_phrase": "ferros",
+          "output": "Pharos"
+        },
+        {
+          "matched_phrase": "kimmy",
+          "output": "Kimi"
+        },
+        {
+          "matched_phrase": "deep seek",
+          "output": "DeepSeek"
+        },
+        {
+          "matched_phrase": "deepseq",
+          "output": "DeepSeek"
+        },
+        {
+          "matched_phrase": "tanstack",
+          "output": "TanStack"
+        },
+        {
+          "matched_phrase": "PNPM",
+          "output": "pnpm"
+        },
+        {
+          "matched_phrase": "mod mail",
+          "output": "modmail"
+        },
+        {
+          "matched_phrase": "aux lint",
+          "output": "oxlint"
+        },
+        {
+          "matched_phrase": "ox lint",
+          "output": "oxlint"
+        },
+        {
+          "matched_phrase": "herder",
+          "output": "herdr"
+        },
+        {
+          "matched_phrase": "fire crawl",
+          "output": "Firecrawl"
+        },
+        {
+          "matched_phrase": "tiny fish",
+          "output": "TinyFish"
+        },
+        {
+          "matched_phrase": "tinnifish",
+          "output": "TinyFish"
+        },
+        {
+          "matched_phrase": "claud code",
+          "output": "Claude Code"
+        },
+        {
+          "matched_phrase": "claude code",
+          "output": "Claude Code"
+        },
+        {
+          "matched_phrase": "click stack",
+          "output": "ClickStack"
+        },
+        {
+          "matched_phrase": "OTEL",
+          "output": "OTel"
+        },
+        {
+          "matched_phrase": "dev GTM",
+          "output": "DevGTM"
+        },
+        {
+          "matched_phrase": "revang",
+          "output": "RevEng"
+        },
+        {
+          "matched_phrase": "verkuta",
+          "output": "Verkada"
+        },
+        {
+          "matched_phrase": "vinux",
+          "output": "vinext"
+        },
+        {
+          "matched_phrase": "whisker flow",
+          "output": "Wispr Flow"
+        },
+        {
+          "matched_phrase": "firecrawl",
+          "output": "Firecrawl"
+        },
+        {
+          "matched_phrase": "um",
+          "output": ""
+        },
+        {
+          "matched_phrase": "umm",
+          "output": ""
+        },
+        {
+          "matched_phrase": "uh",
+          "output": ""
+        },
+        {
+          "matched_phrase": "uhh",
+          "output": ""
+        }
+      ],
+      "transformations": [
+        "dev-speech"
+      ],
+      "post_processing": {
+        "enabled": false,
+        "prompt": "Rewrite the transcript into clear, natural text while preserving the speaker's intended meaning.",
+        "model": null,
+        "variant": null,
+        "deadline_seconds": 30
+      }
+    },
+    "modes": []
+  },
+  "history_retention": "week",
+  "meetings": {
+    "enabled": true,
+    "output_folder": null,
+    "summarize_with_apple_intelligence": true,
+    "show_recording_indicator": true,
+    "recording_indicator_corner": "top_right",
+    "providers": [],
+    "calendar": {
+      "connected": true,
+      "excluded_calendars": [],
+      "remind": true,
+      "lead_minutes": 2
+    }
+  },
+  "capture": {
+    "enabled": true,
+    "hotkey": {
+      "keys": [
+        {
+          "modifier": "option",
+          "side": "any"
+        },
+        {
+          "modifier": "shift",
+          "side": "any"
+        },
+        {
+          "code": 1,
+          "label": "S"
+        }
+      ]
+    },
+    "transcriber": "parakeet",
+    "folder": null,
+    "media_days": 7,
+    "bundle_days": 30,
+    "routing": {
+      "autoSend": "rules",
+      "undoWindowSec": null,
+      "sites": {},
+      "apps": {},
+      "servers": {},
+      "aliases": {},
+      "refusedRules": [],
+      "delivery": "steer",
+      "smartRouting": false,
+      "jevRouting": false,
+      "jev": null,
+      "jevApiKey": null,
+      "agentHost": null,
+      "agentOpencode": null,
+      "sendCaptures": true
+    },
+    "show_overlays_in_recordings": false,
+    "capsule_flow": "list"
+  },
+  "experimental": {
+    "hex_microphone": false,
+    "hex_microphone_mode": "muffled",
+    "hex_microphone_comfort_noise": true,
+    "hex_microphone_strength": 1.0
+  },
+  "enable_on_launch": true,
+  "paste_with_shift": false,
+  "share_dictation_shortcut": false,
+  "ui_language": null,
+  "indicator_position": "top",
+  "updates": {
+    "channel": null
+  },
+  "vocabulary_boost": "normal",
+  "migrations": [
+    "streaming-english-model",
+    "annotate-on-by-default",
+    "anomaly-hex-identity",
+    "scrawl-capture-settings",
+    "scrawl-routing-settings"
+  ]
+}
