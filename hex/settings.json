@@ -1,5 +1,5 @@
 {
-  "release_microphone_while_idle": false,
+  "release_microphone_while_idle": true,
   "sound_effects": false,
   "sound_effect_volume": 0.5,
   "sound_theme": "classic",
