@@ -516,7 +516,7 @@ exit 127
             "# global agent rules\n",
         )
 
-    def test_claude_setup_restores_settings_hook_and_links_claude_md(self):
+    def test_claude_setup_restores_settings_and_links_claude_md(self):
         result = self.run_cmd("bash", "claude/setup.sh")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
@@ -524,9 +524,10 @@ exit 127
         settings = (claude_dir / "settings.json").read_text(encoding="utf-8")
         # __HOME__ placeholders become this machine's home directory.
         self.assertNotIn("__HOME__", settings)
-        self.assertIn(f"{self.home}/.claude/hooks/herdr-agent-state.sh", settings)
+        self.assertIn("rex __internal session-start --agent claude", settings)
+        self.assertNotIn("herdr", settings)
         hook = claude_dir / "hooks" / "herdr-agent-state.sh"
-        self.assertTrue(os.access(hook, os.X_OK))
+        self.assertFalse(hook.exists())
         self.assertEqual(
             os.readlink(claude_dir / "CLAUDE.md"),
             str(self.home / ".omp" / "agent" / "AGENTS.md"),
@@ -594,7 +595,7 @@ exit 0
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(len(pnpm_log.read_text(encoding="utf-8").splitlines()), 2)
 
-    def test_update_captures_claude_settings_hook_and_skills_manifest(self):
+    def test_update_captures_claude_settings_and_skills_manifest(self):
         self.seed_update_sources()
 
         result = self.run_cmd("bash", "update.sh")
@@ -605,11 +606,8 @@ exit 0
         )
         self.assertIn("__HOME__/.claude/hooks/herdr-agent-state.sh", settings)
         self.assertNotIn(str(self.home), settings)
-        self.assertEqual(
-            (self.fixture / "claude" / "hooks" / "herdr-agent-state.sh").read_text(
-                encoding="utf-8"
-            ),
-            "#!/bin/sh\necho hook\n",
+        self.assertFalse(
+            (self.fixture / "claude" / "hooks" / "herdr-agent-state.sh").exists()
         )
         # Grouped by source, skills sorted, lock hashes and timestamps left out.
         self.assertEqual(
@@ -919,10 +917,10 @@ exit 0
         hooks = (codex_dir / "hooks.json").read_text(encoding="utf-8")
         self.assertIn("__HOME__/.codex/herdr-agent-state.sh", hooks)
         self.assertNotIn(str(self.home), hooks)
-        self.assertTrue((codex_dir / "herdr-agent-state.sh").is_file())
+        self.assertFalse((codex_dir / "herdr-agent-state.sh").exists())
         self.assertFalse((codex_dir / "auth.json").exists())
 
-    def test_codex_setup_restores_config_hooks_and_executable_hook(self):
+    def test_codex_setup_restores_config_and_hooks_without_herdr_script(self):
         self.write_file(self.fixture / "codex" / "config.toml", 'model = "m"\n')
         self.write_file(
             self.fixture / "codex" / "hooks.json", '{"c": "__HOME__/.codex/h.sh"}\n'
@@ -938,7 +936,7 @@ exit 0
             (codex_dir / "hooks.json").read_text(encoding="utf-8"),
             f'{{"c": "{self.home}/.codex/h.sh"}}\n',
         )
-        self.assertTrue(os.access(codex_dir / "herdr-agent-state.sh", os.X_OK))
+        self.assertFalse((codex_dir / "herdr-agent-state.sh").exists())
 
     def test_update_captures_hex_settings_without_secrets_or_machine_state(self):
         self.seed_update_sources()

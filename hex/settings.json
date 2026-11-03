@@ -5,9 +5,9 @@
   "sound_theme": "classic",
   "microphone": null,
   "avoid_bluetooth_microphone": true,
-  "recording_audio_behavior": "do_nothing",
+  "recording_audio_behavior": "mute",
   "recording_duck_volume": 0.2,
-  "pause_browser_media": false,
+  "pause_browser_media": true,
   "double_tap_lock": true,
   "double_tap_only": false,
   "shortcut_mode": "hold",
@@ -34,17 +34,25 @@
       }
     ]
   },
+  "raw_dictation_hotkey": null,
+  "second_dictation_hotkey": null,
   "show_dock_icon": false,
   "transcription": {
     "model": "parakeet_unified_en",
-    "language": "en",
-    "recognition_hints": ""
+    "language": "en"
   },
   "transcription_recents": [
     {
+      "model": "underdog_bark_3_pro",
+      "language": "en"
+    },
+    {
+      "model": "whisper_large_v3_turbo",
+      "language": "auto"
+    },
+    {
       "model": "parakeet_unified_en",
-      "language": "en",
-      "recognition_hints": ""
+      "language": "en"
     }
   ],
   "keyboard_model_switching": {
@@ -312,6 +320,7 @@
     "enabled": true,
     "output_folder": null,
     "summarize_with_apple_intelligence": true,
+    "summarize_with_opencode": false,
     "show_recording_indicator": true,
     "recording_indicator_corner": "top_right",
     "providers": [],
@@ -370,6 +379,28 @@
     "hex_microphone_comfort_noise": true,
     "hex_microphone_strength": 1.0
   },
+  "labs": {
+    "live_text": true,
+    "live_chapters": false,
+    "playground": false,
+    "vocabulary_biasing": false,
+    "mouse_shortcuts": false,
+    "unload_idle": true,
+    "unload_idle_minutes": 5,
+    "restore_shortcut_default": false,
+    "keep_on_clipboard": false,
+    "copy_only": false,
+    "spoken_formatting": false,
+    "filler_words": false,
+    "subtitle_export": false,
+    "second_dictation_shortcut": false,
+    "smart_spacing": true,
+    "spoken_symbols": false,
+    "picker_sort_filter": false,
+    "sided_modifier_chords": false,
+    "tap_or_hold": false,
+    "benchmark_details": true
+  },
   "enable_on_launch": true,
   "paste_with_shift": false,
   "share_dictation_shortcut": false,
@@ -384,6 +415,7 @@
     "annotate-on-by-default",
     "anomaly-hex-identity",
     "scrawl-capture-settings",
-    "scrawl-routing-settings"
+    "scrawl-routing-settings",
+    "meeting-retention-default"
   ]
 }

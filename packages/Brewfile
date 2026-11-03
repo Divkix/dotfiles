@@ -73,8 +73,6 @@ brew "goreleaser"
 brew "gosec"
 # Database client and tools for the Go vulnerability database
 brew "govulncheck"
-# Agent multiplexer that lives in your terminal
-brew "herdr"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Simple terminal UI for git commands
@@ -158,8 +156,6 @@ cask "font-hack-nerd-font"
 cask "ghostty"
 # Tools to protect your emails and files
 cask "gpg-suite"
-# AI teammates that work across your apps and tools
-cask "grok-bot"
 # Chromium-based web browser
 cask "helium-browser"
 # Local voice dictation

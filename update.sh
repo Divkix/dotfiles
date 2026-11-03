@@ -513,12 +513,10 @@ stage_omp_config
 stage_file "$HOME/.omp/agent/AGENTS.md" "omp/AGENTS.md"
 
 stage_claude_settings
-stage_file "$HOME/.claude/hooks/herdr-agent-state.sh" "claude/hooks/herdr-agent-state.sh"
 generate_skills_manifest
 
 stage_codex_config
 stage_codex_hooks
-stage_file "$HOME/.codex/herdr-agent-state.sh" "codex/herdr-agent-state.sh"
 
 stage_file "$HOME/.config/herdr/config.toml" "herdr/config.toml"
 stage_file "$HOME/.config/herdr/close-worktree.sh" "herdr/close-worktree.sh"

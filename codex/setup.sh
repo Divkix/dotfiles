@@ -15,8 +15,6 @@ info "Setting up Codex..."
 mkdir -p "$DESTINATION"
 
 scopy "$SOURCE/config.toml" "$DESTINATION/config.toml" || exit 1
-scopy "$SOURCE/herdr-agent-state.sh" "$DESTINATION/herdr-agent-state.sh" || exit 1
-chmod 755 "$DESTINATION/herdr-agent-state.sh"
 
 # hooks.json is captured with __HOME__ in place of the home directory so it is portable.
 hooks_tmp="$(mktemp)"

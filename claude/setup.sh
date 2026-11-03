@@ -13,7 +13,7 @@ AGENTS_MD="$HOME/.omp/agent/AGENTS.md"
 
 info "Setting up Claude Code..."
 
-mkdir -p "$DESTINATION/hooks"
+mkdir -p "$DESTINATION"
 
 # settings.json is captured with __HOME__ in place of the home directory so it is portable.
 settings_tmp="$(mktemp)"
@@ -26,9 +26,6 @@ scopy "$settings_tmp" "$DESTINATION/settings.json"
 status=$?
 rm -f "$settings_tmp"
 [ "$status" -eq 0 ] || exit 1
-
-scopy "$SOURCE/hooks/herdr-agent-state.sh" "$DESTINATION/hooks/herdr-agent-state.sh" || exit 1
-chmod 755 "$DESTINATION/hooks/herdr-agent-state.sh"
 
 # CLAUDE.md is a link to the OMP global rules (omp/AGENTS.md) so both agents share one file.
 # A real file already at that path is kept as CLAUDE.md.bak rather than overwritten.

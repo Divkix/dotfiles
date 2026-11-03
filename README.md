@@ -39,13 +39,13 @@ Each tool is backed up as a curated, secret-free subset of its live config:
   `searxng.basicPassword`, and `auth.broker.token` blanked to `""`; booleans and numbers are
   left as-is). Provider credentials live in the `agent.db` auth store, sessions and history are
   machine state, and `models.yml` can pin literal API keys — none of those are synced.
-- **Claude Code** (`~/.claude`): `settings.json` and the herdr hook script it references.
+- **Claude Code** (`~/.claude`): `settings.json`.
   `settings.json` is stored with `__HOME__` in place of the home directory (hook commands embed
   absolute paths in quotes) and `claude/setup.sh` swaps it back. `CLAUDE.md` is not copied; it is
   re-linked to `~/.omp/agent/AGENTS.md`, and a real file already there is kept as `CLAUDE.md.bak`.
   `~/.claude.json` (OAuth account, user id), history, sessions, caches, and plugin installs are
   machine state and are not synced; plugins re-install from `enabledPlugins` on launch.
-- **Codex** (`~/.codex`): `config.toml`, `hooks.json` and the herdr hook script. `update.sh` drops
+- **Codex** (`~/.codex`): `config.toml` and `hooks.json`. `update.sh` drops
   the per-machine sections of `config.toml` (`[projects.*]` trusted paths, `[hooks.state.*]` trust
   hash, `[tui.model_availability_nux]`) and stores `hooks.json` with `__HOME__` for the home
   directory. `auth.json` (login), sessions, history, and the sqlite databases are never synced.

@@ -11,7 +11,7 @@ modelRoles:
   judge: openrouter/~typesafe/jev-latest
   image: openrouter/meta/muse-image:auto
   smol: opencode-go/deepseek-v4.1-flash:max
-  default: anthropic/claude-opus-5-5:xhigh
+  default: anthropic/claude-opus-5-5:high
   task: openai-codex/gpt-6.1-sol:xhigh
 defaultThinkingLevel: auto
 advisor:
@@ -35,7 +35,7 @@ display:
   showTokenUsage: true
   cacheMissMarker: true
   collapseCompacted: true
-  hideToolActivity: false
+  hideToolActivity: true
   showTurnTime: false
 memory:
   backend: "off"
