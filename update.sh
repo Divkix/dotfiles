@@ -524,6 +524,8 @@ generate_herdr_plugins_manifest
 stage_file "$HOME/.config/worktrunk/config.toml" "worktrunk/config.toml"
 stage_file "$HOME/.config/btop/btop.conf" "btop/btop.conf"
 stage_file "$HOME/.config/gh/config.yml" "gh/config.yml"
+stage_file "$HOME/.agent-browser/config.json" "agent-browser/config.json"
+stage_file "$HOME/.playwright/cli.config.json" "playwright/cli.config.json"
 stage_file "$HOME/.config/hex/hex.config.ts" "hex/hex.config.ts"
 stage_hex_settings
 

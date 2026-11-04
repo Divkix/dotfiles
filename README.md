@@ -23,6 +23,8 @@ Previously used on:
 - `worktrunk/` — Worktrunk (`~/.config/worktrunk`)
 - `btop/` — btop (`~/.config/btop`)
 - `gh/` — GitHub CLI (`~/.config/gh`)
+- `agent-browser/` — agent-browser (`~/.agent-browser`)
+- `playwright/` — Playwright CLI (`~/.playwright`)
 - `macos/` — macOS system preferences (`defaults`)
 - `ghostty/` — Ghostty terminal (`~/.config/ghostty`)
 - `zed/` — Zed editor (`~/.config/zed`)
@@ -74,6 +76,14 @@ Each tool is backed up as a curated, secret-free subset of its live config:
   breaks on the next btop upgrade.
 - **GitHub CLI** (`~/.config/gh`): `config.yml` only. `hosts.yml` is login state; run
   `gh auth login` on a new machine.
+- **agent-browser** (`~/.agent-browser`) and **Playwright CLI** (`~/.playwright`):
+  `config.json` and `cli.config.json` point both tools at Helium
+  (`/Applications/Helium.app`) instead of Google Chrome or a downloaded Chrome for Testing, so
+  `agent-browser install` and `playwright-cli install-browser` are not needed. Browser downloads
+  under `~/.agent-browser/browsers` and `~/Library/Caches/ms-playwright`, sessions, saved auth
+  state, and the encryption key are machine state. `agent-browser doctor` ignores the configured
+  executable and reports "No Chrome binary found"; real commands still launch Helium, so do not
+  run `agent-browser install` or `doctor --fix`, which would download Chrome again.
 - **macOS settings** (`macos/`): `keys.list` is the curated list of `<domain> <key>` preferences
   (Dock, Finder, trackpad, appearance, clock, screenshots, window manager). `update.sh` reads each
   live value into `defaults.list` (tab-separated, with its `defaults` type) and `macos/setup.sh`

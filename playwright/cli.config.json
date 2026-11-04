@@ -1,0 +1,8 @@
+{
+  "browser": {
+    "browserName": "chromium",
+    "launchOptions": {
+      "executablePath": "/Applications/Helium.app/Contents/MacOS/Helium"
+    }
+  }
+}

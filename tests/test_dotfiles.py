@@ -247,6 +247,8 @@ exit 0
             "worktrunk",
             "btop",
             "gh",
+            "agent-browser",
+            "playwright",
             "hex",
             "macos",
             "fisher",
@@ -768,6 +770,8 @@ exit 0
             "worktrunk": ".config/worktrunk/config.toml",
             "btop": ".config/btop/btop.conf",
             "gh": ".config/gh/config.yml",
+            "agent-browser": ".agent-browser/config.json",
+            "playwright": ".playwright/cli.config.json",
         }
 
         for module, destination in expected.items():
@@ -831,6 +835,21 @@ exit 0
         self.assertEqual(
             (self.fixture / "herdr" / "plugins.list").read_text(encoding="utf-8"),
             "acme/a-plugin/sub\nzed/b-plugin\n",
+        )
+
+    def test_update_captures_agent_browser_and_playwright_configs(self):
+        self.seed_update_sources()
+
+        result = self.run_cmd("bash", "update.sh")
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(
+            (self.fixture / "agent-browser" / "config.json").read_text(encoding="utf-8"),
+            '{"executablePath": "/Applications/Helium.app/Contents/MacOS/Helium"}\n',
+        )
+        self.assertEqual(
+            (self.fixture / "playwright" / "cli.config.json").read_text(encoding="utf-8"),
+            '{"browser": {"browserName": "chromium"}}\n',
         )
 
     def test_update_snapshots_scalar_macos_defaults_only(self):
@@ -1361,6 +1380,14 @@ exec /bin/mv "$@"
         self.write_file(config_dir / "worktrunk" / "config.toml", "[commit]\n")
         self.write_file(config_dir / "btop" / "btop.conf", 'color_theme = "tomorrow-night"\n')
         self.write_file(config_dir / "gh" / "config.yml", "git_protocol: https\n")
+        self.write_file(
+            self.home / ".agent-browser" / "config.json",
+            '{"executablePath": "/Applications/Helium.app/Contents/MacOS/Helium"}\n',
+        )
+        self.write_file(
+            self.home / ".playwright" / "cli.config.json",
+            '{"browser": {"browserName": "chromium"}}\n',
+        )
         hex_support = self.home / "Library" / "Application Support" / "hex"
         self.write_file(
             hex_support / "settings.json",
