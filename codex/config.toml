@@ -2,6 +2,7 @@ model = "gpt-6.1-sol"
 model_reasoning_effort = "xhigh"
 approval_policy = "on-request"
 approvals_reviewer = "auto_review"
+service_tier = "fast"
 
 [tui]
 screen_reader_detection_done = true
@@ -11,3 +12,10 @@ hooks = true
 analytics_plan_history = true
 login_shell_package_path = true
 daemon_auto_start = false
+
+[marketplaces.worktrunk]
+source_type = "git"
+source = "https://github.com/max-sixty/worktrunk.git"
+
+[plugins."worktrunk@worktrunk"]
+enabled = true
