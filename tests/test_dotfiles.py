@@ -233,7 +233,6 @@ exit 0
                 "gh",
                 "agent-browser",
                 "playwright",
-                "hex",
                 "macos",
             ],
         )
@@ -848,49 +847,6 @@ exit 0
         )
         self.assertFalse((codex_dir / "herdr-agent-state.sh").exists())
 
-    def test_update_captures_hex_settings_without_secrets_or_machine_state(self):
-        self.seed_update_sources()
-
-        result = self.run_cmd("bash", "setup.sh", "update")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        hex_dir = self.fixture / "hex"
-        raw_settings = (hex_dir / "settings.json").read_text(encoding="utf-8")
-        self.assertNotIn("sk-live-hex-key", raw_settings)
-        self.assertNotIn(str(self.home), raw_settings)
-        settings = json.loads(raw_settings)
-        self.assertIsNone(settings["capture"]["routing"]["jevApiKey"])
-        self.assertEqual(settings["capture"]["folder"], "__HOME__/Captures")
-        self.assertEqual(settings["capture"]["media_days"], 7)
-        self.assertEqual(settings["shortcut_mode"], "hold")
-        self.assertEqual(
-            (hex_dir / "hex.config.ts").read_text(encoding="utf-8"),
-            "export default {}\n",
-        )
-        # Hex-generated scaffolding, dictation history and the local API token stay local.
-        for name in ("hex.d.ts", "history.json", "local-api.json"):
-            self.assertFalse((hex_dir / name).exists(), msg=name)
-
-    def test_hex_setup_restores_config_and_settings(self):
-        self.write_file(self.fixture / "hex" / "hex.config.ts", "export default {}\n")
-        self.write_file(
-            self.fixture / "hex" / "settings.json",
-            '{"capture": {"folder": "__HOME__/Captures"}}\n',
-        )
-
-        result = self.run_cmd("bash", "setup.sh", "restore", "hex")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertEqual(
-            (self.home / ".config" / "hex" / "hex.config.ts").read_text(encoding="utf-8"),
-            "export default {}\n",
-        )
-        settings = self.home / "Library" / "Application Support" / "hex" / "settings.json"
-        self.assertEqual(
-            settings.read_text(encoding="utf-8"),
-            f'{{"capture": {{"folder": "{self.home}/Captures"}}}}\n',
-        )
-
     def test_update_captures_goup_function(self):
         self.seed_update_sources()
 
@@ -1144,22 +1100,6 @@ exit 1
             self.home / ".playwright" / "cli.config.json",
             '{"browser": {"browserName": "chromium"}}\n',
         )
-        hex_support = self.home / "Library" / "Application Support" / "hex"
-        self.write_file(
-            hex_support / "settings.json",
-            "{\n"
-            '  "shortcut_mode": "hold",\n'
-            '  "capture": {\n'
-            '    "folder": "' + str(self.home) + '/Captures",\n'
-            '    "media_days": 7,\n'
-            '    "routing": {"jevApiKey": "sk-live-hex-key", "jev": null}\n'
-            "  }\n"
-            "}\n",
-        )
-        self.write_file(hex_support / "history.json", '[{"text": "private dictation"}]\n')
-        self.write_file(hex_support / "local-api.json", '{"token": "never"}\n')
-        self.write_file(self.home / ".config" / "hex" / "hex.config.ts", "export default {}\n")
-        self.write_file(self.home / ".config" / "hex" / "hex.d.ts", "// owned by Hex\n")
 
         self.write_file(self.home / ".gitconfig", "[user]\n  name = Test\n")
         self.write_file(self.home / ".gitignore_global", "node_modules\n")

@@ -28,7 +28,6 @@ Previously used on:
 - `macos/` — macOS system preferences (`defaults`)
 - `ghostty/` — Ghostty terminal (`~/.config/ghostty`)
 - `zed/` — Zed editor (`~/.config/zed`)
-- `hex/` — Hex dictation (`~/.config/hex`, `~/Library/Application Support/hex`)
 - `gnupg/`
 - `starship/`
 
@@ -105,19 +104,10 @@ Each tool is backed up as a curated, secret-free subset of its live config:
   rebuild, so manual `"id": false` ("never install") pins are not preserved. The compiled
   extension binaries under `~/Library/Application Support/Zed/` are machine state and are not
   synced.
-- **Hex** (`~/.config/hex`, `~/Library/Application Support/hex`): `hex.config.ts` (custom
-  transformations, e.g. "Dev speech") and `settings.json` (hotkeys, transcription model,
-  vocabulary replacements, modes and their selected transformations, meetings and capture
-  options). `update` sets string values under secret-named keys (`capture.routing.jevApiKey`)
-  to `null` and stores the home directory as `__HOME__`; restore swaps it back. Hex
-  regenerates `AGENTS.md`, `hex.d.ts` and `tsconfig.json` itself. Dictation history,
-  `local-api.json` (local API token), downloaded models, logs, and onboarding markers are machine
-  state. Quit Hex before restoring and relaunch it afterwards so it loads the
-  restored settings.
 
 Because the repo is public, `update` sanitizes on capture: it blanks secret-bearing
-`set -gx` exports in `fish/config.fish` and secret values in `omp/config.yml` and
-`hex/settings.json`, so keys and tokens never get committed.
+`set -gx` exports in `fish/config.fish` and secret values in `omp/config.yml`, so keys and tokens
+never get committed.
 
 Local install artifacts such as `node_modules/`, package manager files, and other machine-specific state are intentionally excluded.
 
@@ -155,9 +145,6 @@ A few things `setup.sh` intentionally cannot restore:
   `~/.omp/agent/agent.db` (not in this repo). Run `omp` and `/login <provider>` on a fresh machine.
 - **Raycast**: import the encrypted backup from `RayCast/` via the Raycast app
   (Settings → Advanced → Import). See `RayCast/README.md`.
-- **Hex**: on first launch, finish onboarding (microphone and accessibility permissions) and let
-  it download the transcription model. Meeting reminders need Calendars access under Privacy &
-  Security, even though the restored settings say the calendar is connected.
 
 ## Updating the repo from the current machine
 

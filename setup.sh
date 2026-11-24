@@ -12,7 +12,7 @@ step() { printf '\n=== %s ===\n' "$*"; }
 warn() { printf '!! %s\n' "$*" >&2; }
 
 MODULES=(packages fish fisher git ssh gnupg starship ghostty zed omp claude codex
-    skills herdr worktrunk btop gh agent-browser playwright hex macos)
+    skills herdr worktrunk btop gh agent-browser playwright macos)
 
 FISH_FILES=(
     config.fish
@@ -180,24 +180,6 @@ _codex_filter() {
         skip { next }
         /^$/ { blank = 1; next }
         { if (n++ && (blank || /^\[/)) print ""; blank = 0; print }' "$1"
-}
-
-# Hex: secret-named keys holding strings become null; $HOME becomes __HOME__.
-_hex_filter() {
-    jq --arg home "$HOME" '
-        walk(
-            if type == "object" then
-                with_entries(
-                    if (.key | test("(api[_-]?key|token|secret|password)$"; "i"))
-                        and (.value | type) == "string"
-                    then .value = null
-                    else .
-                    end
-                )
-            elif type == "string" then split($home) | join("__HOME__")
-            else .
-            end
-        )' "$1"
 }
 
 _skills_manifest() {
@@ -491,16 +473,6 @@ update_agent_browser() { take "$HOME/.agent-browser/config.json" agent-browser/c
 
 restore_playwright() { put playwright/cli.config.json "$HOME/.playwright/cli.config.json"; }
 update_playwright() { take "$HOME/.playwright/cli.config.json" playwright/cli.config.json; }
-
-restore_hex() {
-    put hex/hex.config.ts "$HOME/.config/hex/hex.config.ts"
-    put_home hex/settings.json "$HOME/Library/Application Support/hex/settings.json"
-}
-
-update_hex() {
-    take "$HOME/.config/hex/hex.config.ts" hex/hex.config.ts
-    take "$HOME/Library/Application Support/hex/settings.json" hex/settings.json _hex_filter
-}
 
 restore_macos() {
     if ! command -v defaults >/dev/null 2>&1; then
