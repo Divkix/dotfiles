@@ -198,182 +198,71 @@ exit 0
             timeout=timeout,
         )
 
-    def snapshot_repo_paths(
-        self, *relative_paths: str
-    ) -> dict[str, tuple[str, str | None]]:
-        snapshot: dict[str, tuple[str, str | None]] = {}
-
-        for relative_path in relative_paths:
-            target = self.fixture / relative_path
-            relative_key = target.relative_to(self.fixture).as_posix()
-
-            if not target.exists() and not target.is_symlink():
-                snapshot[relative_key] = ("missing", None)
-                continue
-
-            if target.is_symlink():
-                snapshot[relative_key] = ("symlink", os.readlink(target))
-                continue
-
-            if target.is_file():
-                snapshot[relative_key] = ("file", target.read_text(encoding="utf-8"))
-                continue
-
-            snapshot[relative_key] = ("dir", None)
-            for child in sorted(target.rglob("*")):
-                child_relative = child.relative_to(self.fixture).as_posix()
-                if child.is_symlink():
-                    snapshot[child_relative] = ("symlink", os.readlink(child))
-                elif child.is_file():
-                    snapshot[child_relative] = (
-                        "file",
-                        child.read_text(encoding="utf-8"),
-                    )
-                else:
-                    snapshot[child_relative] = ("dir", None)
-
-        return snapshot
-
-    def snapshot_managed_repo(self) -> dict[str, tuple[str, str | None]]:
-        return self.snapshot_repo_paths(
-            "fish",
-            "ghostty",
-            "zed",
-            "omp",
-            "claude",
-            "codex",
-            "skills",
-            "herdr",
-            "worktrunk",
-            "btop",
-            "gh",
-            "agent-browser",
-            "playwright",
-            "hex",
-            "macos",
-            "fisher",
-            "git",
-            "ssh",
-            "gnupg",
-            "packages",
-            "starship",
+    def test_restore_runs_modules_in_module_order(self):
+        # pnpm would otherwise hit the network; chsh/tee are reached through the sudo stub.
+        self.write_stub("pnpm", "#!/bin/bash\ncat >/dev/null\nexit 0\n")
+        self.write_stub("chsh", "#!/bin/bash\nexit 0\n")
+        self.write_stub(
+            "tee",
+            "#!/bin/bash\ncat >/dev/null 2>&1 || true\nexit 0\n",
         )
 
-    def test_scopy_keeps_existing_destination_when_copy_fails(self):
-        destination = self.root / "existing.conf"
-        destination.write_text("keep me\n", encoding="utf-8")
+        result = self.run_cmd("bash", "setup.sh", timeout=30)
+
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        steps = re.findall(r"^=== restore (\S+) ===$", result.stdout, re.M)
+        self.assertEqual(
+            steps,
+            [
+                "packages",
+                "fish",
+                "fisher",
+                "git",
+                "ssh",
+                "gnupg",
+                "starship",
+                "ghostty",
+                "zed",
+                "omp",
+                "claude",
+                "codex",
+                "skills",
+                "herdr",
+                "worktrunk",
+                "btop",
+                "gh",
+                "agent-browser",
+                "playwright",
+                "hex",
+                "macos",
+            ],
+        )
+
+    def test_restore_stops_after_first_failing_module(self):
+        # A missing repo source makes restore_ghostty fail; modules after it must not run.
+        (self.fixture / "ghostty" / "config").unlink()
 
         result = self.run_cmd(
-            "bash",
-            "-c",
-            '. scripts/functions.sh; scopy "$SOURCE_PATH" "$DESTINATION_PATH"',
-            extra_env={
-                "SOURCE_PATH": str(self.root / "missing.conf"),
-                "DESTINATION_PATH": str(destination),
-            },
+            "bash", "setup.sh", "restore", "starship", "ghostty", "worktrunk"
         )
 
         self.assertNotEqual(result.returncode, 0)
-        self.assertTrue(destination.exists())
-        self.assertEqual(destination.read_text(encoding="utf-8"), "keep me\n")
-
-    def test_bootstrap_runs_packages_first_and_setup_scripts_in_sorted_order(self):
-        bootstrap_log = self.logs_dir / "bootstrap.log"
-        setup_paths = sorted(self.fixture.glob("*/setup.sh"))
-
-        for setup_path in setup_paths:
-            module = setup_path.parent.name
-            self.write_file(
-                setup_path,
-                (f"#!/bin/bash\nprintf '%s\\n' '{module}' >> '{bootstrap_log}'\n"),
-            )
-            setup_path.chmod(0o755)
-
-        result = self.run_cmd("bash", "bootstrap.sh", timeout=5)
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertEqual(
-            bootstrap_log.read_text(encoding="utf-8").splitlines(),
-            ["packages"]
-            + sorted(
-                setup_path.parent.name
-                for setup_path in setup_paths
-                if setup_path.parent.name != "packages"
-            ),
-        )
-
-    def test_bootstrap_stops_after_first_failing_setup_script(self):
-        bootstrap_log = self.logs_dir / "bootstrap.log"
-        setup_paths = sorted(self.fixture.glob("*/setup.sh"))
-        failing_module = "git"
-
-        for setup_path in setup_paths:
-            module = setup_path.parent.name
-            exit_code = 1 if module == failing_module else 0
-            self.write_file(
-                setup_path,
-                (
-                    "#!/bin/bash\n"
-                    f"printf '%s\\n' '{module}' >> '{bootstrap_log}'\n"
-                    f"exit {exit_code}\n"
-                ),
-            )
-            setup_path.chmod(0o755)
-
-        result = self.run_cmd("bash", "bootstrap.sh", timeout=5)
-
-        self.assertNotEqual(result.returncode, 0)
-        expected_modules = [
-            "packages",
-            *sorted(
-                setup_path.parent.name
-                for setup_path in setup_paths
-                if setup_path.parent.name != "packages"
-            ),
-        ]
-        self.assertEqual(
-            bootstrap_log.read_text(encoding="utf-8").splitlines(),
-            expected_modules[: expected_modules.index(failing_module) + 1],
-        )
-
-    def test_scopy_creates_nested_parent_without_sudo_owned_tempdir(self):
-        source = self.root / "source.conf"
-        source.write_text("nested\n", encoding="utf-8")
-        destination = self.home / ".config" / "nested" / "deep" / "custom.md"
-
-        result = self.run_cmd(
-            "bash",
-            "-c",
-            '. scripts/functions.sh; scopy "$SOURCE_PATH" "$DESTINATION_PATH"',
-            extra_env={
-                "SOURCE_PATH": str(source),
-                "DESTINATION_PATH": str(destination),
-                "FAKE_SUDO_MKDIR_READONLY": "1",
-            },
-        )
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertTrue(destination.exists())
-        self.assertEqual(destination.read_text(encoding="utf-8"), "nested\n")
-        sudo_calls = []
-        if self.sudo_log.exists():
-            sudo_calls = self.sudo_log.read_text(encoding="utf-8").splitlines()
+        self.assertIn("=== restore ghostty ===", result.stdout)
+        self.assertNotIn("=== restore worktrunk ===", result.stdout)
+        self.assertTrue((self.home / ".config" / "starship.toml").exists())
+        self.assertFalse((self.home / ".config" / "ghostty" / "config").exists())
         self.assertFalse(
-            any(
-                call.startswith(prefix)
-                for call in sudo_calls
-                for prefix in ("mkdir ", "cp ", "mv ")
-            )
+            (self.home / ".config" / "worktrunk" / "config.toml").exists()
         )
 
     def test_starship_creates_first_run_destination(self):
-        starship_result = self.run_cmd("bash", "starship/setup.sh")
+        starship_result = self.run_cmd("bash", "setup.sh", "restore", "starship")
 
         self.assertEqual(starship_result.returncode, 0, msg=starship_result.stderr)
         self.assertTrue((self.home / ".config" / "starship.toml").exists())
 
     def test_ghostty_setup_restores_config_and_sets_default_terminal(self):
-        result = self.run_cmd("bash", "ghostty/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "ghostty")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertTrue((self.home / ".config" / "ghostty" / "config").exists())
@@ -384,7 +273,7 @@ exit 0
         )
 
     def test_zed_setup_restores_config(self):
-        result = self.run_cmd("bash", "zed/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "zed")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         zed_dir = self.home / ".config" / "zed"
@@ -398,10 +287,10 @@ exit 0
         self.assertIn("auto_install_extensions", settings)
 
     def test_fisher_setup_installs_each_plugin_once(self):
-        list_file = self.fixture / "fisher" / "fisher install.list"
+        list_file = self.fixture / "fisher" / "plugins.list"
         list_file.write_text("jorgebucaran/autopair.fish\n", encoding="utf-8")
 
-        result = self.run_cmd("bash", "fisher/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "fisher")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         fish_calls = self.fish_log.read_text(encoding="utf-8").splitlines()
@@ -419,7 +308,7 @@ exit 0
         )
 
     def test_fisher_setup_installs_plugins_through_fish_shell(self):
-        list_file = self.fixture / "fisher" / "fisher install.list"
+        list_file = self.fixture / "fisher" / "plugins.list"
         list_file.write_text("jorgebucaran/autopair.fish\n", encoding="utf-8")
         self.write_stub(
             "fisher",
@@ -428,7 +317,7 @@ exit 127
 """,
         )
 
-        result = self.run_cmd("bash", "fisher/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "fisher")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         fish_calls = self.fish_log.read_text(encoding="utf-8").splitlines()
@@ -442,7 +331,7 @@ exit 127
     def test_update_backs_up_ghostty_config(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertTrue((self.fixture / "ghostty" / "config").exists())
@@ -450,7 +339,7 @@ exit 127
     def test_update_backs_up_zed_config(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertTrue((self.fixture / "zed" / "settings.json").exists())
@@ -459,7 +348,7 @@ exit 127
     def test_update_regenerates_zed_auto_install_extensions(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         settings = (self.fixture / "zed" / "settings.json").read_text(encoding="utf-8")
@@ -480,7 +369,7 @@ exit 127
     def test_update_backs_up_omp_global_config_and_blanks_secrets(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         config = (self.fixture / "omp" / "config.yml").read_text(encoding="utf-8")
@@ -497,7 +386,7 @@ exit 127
         self.assertIn("credentialsCacheEnabled: true\n", config)
 
     def test_omp_setup_restores_config_and_agents_md(self):
-        result = self.run_cmd("bash", "omp/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "omp")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         omp_dir = self.home / ".omp" / "agent"
@@ -510,7 +399,7 @@ exit 127
     def test_update_backs_up_omp_agents_md(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
@@ -519,7 +408,7 @@ exit 127
         )
 
     def test_claude_setup_restores_settings_and_links_claude_md(self):
-        result = self.run_cmd("bash", "claude/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "claude")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         claude_dir = self.home / ".claude"
@@ -539,7 +428,7 @@ exit 127
         claude_dir = self.home / ".claude"
         self.write_file(claude_dir / "CLAUDE.md", "my own rules\n")
 
-        result = self.run_cmd("bash", "claude/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "claude")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertTrue((claude_dir / "CLAUDE.md").is_symlink())
@@ -565,7 +454,7 @@ exit 0
             "owner/two skill-c\n",
         )
 
-        result = self.run_cmd("bash", "skills/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "skills")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
@@ -592,7 +481,7 @@ exit 0
             "# agents: claude-code\nowner/one a\nowner/two b\n",
         )
 
-        result = self.run_cmd("bash", "skills/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "skills")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(len(pnpm_log.read_text(encoding="utf-8").splitlines()), 2)
@@ -600,7 +489,7 @@ exit 0
     def test_update_captures_claude_settings_and_skills_manifest(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         settings = (self.fixture / "claude" / "settings.json").read_text(
@@ -630,7 +519,7 @@ exit 0
             "set -gx DO_NOT_TRACK 1\n",
         )
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         staged = (self.fixture / "fish" / "config.fish").read_text(encoding="utf-8")
@@ -654,7 +543,7 @@ exit 0
             "\thelper = !gh auth git-credential\n",
         )
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         staged = (self.fixture / "git" / ".gitconfig").read_text(encoding="utf-8")
@@ -667,12 +556,13 @@ exit 0
 
     def test_update_handles_empty_fisher_plugin_list(self):
         self.seed_update_sources()
-        manifest = self.fixture / "fisher" / "fisher install.list"
+        manifest = self.fixture / "fisher" / "plugins.list"
         manifest.write_text("stale-plugin\n", encoding="utf-8")
 
         result = self.run_cmd(
             "bash",
-            "update.sh",
+            "setup.sh",
+            "update",
             extra_env={"FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\n"},
         )
 
@@ -681,11 +571,12 @@ exit 0
 
     def test_update_generates_fisher_manifest_from_live_plugin_list(self):
         self.seed_update_sources()
-        manifest = self.fixture / "fisher" / "fisher install.list"
+        manifest = self.fixture / "fisher" / "plugins.list"
 
         result = self.run_cmd(
             "bash",
-            "update.sh",
+            "setup.sh",
+            "update",
             extra_env={
                 "FAKE_FISH_LIST_OUTPUT": (
                     "jorgebucaran/fisher\n"
@@ -705,7 +596,7 @@ exit 0
         self.seed_update_sources()
         brewfile = self.fixture / "packages" / "Brewfile"
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
@@ -733,7 +624,7 @@ exit 0
             "# not restored\n222 # Skip Me\n",
         )
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
@@ -757,12 +648,12 @@ exit 0
 """,
         )
 
-        result = self.run_cmd("bash", "packages/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "packages")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
             self.brew_log.read_text(encoding="utf-8").splitlines(),
-            ["bundle", "bundle --file=Brewfile.appstore"],
+            ["bundle --file=packages/Brewfile", "bundle --file=packages/Brewfile.appstore"],
         )
 
     def test_simple_config_setups_restore_their_files(self):
@@ -776,7 +667,7 @@ exit 0
 
         for module, destination in expected.items():
             with self.subTest(module=module):
-                result = self.run_cmd("bash", f"{module}/setup.sh")
+                result = self.run_cmd("bash", "setup.sh", "restore", module)
 
                 self.assertEqual(result.returncode, 0, msg=result.stderr)
                 self.assertTrue((self.home / destination).is_file())
@@ -787,7 +678,7 @@ exit 0
             "owner/one\nowner/two/sub\n",
         )
 
-        result = self.run_cmd("bash", "herdr/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "herdr")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertTrue((self.home / ".config" / "herdr" / "config.toml").is_file())
@@ -810,7 +701,7 @@ exit 0
             self.fixture / "herdr" / "plugins.list", "owner/one\nowner/two\n"
         )
 
-        result = self.run_cmd("bash", "herdr/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "herdr")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(len(self.herdr_log.read_text(encoding="utf-8").splitlines()), 2)
@@ -818,7 +709,7 @@ exit 0
     def test_update_captures_herdr_worktrunk_btop_and_gh_configs(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
@@ -840,7 +731,7 @@ exit 0
     def test_update_captures_agent_browser_and_playwright_configs(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
@@ -864,7 +755,7 @@ exit 0
         )
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         # Arrays and unset keys are dropped; spaces inside a value survive.
@@ -885,7 +776,7 @@ exit 0
             "NSGlobalDomain\tAppleHighlightColor\tstring\t1.000000 0.733333 0.721569 Red\n",
         )
 
-        result = self.run_cmd("bash", "macos/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "macos")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
@@ -917,7 +808,7 @@ exit 0
             "com.apple.dock\ttilesize\tfloat\t62\ncom.apple.dock\tautohide\tboolean\t1\n",
         )
 
-        result = self.run_cmd("bash", "macos/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "macos")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(len(self.defaults_log.read_text(encoding="utf-8").splitlines()), 2)
@@ -925,7 +816,7 @@ exit 0
     def test_update_captures_codex_config_without_machine_state_or_auth(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         codex_dir = self.fixture / "codex"
@@ -946,7 +837,7 @@ exit 0
         )
         self.write_file(self.fixture / "codex" / "herdr-agent-state.sh", "#!/bin/sh\n")
 
-        result = self.run_cmd("bash", "codex/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "codex")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         codex_dir = self.home / ".codex"
@@ -960,7 +851,7 @@ exit 0
     def test_update_captures_hex_settings_without_secrets_or_machine_state(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         hex_dir = self.fixture / "hex"
@@ -987,7 +878,7 @@ exit 0
             '{"capture": {"folder": "__HOME__/Captures"}}\n',
         )
 
-        result = self.run_cmd("bash", "hex/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "hex")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
@@ -1003,7 +894,7 @@ exit 0
     def test_update_captures_goup_function(self):
         self.seed_update_sources()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertEqual(
@@ -1022,7 +913,8 @@ exit 0
 
         result = self.run_cmd(
             "bash",
-            "update.sh",
+            "setup.sh",
+            "update",
             extra_env={
                 "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
             },
@@ -1039,29 +931,6 @@ exit 0
             "alias ll='ls -la'\n",
         )
 
-    def test_update_cleans_repo_local_temp_artifacts_on_success(self):
-        self.seed_update_sources()
-
-        result = self.run_cmd("bash", "update.sh")
-
-        self.assertEqual(result.returncode, 0, msg=result.stderr)
-        self.assertEqual(list(self.fixture.glob(".update.sh.*")), [])
-
-    def test_update_cleans_repo_local_temp_artifacts_on_snapshot_failure(self):
-        self.seed_update_sources()
-
-        self.write_stub(
-            "fish",
-            """#!/bin/bash
-exit 1
-""",
-        )
-
-        result = self.run_cmd("bash", "update.sh")
-
-        self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(list(self.fixture.glob(".update.sh.*")), [])
-
     def test_update_prunes_missing_managed_sources_from_repo(self):
         self.seed_update_sources()
 
@@ -1069,16 +938,15 @@ exit 1
         (self.home / ".config" / "zed" / "keymap.json").unlink()
         (self.home / ".gitconfig").unlink()
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertFalse((self.fixture / "fish" / "functions" / "fish_prompt.fish").exists())
         self.assertFalse((self.fixture / "zed" / "keymap.json").exists())
         self.assertFalse((self.fixture / "git" / ".gitconfig").exists())
 
-    def test_update_keeps_repo_unchanged_when_fisher_list_fails(self):
+    def test_update_fails_when_fisher_list_fails(self):
         self.seed_update_sources()
-        expected = self.snapshot_managed_repo()
 
         self.write_stub(
             "fish",
@@ -1087,14 +955,13 @@ exit 1
 """,
         )
 
-        result = self.run_cmd("bash", "update.sh")
+        result = self.run_cmd("bash", "setup.sh", "update")
 
         self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(self.snapshot_managed_repo(), expected)
+        self.assertIn("update failed", result.stderr)
 
-    def test_update_keeps_repo_unchanged_when_brew_dump_fails(self):
+    def test_update_fails_when_brew_dump_fails(self):
         self.seed_update_sources()
-        expected = self.snapshot_managed_repo()
 
         self.write_stub(
             "brew",
@@ -1105,129 +972,18 @@ exit 1
 
         result = self.run_cmd(
             "bash",
-            "update.sh",
+            "setup.sh",
+            "update",
             extra_env={
                 "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
             },
         )
 
         self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(self.snapshot_managed_repo(), expected)
-
-    def test_update_rolls_back_repo_when_apply_phase_fails(self):
-        self.seed_update_sources()
-        self.write_file(self.fixture / "fish" / "config.fish", "repo fish\n")
-        self.write_file(self.fixture / "git" / ".gitconfig", "[user]\n  name = Repo\n")
-        self.write_file(self.fixture / "omp" / "config.yml", "modelRoles: {}\n")
-        self.write_file(self.fixture / "packages" / "Brewfile", 'tap "repo/stale"\n')
-        expected = self.snapshot_managed_repo()
-        fail_marker = self.root / "mv-failed"
-
-        self.write_stub(
-            "mv",
-            f"""#!/bin/bash
-if [ "${{1:-}}" != "${{1##*/stage/git/.gitconfig}}" ] && [ ! -e "{fail_marker}" ]; then
-    : > "{fail_marker}"
-    exit 1
-fi
-
-exec /bin/mv "$@"
-""",
-        )
-
-        result = self.run_cmd(
-            "bash",
-            "update.sh",
-            extra_env={
-                "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
-            },
-        )
-
-        self.assertNotEqual(result.returncode, 0)
-        self.assertTrue(fail_marker.exists())
-        self.assertEqual(self.snapshot_managed_repo(), expected)
-
-    def test_update_keeps_repo_unchanged_when_backup_move_fails(self):
-        self.seed_update_sources()
-        self.write_file(self.fixture / "fish" / "config.fish", "repo fish\n")
-        expected = self.snapshot_managed_repo()
-        fail_marker = self.root / "mv-backup-failed"
-
-        self.write_stub(
-            "mv",
-            f"""#!/bin/bash
-if [ "${{2:-}}" != "${{2##*/backup/fish/config.fish}}" ] && [ ! -e "{fail_marker}" ]; then
-    : > "{fail_marker}"
-    exit 1
-fi
-
-exec /bin/mv "$@"
-""",
-        )
-
-        result = self.run_cmd(
-            "bash",
-            "update.sh",
-            extra_env={
-                "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
-            },
-        )
-
-        self.assertNotEqual(result.returncode, 0)
-        self.assertTrue(fail_marker.exists())
-        self.assertEqual(self.snapshot_managed_repo(), expected)
-
-    def test_update_reports_rollback_failures(self):
-        self.seed_update_sources()
-        self.write_file(self.fixture / "fish" / "config.fish", "repo fish\n")
-        self.write_file(self.fixture / "git" / ".gitconfig", "[user]\n  name = Repo\n")
-        self.write_file(self.fixture / "omp" / "config.yml", "modelRoles: {}\n")
-        expected = self.snapshot_managed_repo()
-        expected.pop("fish/config.fish", None)
-        apply_marker = self.root / "mv-apply-failed"
-        rollback_marker = self.root / "mv-rollback-failed"
-
-        self.write_stub(
-            "mv",
-            f"""#!/bin/bash
-if [ "${{1:-}}" != "${{1##*/stage/git/.gitconfig}}" ] && [ ! -e "{apply_marker}" ]; then
-    : > "{apply_marker}"
-    exit 1
-fi
-
-if [ "${{1:-}}" != "${{1##*/backup/fish/config.fish}}" ] && [ ! -e "{rollback_marker}" ]; then
-    : > "{rollback_marker}"
-    exit 1
-fi
-
-exec /bin/mv "$@"
-""",
-        )
-
-        result = self.run_cmd(
-            "bash",
-            "update.sh",
-            extra_env={
-                "FAKE_FISH_LIST_OUTPUT": "jorgebucaran/fisher\nPatrickF1/fzf.fish\n"
-            },
-        )
-
-        self.assertNotEqual(result.returncode, 0)
-        self.assertTrue(apply_marker.exists())
-        self.assertTrue(rollback_marker.exists())
-        self.assertIn("Rollback failed", result.stderr)
-        temp_dir_match = re.search(r"Rollback artifacts kept at (.+)", result.stderr)
-        self.assertIsNotNone(temp_dir_match, msg=result.stderr)
-        artifacts_dir = Path(temp_dir_match.group(1).strip())
-        self.assertTrue(artifacts_dir.is_dir())
-        self.assertEqual(artifacts_dir.parent.resolve(), self.fixture.resolve())
-        self.assertTrue(artifacts_dir.name.startswith(".update.sh."))
-        current = self.snapshot_managed_repo()
-        self.assertNotIn("fish/config.fish", current)
-        self.assertEqual(current, expected)
+        self.assertIn("update failed", result.stderr)
 
     def test_ssh_setup_restores_config(self):
-        result = self.run_cmd("bash", "ssh/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "ssh")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         config_path = self.home / ".ssh" / "config"
@@ -1238,7 +994,7 @@ exec /bin/mv "$@"
         )
 
     def test_gnupg_setup_restores_files_with_secure_permissions(self):
-        result = self.run_cmd("bash", "gnupg/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "gnupg")
 
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         gnupg_dir = self.home / ".gnupg"
@@ -1252,13 +1008,13 @@ exec /bin/mv "$@"
         self.assertEqual(gpg_agent_conf.stat().st_mode & 0o777, 0o600)
 
     def test_git_setup_propagates_copy_failure(self):
-        # find emits a path whose source file does not exist, so scopy must fail the
-        # whole script rather than the failure being swallowed by a pipe-to-while subshell.
-        self.write_stub("find", '#!/bin/bash\nprintf "%s\\n" "./.gitmissing"\n')
+        # A missing repo source must fail the restore, not be silently skipped.
+        (self.fixture / "git" / ".gitconfig").unlink()
 
-        result = self.run_cmd("bash", "git/setup.sh")
+        result = self.run_cmd("bash", "setup.sh", "restore", "git")
 
         self.assertNotEqual(result.returncode, 0)
+        self.assertIn("missing git/.gitconfig", result.stderr)
 
     def seed_update_sources(self) -> None:
         fish_dir = self.home / ".config" / "fish"

@@ -1,7 +1,7 @@
 # Raycast Backup
 
 A password-encrypted export of Raycast settings & data. Unlike the rest of this repo, it is a
-manual backup artifact: `bootstrap.sh` does **not** restore it and `update.sh` does **not**
+manual backup artifact: `setup.sh` does **not** restore it and `./setup.sh update` does **not**
 refresh it.
 
 ## Restore (new machine)

@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "3.x"
       - name: Shellcheck scripts
-        run: shellcheck -x --severity=warning bootstrap.sh update.sh scripts/functions.sh */setup.sh
+        run: shellcheck -x --severity=warning setup.sh
       - name: Verify required tools
         run: awk --version 2>/dev/null | head -1 || true
       - name: Run dotfiles regression tests

@@ -1,5 +1,5 @@
 # Curated macOS preferences to back up: "<domain> <key>" per line.
-# update.sh reads each live value into defaults.list; macos/setup.sh writes them back.
+# `./setup.sh update` reads each live value into defaults.list; restore writes them back.
 # Only scalar values (bool/int/float/string) are supported; arrays and dicts are skipped.
 # Keys that are not set on this machine are skipped too.
 NSGlobalDomain AppleInterfaceStyle
