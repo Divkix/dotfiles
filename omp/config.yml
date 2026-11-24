@@ -5,14 +5,14 @@ providers:
   tinyModelDevice: auto
   openai-codex:
     codeMode: auto
-setupVersion: 2
+setupVersion: 3
 modelRoles:
   web: web/firecrawl
   judge: openrouter/~typesafe/jev-latest
   image: openrouter/meta/muse-image:auto
-  smol: opencode-go/deepseek-v4.1-flash:max
-  default: anthropic/claude-opus-5-5:high
-  task: openai-codex/gpt-6.1-sol:xhigh
+  default: devin/swe-2:max
+  task: devin/swe-2-flash:max
+  smol: devin/swe-2-flash:max
 defaultThinkingLevel: auto
 advisor:
   enabled: false
@@ -123,6 +123,8 @@ steeringMode: one-at-a-time
 interruptMode: immediate
 tools:
   approvalMode: yolo
+  xdevDocs: catalog
+  xdev: true
 ttsr:
   contextMode: discard
 snapcompact:
@@ -172,12 +174,13 @@ browser:
   headless: true
 compaction:
   enabled: true
-  thresholdTokens: 250000
+  thresholdTokens: 400000
   experimentalContextManagement: false
   idleEnabled: false
 disabledExtensions: []
 codexResets:
-  autoRedeem: "no"
+  autoRedeem5h: "no"
+  autoRedeemWeekly: "no"
 externalThinking: false
 isolation:
   backend: auto
@@ -189,3 +192,5 @@ spelling:
   typoDetection: false
 plan:
   enabled: false
+update:
+  auto: false
